@@ -1,4 +1,4 @@
-SRC = main.c ./Parss/parssMap.c  ./Parss/errorHandler.c \
+SRC = main.c ./Parss/parssMap.c  ./Parss/errorHandler.c ./Parss/Utils.c \
 	./42Get_next_line/get_next_line.c \
 	./42Get_next_line/get_next_line_utils.c \
 	#  ./exec/raycasting.c \
@@ -13,7 +13,7 @@ HEADERS = ./headers/cub3d.h ./headers/struct.h ./headers/parss.h ./42Get_next_li
 
 CC = gcc
 
-MLX_FLAGS = -framework OpenGL -framework AppKit
+MLX_FLAGS = -framework OpenGL -framework AppKit 
 
 FLAGS = -Wall -Wextra -Werror 
 # -fsanitize=address

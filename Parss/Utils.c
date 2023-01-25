@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parss.h                                            :+:      :+:    :+:   */
+/*   Utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/23 17:05:13 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/01/25 20:15:14 by ielmakhf         ###   ########.fr       */
+/*   Created: 2023/01/25 20:12:05 by ielmakhf          #+#    #+#             */
+/*   Updated: 2023/01/25 20:14:32 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSS_H
-#define PARSS_H
+#include "../headers/parss.h"
 
-#include "../42Get_next_line/get_next_line.h"
-#include "../42Libft/libft.h"
-#include "./struct.h"
 
-#include <fcntl.h>
-#include <stdlib.h>
-#include <stdio.h>
+void    check_path(char *path)
+{
+    int fd;
 
-int parss_map(t_map *map, char *av);
-char    *get_filename_ext(char *filename);
-void    error_handler(char *mssg, int exit_status);
-void    check_path(char *path);
-
-#endif
+    fd = open(path, O_RDONLY);
+    if (fd < 0)
+        error_handler("no such file or directory", 127);
+}
