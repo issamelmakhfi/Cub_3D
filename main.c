@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:49:10 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/01/24 14:37:41 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/01/24 19:10:46 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 int main(int ac, char **av)
 {
     t_map   *map;
+    int fd;
     
     map = malloc(sizeof(t_map));
     if (!map)

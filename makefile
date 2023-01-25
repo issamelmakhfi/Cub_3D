@@ -15,7 +15,8 @@ CC = gcc
 
 MLX_FLAGS = -framework OpenGL -framework AppKit
 
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror 
+# -fsanitize=address
 
 LIBFT = 42Libft/libft.a
 

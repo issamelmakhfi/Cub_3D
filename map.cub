@@ -1,9 +1,6 @@
-NO  ./textures/GrayWalls.xpm
-SO  ./textures/GrayWalls.xpm
-WE  ./textures/GrayWalls.xpm
-EA  ./textures/GrayWalls.xpm
+NO  ../BlueWalls.xpm
 
-F	68, 68,  68
+F	68, 68, 68
 C	51, 204, 255
 
 11111111111111111   11111

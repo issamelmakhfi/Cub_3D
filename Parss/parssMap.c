@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:40:07 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/01/24 17:21:16 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/01/24 19:07:41 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void    free_tab(char **tab)
         free(tab[i]);
         i++;        
     }
+    free(tab);
 }
 
 char    *get_filename_ext(char *filename)
@@ -40,21 +41,34 @@ int get_direction(char **direction)
     
     if (!ft_strcmp(direction[0], "NO"))
     {
-        fd = open(direction[1], O_RDONLY);
+        printf("%s\n", direction[1]);
+        fd = open("../BlueWalls.xpm", O_RDONLY);
         if (fd < 0)
+        {
+            printf("error\n");
             return (1);
+        }
     }
-    if (!ft_strcmp(direction[0], "SO"))
+    else if (!ft_strcmp(direction[0], "SO"))
     {
         fd = open(direction[1], O_RDONLY);
         if (fd < 0)
             return (1);
     }
-    if (!ft_strcmp(direction[0], "WE"))
+    else if (!ft_strcmp(direction[0], "WE"))
     {
-        
+        fd = open(direction[1], O_RDONLY);
+        if (fd < 0)
+            return (1);
     }
-    if ()
+    else if (!ft_strcmp(direction[0], "EA"))
+    {
+        fd = open(direction[1], O_RDONLY);
+        if (fd < 0)
+            return (1);
+    }
+    else
+        return (2);    
     return (0);
 }
 
@@ -67,11 +81,13 @@ int check_directions(t_map *map)
     while (map->map_tab[i])
     {
         dire = ft_split(map->map_tab[i], ' ');
-        if (!get_direction(dire))
+        if (get_direction(dire))
         {
-            printf("test\n");
-            return 0;
+            ft_putstr_fd("There is error with elements of map", 2);
+            return (1);
         }
+        free_tab(dire);
+        dire = NULL;
         i++;
     }
     return (1);
@@ -95,6 +111,6 @@ int parss_map(t_map *map, char *av)
     }
     map->map_tab[i] = NULL;
     check_directions(map);
-    free_tab(map->map_tab);
+    // free_tab(map->map_tab);
     return (0);
 }
