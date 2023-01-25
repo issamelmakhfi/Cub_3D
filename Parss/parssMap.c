@@ -6,11 +6,13 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:40:07 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/01/24 19:07:41 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/01/25 17:45:57 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/parss.h"
+#include <string.h>
+#include <errno.h>
 
 void    free_tab(char **tab)
 {
@@ -38,14 +40,14 @@ char    *get_filename_ext(char *filename)
 int get_direction(char **direction)
 {
     int fd;
-    
+    printf("|%s|\n", direction[1]);
     if (!ft_strcmp(direction[0], "NO"))
     {
-        printf("%s\n", direction[1]);
-        fd = open("../BlueWalls.xpm", O_RDONLY);
+        fd = open("./textures/BlueWalls.xpm", O_RDONLY);
         if (fd < 0)
         {
-            printf("error\n");
+            printf("%s\n", strerror(errno));
+            printf("error22\n");
             return (1);
         }
     }
@@ -83,7 +85,8 @@ int check_directions(t_map *map)
         dire = ft_split(map->map_tab[i], ' ');
         if (get_direction(dire))
         {
-            ft_putstr_fd("There is error with elements of map", 2);
+            // printf("%s\n", strerror(errno));
+            // ft_putstr_fd("There is error with elements of map", 2);
             return (1);
         }
         free_tab(dire);

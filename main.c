@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:49:10 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/01/24 19:10:46 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/01/25 14:58:58 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 int main(int ac, char **av)
 {
     t_map   *map;
-    int fd;
     
     map = malloc(sizeof(t_map));
     if (!map)
@@ -29,6 +28,13 @@ int main(int ac, char **av)
         return (1);
     if (ft_strcmp(get_filename_ext(av[1]), ".cub"))
         error_handler("Bad Map", 1);
+    int fd;
+        fd = open("./textures/BlueWalls.xpm", O_RDONLY);
+        if (fd < 0)
+        {
+            printf("error12\n");
+            return (1);
+        }
     parss_map(map, av[1]);
     free (map);
     return (0);
