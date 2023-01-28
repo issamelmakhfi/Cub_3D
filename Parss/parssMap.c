@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:40:07 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/01/27 11:44:31 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/01/28 19:46:47 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ int check_elements(t_map *map)
     char **elements;
 
     i = 0;
-    while (map->map_tab[i])
+    while (map)
     {
-        elements = ft_split(map->map_tab[i], ' ');
+        elements = ft_split(map->elements, ' ');
         if (ft_strlen(elements[0]) == 2)
         {
             if (get_direction(elements))
@@ -72,59 +72,76 @@ int check_elements(t_map *map)
         }
         free_tab(elements);
         elements = NULL;
-        i++;
+        map = map->next;
     }
     return (0);
 }
 
-int map_check(t_map *map)
+
+void leak()
 {
-    int i;
-    int j;
-    char *tmp;
-
-    i = 0;
-    while (map->map_tab[i])
-    {
-        j = 0;
-        while (map->map_tab[0][j])
-        {
-            if (map->map_tab[i][j++] != '1')
-                return (1);
-        }
-        tmp = ft_strtrim(map->map_tab[i], "1");
-        j = 0;
-        while (tmp[j])
-        {
-            if (tmp[j++] != '0')
-                return (1);
-        }
-        i++;
-    }
-    return (0);
+	system("leaks cub3D");
 }
 
-int parss_map(t_map *map, char *av)
+int parss_map(char *av)
 {
     int fd;
-    int i;
     char *str;
+    int len = 0;
+    t_map *tmp = NULL, *head = NULL;
+    t_map *cub = NULL, *Chead = NULL;
 
-    i = 0;
     fd = open(av,  O_RDONLY);
     if (fd < 0)
         exit(1);
-    while ((str = get_next_line(fd)))
+    str = get_next_line(fd);
+    while (str)
     {
-        map->map_tab[i] = malloc(1 * ft_strlen(str));
-        map->map_tab[i] = str;
-        i++;
+        len = ft_strlen(str);
+        if ((str[0] == '1'  || str[0] == ' ') && (str[len - 1] == '1' || str[len - 1] == ' '))
+        {
+            if (!head) {
+                head = tmp = malloc(sizeof(t_map));
+                tmp->map_tab = strdup(str);
+                tmp->next = NULL;
+            } else {
+                tmp->next = malloc(sizeof(t_map));
+                tmp = tmp->next;
+                tmp->map_tab = strdup(str);
+                tmp->next = NULL;
+            }
+        }
+        else
+        {
+            if (!Chead) {
+                Chead = cub = malloc(sizeof(t_map));
+                cub->elements = strdup(str);
+                cub->next = NULL;
+            } else {
+                cub->next = malloc(sizeof(t_map));
+                cub = cub->next;
+                cub->elements = strdup(str);
+                cub->next = NULL;
+            }
+        }
+        free(str);
+        str = get_next_line(fd);
     }
-    map->map_tab[i] = NULL;
-    if (check_elements(map))
+    if (check_elements(Chead))
         error_handler("ELEMENTS ERROR", 1);
-    if (map_check(map))
-        error_handler("MAP ERROR", 1);
-    // free_tab(map->map_tab);
+    while (head)
+    {
+        free(head->map_tab);
+        free(head);
+        head = head->next;
+    }
+    // need to make pionter for Chead to free all of it 
+    while (Chead)
+    {
+        free(Chead->elements);
+        free(Chead);
+        Chead = Chead->next;
+    }
+    while (1);
     return (0);
 }

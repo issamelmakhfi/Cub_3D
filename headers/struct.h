@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:16:30 by Ma3ert            #+#    #+#             */
-/*   Updated: 2023/01/15 23:23:29 by Ma3ert           ###   ########.fr       */
+/*   Updated: 2023/01/28 19:39:53 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,21 @@
 # define OPEN 3
 # define CLOSE 4
 
-typedef struct s_map
+
+typedef	struct s_map
+{
+	char	*map_tab;
+	char	*elements;
+	struct s_map	*next;
+}	t_map;
+
+typedef struct s_info
 {
 	char			**map_tab;
 	int				map_h;
 	int				map_w;
-}	t_map;
+	t_map			*map;
+}	t_info;
 
 typedef struct s_position
 {
@@ -43,7 +52,7 @@ typedef struct s_position
 	double	virtual_px;
 	double	virtual_py;
 	double	pov;
-	t_map	*map;
+	t_info	*map;
 }	t_position;
 
 typedef struct s_ray

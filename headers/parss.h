@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:05:13 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/01/27 11:44:55 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/01/28 19:40:52 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int parss_map(t_map *map, char *av);
+int parss_map(char *av);
 char    *get_filename_ext(char *filename);
 void    error_handler(char *mssg, int exit_status);
 void    check_path(char *path);
