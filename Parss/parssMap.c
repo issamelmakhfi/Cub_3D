@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:40:07 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/01/28 19:46:47 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/01/28 22:26:22 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,17 @@ int check_colors(char **colors)
     return (0);
 }
 
-int check_elements(t_map *map)
+int check_elements(t_map *list_elements)
 {
     int i;
+    t_map   *list;
     char **elements;
 
     i = 0;
-    while (map)
+    list = list_elements;
+    while (list)
     {
-        elements = ft_split(map->elements, ' ');
+        elements = ft_split(list->elements, ' ');
         if (ft_strlen(elements[0]) == 2)
         {
             if (get_direction(elements))
@@ -72,7 +74,7 @@ int check_elements(t_map *map)
         }
         free_tab(elements);
         elements = NULL;
-        map = map->next;
+        list = list->next;
     }
     return (0);
 }
@@ -87,6 +89,7 @@ int parss_map(char *av)
 {
     int fd;
     char *str;
+    char   **map_arr = NULL;
     int len = 0;
     t_map *tmp = NULL, *head = NULL;
     t_map *cub = NULL, *Chead = NULL;
@@ -129,19 +132,19 @@ int parss_map(char *av)
     }
     if (check_elements(Chead))
         error_handler("ELEMENTS ERROR", 1);
+    lsttoarray(head, &map_arr);
     while (head)
     {
         free(head->map_tab);
         free(head);
         head = head->next;
     }
-    // need to make pionter for Chead to free all of it 
+    // need to make pionter for Chead to free all of it / leaks here
     while (Chead)
     {
         free(Chead->elements);
         free(Chead);
         Chead = Chead->next;
     }
-    while (1);
     return (0);
 }
