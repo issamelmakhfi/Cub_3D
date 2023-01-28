@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 20:12:05 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/01/27 11:13:47 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/01/28 22:24:59 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,36 @@ int check_digit(char *str)
             return (1);
     }
     return (0);
+}
+
+int	ft_lstsize(t_map *lst)
+{
+	int	len;
+
+	len = 0;
+	if (!lst)
+		return (0);
+	while (lst)
+	{
+		len++;
+		lst = lst->next;
+	}
+	return (len);
+}
+
+void	lsttoarray(t_map *map, char ***map_arr)
+{
+	t_map	*list;
+	int		i;
+
+	list = map;
+	i = 0;
+	(*map_arr) = malloc(sizeof(char *) * ft_lstsize(map) + 1);
+	while (list)
+	{
+		(*map_arr)[i++] = ft_strdup(list->map_tab);
+		list = list->next;
+	}
+	(*map_arr[i]) = NULL;
+	
 }
