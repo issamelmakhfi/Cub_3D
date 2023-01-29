@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:16:30 by Ma3ert            #+#    #+#             */
-/*   Updated: 2023/01/28 19:39:53 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/01/29 20:10:46 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef	struct s_map
 
 typedef struct s_info
 {
-	char			**map_tab;
+	char			**map_arr;
 	int				map_h;
 	int				map_w;
 	t_map			*map;

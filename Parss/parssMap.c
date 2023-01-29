@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:40:07 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/01/28 22:26:22 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/01/29 20:44:28 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,17 @@ int check_colors(char **colors)
         {
             tmp = ft_strtrim(colors[i], ",");
             if (check_digit(tmp))
+            {
+                free (tmp);
                 return (1);
+            }
             if (ft_atoi(tmp) > 256)
+            {
+                free(tmp);
                 return (1);
+            }
             i++;
+            free(tmp);
         }
     }
     else
@@ -79,17 +86,40 @@ int check_elements(t_map *list_elements)
     return (0);
 }
 
-
-void leak()
+void    fill_map(t_map *map, char **map_arr)
 {
-	system("leaks cub3D");
+    int i;
+    int j;
+    size_t len;
+
+    i = 0;
+    j = 0;
+    len = 0;
+    (void)map;
+    while (map_arr[i])
+    {
+        if (len < ft_strlen(map_arr[i]))
+            len = ft_strlen(map_arr[i]);
+        i++;
+    }
+    // i = 0;
+    // while (map_arr[i])
+    // {
+    //     j = i;
+    //     while (ft_strlen(map_arr[j]) < len)
+    //     {
+    //         map_arr[j] = ft_strjoin(map_arr[j], "1");
+    //         j++;
+    //     }
+    //     i++;
+    // }
 }
 
 int parss_map(char *av)
 {
     int fd;
     char *str;
-    char   **map_arr = NULL;
+    // char   **map_arr = NULL;
     int len = 0;
     t_map *tmp = NULL, *head = NULL;
     t_map *cub = NULL, *Chead = NULL;
@@ -132,14 +162,16 @@ int parss_map(char *av)
     }
     if (check_elements(Chead))
         error_handler("ELEMENTS ERROR", 1);
-    lsttoarray(head, &map_arr);
+    lsttoarray(head);
+    // fill_map(head, map_arr);
+    
+    // free_tab(map_arr);
     while (head)
     {
         free(head->map_tab);
         free(head);
         head = head->next;
     }
-    // need to make pionter for Chead to free all of it / leaks here
     while (Chead)
     {
         free(Chead->elements);

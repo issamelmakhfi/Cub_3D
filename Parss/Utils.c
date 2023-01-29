@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 20:12:05 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/01/28 22:24:59 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/01/29 20:44:03 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,19 +72,24 @@ int	ft_lstsize(t_map *lst)
 	return (len);
 }
 
-void	lsttoarray(t_map *map, char ***map_arr)
+void	lsttoarray(t_map *map)
 {
 	t_map	*list;
+    t_info   *info = NULL;
 	int		i;
 
 	list = map;
 	i = 0;
-	(*map_arr) = malloc(sizeof(char *) * ft_lstsize(map) + 1);
+    info = malloc(sizeof(info));
+    if (!info)
+        return ;
+    info->map_arr = malloc(sizeof(char *) * ft_lstsize(list));
+    if (!info->map_arr)
+        return;
 	while (list)
 	{
-		(*map_arr)[i++] = ft_strdup(list->map_tab);
+		(info->map_arr)[i++] = ft_strdup(list->map_tab);
 		list = list->next;
 	}
-	(*map_arr[i]) = NULL;
-	
+	(info->map_arr[i]) = NULL;
 }
