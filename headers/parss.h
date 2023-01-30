@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:05:13 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/01/29 20:14:37 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/01/30 21:51:35 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void    error_handler(char *mssg, int exit_status);
 void    check_path(char *path);
 void    free_tab(char **tab);
 int check_digit(char *str);
-void	lsttoarray(t_map *map);
+void	lsttoarray(t_map *map, t_info *info);
 int	ft_lstsize(t_map *lst);
+void    free_stuff(t_info *info, t_map *head, t_map *Chead);
 
 #endif

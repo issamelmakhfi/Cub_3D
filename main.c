@@ -6,16 +6,11 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:49:10 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/01/29 15:06:45 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/01/30 22:43:10 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./headers/parss.h"
-
-// void leak()
-// {
-// 	system("leaks cub3D map.cub");
-// }
 
 int main(int ac, char **av)
 {
@@ -30,5 +25,6 @@ int main(int ac, char **av)
         error_handler("Bad Map", 1);
     parss_map(av[1]);
     free (cub);
+    // while (1);
     return (0);
 }
