@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:40:07 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/01/30 23:34:45 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/04 22:04:24 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,14 +102,14 @@ char    *join_rest(char *str, size_t len)
         if (i < ft_strlen(str))
             tmp[i] = str[i];
         else
-            tmp[i] = '1';
+            tmp[i] = '2';
         i++;
     }
     tmp[i] = '\0';
     i = 0;
     while (tmp[i] == ' ')
     {
-        tmp[i] = '1';
+        tmp[i] = '2';
         i++;
     }
     i = 0;
@@ -146,38 +146,29 @@ void    fill_map(t_info *info)
         {
             if (info->map_arr[i][j] == ' ')
             {
-                if (info->map_arr[i][j + 1] == '0' || info->map_arr[i][j - 1] == '0' ||  info->map_arr[i][j - 1] == 'P')
+                if (info->map_arr[i][j + 1] == '0' || info->map_arr[i][j - 1] == '0' || info->map_arr[i][j - 1] == 'P' || info->map_arr[i][j + 1] == 'P')
                     error_handler("MAP ERROR", 1);
-                if (i != 0)
+                else if (info->map_arr[i + 1])
                 {
-                    if (info->map_arr[i + 1][j] == '0' || info->map_arr[i - 1][j] == '0')
-                    {
-                        printf("%d\n", i);
-                        error_handler("MAP ERROR", 1);  
-                    } 
+                    printf("%d\n", i);
+                    if (info->map_arr[i + 1][j] == '0'|| info->map_arr[i + 1][j] == 'P')
+                        error_handler("MAP ERROR", 1);
+                }
+                if (i && info->map_arr[i - 1][j])
+                {
+                    if (info->map_arr[i - 1][j] == '0' || info->map_arr[i - 1][j] == 'P')
+                        error_handler("MAP ERROR", 1);
                 }
             }
-            // if (info->map_arr[i][j] == ' ' && (info->map_arr[i][j + 1] == '0' || info->map_arr[i][j - 1] == '0' || info->map_arr[i][j - 1] == 'P'))
-            //     error_handler("MAP ERROR", 1);
-            // else if (info->map_arr[i][j] == ' ' && info->map_arr[i + 1])
-            // {
-            //     if (info->map_arr[i + 1][j] == '0')
-            //         error_handler("MAP ERROR", 1);
-            // }
-            // if (info->map_arr[i][j] == ' ' && info->map_arr[i - 1])
-            // {
-            //     exit(1);
-            //     if (info->map_arr[i - 1][j] == '0')
-            //         error_handler("MAP ERROR", 1);
-            // }
             else
                 printf("ALL GOOD\n");
             j++;
         }
         i++;
     }
-    // while (info->map_arr[i])
-    //     printf("%s\n", info->map_arr[i++]);
+    i = 0;
+    while (info->map_arr[i])
+        printf("%s\n", info->map_arr[i++]);
 }
 
 int parss_map(char *av)
@@ -232,6 +223,6 @@ int parss_map(char *av)
         error_handler("ELEMENTS ERROR", 1);
     lsttoarray(head, info);
     fill_map(info);
-    free_stuff(info, head, Chead);
+    // free_stuff(info, head, Chead);
     return (0);
 }
