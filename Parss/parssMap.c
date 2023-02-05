@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:40:07 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/04 22:04:24 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/05 23:58:37 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,12 @@ int check_elements(t_map *list_elements)
     while (list)
     {
         elements = ft_split(list->elements, ' ');
-        if (ft_strlen(elements[0]) == 2)
+        if (elements[0] &&ft_strlen(elements[0]) == 2)
         {
             if (get_direction(elements))
                 return (1);
         }
-        else if (ft_strlen(elements[0])  == 1)
+        else if (elements[0] && ft_strlen(elements[0])  == 1)
         {
             if (check_colors(elements))
                 return (1);
@@ -187,6 +187,7 @@ int parss_map(char *av)
     if (fd < 0)
         error_handler("No such file or directory", 1);
     str = get_next_line(fd);
+    str = ft_strtrim(str, "\n");
     while (str)
     {
         len = ft_strlen(str);
@@ -218,11 +219,17 @@ int parss_map(char *av)
         }
         free(str);
         str = get_next_line(fd);
+        str = ft_strtrim(str, "\n");
     }
-    if (check_elements(Chead))
-        error_handler("ELEMENTS ERROR", 1);
-    lsttoarray(head, info);
-    fill_map(info);
+    // if (check_elements(Chead))
+    //     error_handler("ELEMENTS ERROR", 1);
+    // lsttoarray(head, info);
+    // int i = 0;
+    // while (info->map_arr[i])
+    // {
+    //     printf("%s\n", info->map_arr[i++]);
+    // }
+    // fill_map(info);
     // free_stuff(info, head, Chead);
     return (0);
 }
