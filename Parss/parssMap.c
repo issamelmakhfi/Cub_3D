@@ -6,13 +6,11 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:40:07 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/06 16:17:08 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/06 20:11:29 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/parss.h"
-#include <string.h>
-#include <errno.h>
 
 int get_direction(char **direction)
 {
@@ -155,23 +153,50 @@ void    fill_map(t_info *info)
         {
             if (info->map_arr[i][j] == ' ' || info->map_arr[i][j] == '2')
             {
-                if (info->map_arr[i][j + 1] == '0' || info->map_arr[i][j - 1] == '0' || info->map_arr[i][j - 1] == 'P' || info->map_arr[i][j + 1] == 'P')
-                    error_handler("MAP ERROR", 1);
+                if ((j > 0) && (info->map_arr[i][j + 1] == '0' || info->map_arr[i][j - 1] == '0' || info->map_arr[i][j - 1] == 'P' || info->map_arr[i][j + 1] == 'P'))
+                    error_handler("MAP ERROR1", 1);
                 else if (info->map_arr[i + 1])
                 {
                     if (info->map_arr[i + 1][j] == '0'|| info->map_arr[i + 1][j] == 'P')
-                        error_handler("MAP ERROR", 1);
+                        error_handler("MAP ERROR2", 1);
                 }
                 if (i && info->map_arr[i - 1][j])
                 {
                     if (info->map_arr[i - 1][j] == '0' || info->map_arr[i - 1][j] == 'P')
-                        error_handler("MAP ERROR", 1);
+                        error_handler("MAP ERROR3", 1);
                 }
             }
             j++;
         }
         i++;
     }
+    i = 0;
+    while (info->map_arr[i])
+        printf("%s\n", info->map_arr[i++]);
+}
+
+int checkLine(char *line)
+{
+    int i;
+
+    i = 0;
+    if (!line[0])
+        return (1);
+    while (line[i])
+    {
+        if (!ft_isdigit(line[i]))
+        {
+            if (line[i] == 'P' || line[i] == ' ')
+            {
+                i++;
+                continue;
+            }
+            else
+                return (1);
+        }
+        i++;
+    }
+    return (0);
 }
 
 int parss_map(char *av)
@@ -193,8 +218,8 @@ int parss_map(char *av)
     str = ft_strtrim(str, "\n");
     while (str)
     {
-        len = ft_strlen(str);
-        if ((str[0] == '1'  || str[0] == ' ') && (str[len - 1] == '1' || str[len - 1] == ' '))
+        // len = ft_strlen(str);
+        if (!checkLine(str))
         {
             if (!head) {
                 head = tmp = malloc(sizeof(t_map));
@@ -226,7 +251,7 @@ int parss_map(char *av)
     if (check_elements(Chead))
         error_handler("ELEMENTS ERROR", 1);
     lsttoarray(head, info);
-    // fill_map(info);
+    fill_map(info);
     free_stuff(info, head, Chead);
     return (0);
 }
