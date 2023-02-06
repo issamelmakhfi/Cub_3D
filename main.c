@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:49:10 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/01/30 22:43:10 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/06 16:18:28 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,6 @@ int main(int ac, char **av)
         error_handler("Bad Map", 1);
     parss_map(av[1]);
     free (cub);
-    // while (1);
+    while (1);
     return (0);
 }

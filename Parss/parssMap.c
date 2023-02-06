@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:40:07 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/06 16:00:59 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/06 16:17:08 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int check_elements(t_map *list_elements)
     while (list)
     {
         elements = ft_split(list->elements, ' ');
-        if (elements[0] &&ft_strlen(elements[0]) == 2)
+        if (elements[0] && ft_strlen(elements[0]) == 2)
         {
             if (get_direction(elements))
                 return (1);
@@ -222,12 +222,11 @@ int parss_map(char *av)
         }
         free(str);
         str = get_next_line(fd);
-        str = ft_strtrim(str, "\n");
     }
     if (check_elements(Chead))
         error_handler("ELEMENTS ERROR", 1);
     lsttoarray(head, info);
-    fill_map(info);
-    // free_stuff(info, head, Chead);
+    // fill_map(info);
+    free_stuff(info, head, Chead);
     return (0);
 }
