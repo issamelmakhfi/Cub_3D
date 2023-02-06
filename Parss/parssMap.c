@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:40:07 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/05 23:58:37 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/06 16:00:59 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,22 @@ char    *join_rest(char *str, size_t len)
     return (tmp);
 }
 
+size_t  getLongestLen(char **str)
+{
+    int i;
+    size_t  len;
+
+    i = 0;
+    len = 0;
+    while (str[i])
+    {
+        if (len < ft_strlen(str[i]))
+            len = ft_strlen(str[i]);
+        i++;
+    }
+    return (len);
+}
+
 void    fill_map(t_info *info)
 {
     int i;
@@ -124,15 +140,8 @@ void    fill_map(t_info *info)
     size_t len;
 
     i = 0;
-    len = 0;
     j = 0;
-    while (info->map_arr[i])
-    {
-        if (len < ft_strlen(info->map_arr[i]))
-            len = ft_strlen(info->map_arr[i]);
-        i++;
-    }
-    i = 0;
+    len = getLongestLen(info->map_arr);
     while (info->map_arr[i])
     {
         info->map_arr[i] = join_rest(info->map_arr[i], len);
@@ -144,13 +153,12 @@ void    fill_map(t_info *info)
         j = 0;
         while (info->map_arr[i][j])
         {
-            if (info->map_arr[i][j] == ' ')
+            if (info->map_arr[i][j] == ' ' || info->map_arr[i][j] == '2')
             {
                 if (info->map_arr[i][j + 1] == '0' || info->map_arr[i][j - 1] == '0' || info->map_arr[i][j - 1] == 'P' || info->map_arr[i][j + 1] == 'P')
                     error_handler("MAP ERROR", 1);
                 else if (info->map_arr[i + 1])
                 {
-                    printf("%d\n", i);
                     if (info->map_arr[i + 1][j] == '0'|| info->map_arr[i + 1][j] == 'P')
                         error_handler("MAP ERROR", 1);
                 }
@@ -160,15 +168,10 @@ void    fill_map(t_info *info)
                         error_handler("MAP ERROR", 1);
                 }
             }
-            else
-                printf("ALL GOOD\n");
             j++;
         }
         i++;
     }
-    i = 0;
-    while (info->map_arr[i])
-        printf("%s\n", info->map_arr[i++]);
 }
 
 int parss_map(char *av)
@@ -221,15 +224,10 @@ int parss_map(char *av)
         str = get_next_line(fd);
         str = ft_strtrim(str, "\n");
     }
-    // if (check_elements(Chead))
-    //     error_handler("ELEMENTS ERROR", 1);
-    // lsttoarray(head, info);
-    // int i = 0;
-    // while (info->map_arr[i])
-    // {
-    //     printf("%s\n", info->map_arr[i++]);
-    // }
-    // fill_map(info);
+    if (check_elements(Chead))
+        error_handler("ELEMENTS ERROR", 1);
+    lsttoarray(head, info);
+    fill_map(info);
     // free_stuff(info, head, Chead);
     return (0);
 }
