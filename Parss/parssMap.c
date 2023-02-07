@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:40:07 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/06 20:11:29 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/07 22:06:11 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,20 +115,11 @@ char    *join_rest(char *str, size_t len)
     return (tmp);
 }
 
-size_t  getLongestLen(char **str)
+int charachtersCHeck(char ch)
 {
-    int i;
-    size_t  len;
-
-    i = 0;
-    len = 0;
-    while (str[i])
-    {
-        if (len < ft_strlen(str[i]))
-            len = ft_strlen(str[i]);
-        i++;
-    }
-    return (len);
+    if (ch == '1' || ch == '0' || ch == '2' || ch == 'N' || ch == 'S' || ch == 'W' || ch == 'E' || ch == ' ')
+        return (0);
+    return (1);
 }
 
 void    fill_map(t_info *info)
@@ -151,6 +142,8 @@ void    fill_map(t_info *info)
         j = 0;
         while (info->map_arr[i][j])
         {
+            if (charachtersCHeck(info->map_arr[i][j]))
+                error_handler("MAP ERROR0", 1);
             if (info->map_arr[i][j] == ' ' || info->map_arr[i][j] == '2')
             {
                 if ((j > 0) && (info->map_arr[i][j + 1] == '0' || info->map_arr[i][j - 1] == '0' || info->map_arr[i][j - 1] == 'P' || info->map_arr[i][j + 1] == 'P'))
@@ -170,33 +163,6 @@ void    fill_map(t_info *info)
         }
         i++;
     }
-    i = 0;
-    while (info->map_arr[i])
-        printf("%s\n", info->map_arr[i++]);
-}
-
-int checkLine(char *line)
-{
-    int i;
-
-    i = 0;
-    if (!line[0])
-        return (1);
-    while (line[i])
-    {
-        if (!ft_isdigit(line[i]))
-        {
-            if (line[i] == 'P' || line[i] == ' ')
-            {
-                i++;
-                continue;
-            }
-            else
-                return (1);
-        }
-        i++;
-    }
-    return (0);
 }
 
 int parss_map(char *av)
@@ -204,7 +170,6 @@ int parss_map(char *av)
     int fd;
     char *str;
     t_info  *info;
-    int len = 0;
     t_map *tmp = NULL, *head = NULL;
     t_map *cub = NULL, *Chead = NULL;
 
@@ -215,25 +180,17 @@ int parss_map(char *av)
     if (fd < 0)
         error_handler("No such file or directory", 1);
     str = get_next_line(fd);
-    str = ft_strtrim(str, "\n");
+    int i = 0;
     while (str)
     {
-        // len = ft_strlen(str);
-        if (!checkLine(str))
+        if (i < 6)
         {
-            if (!head) {
-                head = tmp = malloc(sizeof(t_map));
-                tmp->map_tab = strdup(str);
-                tmp->next = NULL;
-            } else {
-                tmp->next = malloc(sizeof(t_map));
-                tmp = tmp->next;
-                tmp->map_tab = strdup(str);
-                tmp->next = NULL;
+            if (str[0] == '\0')
+            {
+                free(str);
+                str = get_next_line(fd);
+                continue;
             }
-        }
-        else
-        {
             if (!Chead) {
                 Chead = cub = malloc(sizeof(t_map));
                 cub->elements = strdup(str);
@@ -243,6 +200,26 @@ int parss_map(char *av)
                 cub = cub->next;
                 cub->elements = strdup(str);
                 cub->next = NULL;
+            }
+            i++;
+        }
+        else
+        {
+            if (!str[0])
+            {
+                free(str);
+                str = get_next_line(fd);
+                continue;
+            }
+            if (!head) {
+                head = tmp = malloc(sizeof(t_map));
+                tmp->map_tab = strdup(str);
+                tmp->next = NULL;
+            } else {
+                tmp->next = malloc(sizeof(t_map));
+                tmp = tmp->next;
+                tmp->map_tab = strdup(str);
+                tmp->next = NULL;
             }
         }
         free(str);
