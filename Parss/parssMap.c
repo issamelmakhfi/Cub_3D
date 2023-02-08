@@ -6,22 +6,26 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:40:07 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/08 18:05:52 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/08 20:29:41 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/parss.h"
 
-int get_direction(char **direction)
+int get_direction(char **direction, t_map *list)
 {
-    if (direction[0] && !ft_strcmp(direction[0], "NO"))
-        check_path(direction[1]);
+    if (direction[0] && !ft_strcmp(direction[0], "NO") && !list->check)
+    {
+        check_path(direction[1], list);
+    }
     else if (direction[0] && !ft_strcmp(direction[0], "SO"))
-        check_path(direction[1]);
+    {
+        check_path(direction[1], list);
+    }
     else if (direction[0] && !ft_strcmp(direction[0], "WE"))
-        check_path(direction[1]);
+        check_path(direction[1], list);
     else if (direction[0] && !ft_strcmp(direction[0], "EA"))
-        check_path(direction[1]);
+        check_path(direction[1], list);
     else
         return (1);
     return (0);
@@ -56,6 +60,23 @@ int check_colors(char **colors)
     return (0);
 }
 
+int checkDup(t_map *elements, char  *first_elements, int len)
+{
+    t_map *tmp;
+    int check = 0;
+
+    tmp = elements;
+    while (tmp)
+    {
+        if (!ft_strncmp(tmp->elements, first_elements, len))
+            check++;
+        tmp = tmp->next;
+    }
+    if (check > 1)
+        return (1);
+    return (0);
+}
+
 int check_elements(t_map *list_elements)
 {
     int i;
@@ -66,19 +87,21 @@ int check_elements(t_map *list_elements)
     list = list_elements;
     while (list)
     {
+        list->check = 0;
         elements = ft_split(list->elements, ' ');
         if (elements[0] && ft_strlen(elements[0]) == 2)
         {
+            
             while (elements[i])
                 i++;
-            if (i != 2 || get_direction(elements))
+            if (i != 2 || get_direction(elements, list) || checkDup(list, elements[0], 2))
                 return (1);
         }
         else if (elements[0] && ft_strlen(elements[0])  == 1)
         {
             while (elements[i])
                 i++;
-            if (i != 4 ||check_colors(elements))
+            if (i != 4 ||check_colors(elements) || checkDup(list, elements[0], 1))
                 return (1);
         }
         free_tab(elements);
