@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:40:07 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/08 20:29:41 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/08 21:39:41 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int check_elements(t_map *list_elements)
         {
             while (elements[i])
                 i++;
-            if (i != 4 ||check_colors(elements) || checkDup(list, elements[0], 1))
+            if (i != 4 || check_colors(elements) || checkDup(list, elements[0], 1))
                 return (1);
         }
         free_tab(elements);
@@ -142,11 +142,20 @@ char    *join_rest(char *str, size_t len)
     return (tmp);
 }
 
-int charachtersCHeck(char ch)
+int charachtersCHeck(char ch, int *check)
 {
     if (ch == '1' || ch == '0' || ch == '2' || ch == 'N' || ch == 'S' || ch == 'W' || ch == 'E' || ch == ' ')
-        return (0);
-    return (1);
+    {
+        if (ch == 'N' || ch == 'S' || ch == 'W' || ch == 'E')
+            *check = *check + 1;
+        else if (ch != '1' && ch != '0' && ch != '2' && ch != ' ')
+            *check = 0;
+        else
+            return (0);
+    }
+    if (*check != 1)
+        return (1);
+    return (0);
 }
 
 void    fill_map(t_info *info)
@@ -154,6 +163,7 @@ void    fill_map(t_info *info)
     int i;
     int j;
     size_t len;
+    int check = 0;
 
     i = 0;
     j = 0;
@@ -169,7 +179,7 @@ void    fill_map(t_info *info)
         j = 0;
         while (info->map_arr[i][j])
         {
-            if (charachtersCHeck(info->map_arr[i][j]))
+            if (charachtersCHeck(info->map_arr[i][j], &check))
                 error_handler("MAP ERROR0", 1);
             if (info->map_arr[i][j] == ' ' || info->map_arr[i][j] == '2')
             {
@@ -190,6 +200,7 @@ void    fill_map(t_info *info)
         }
         i++;
     }
+
 }
 
 int parss_map(char *av)
@@ -255,6 +266,9 @@ int parss_map(char *av)
     if (check_elements(Chead))
         error_handler("ELEMENTS ERROR", 1);
     lsttoarray(head, info);
+    // i = 0;
+    // while (info->map_arr[i])
+    //     printf("%s\n", info->map_arr[i++]);
     fill_map(info);
     free_stuff(info, head, Chead);
     return (0);
