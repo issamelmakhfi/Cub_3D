@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:16:30 by Ma3ert            #+#    #+#             */
-/*   Updated: 2023/01/29 20:10:46 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/08 18:04:14 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef	struct s_map
 {
 	char	*map_tab;
 	char	*elements;
+	int		check;
 	struct s_map	*next;
 }	t_map;
 

@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:40:07 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/07 22:06:11 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/08 18:05:52 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,16 @@ int check_elements(t_map *list_elements)
         elements = ft_split(list->elements, ' ');
         if (elements[0] && ft_strlen(elements[0]) == 2)
         {
-            if (get_direction(elements))
+            while (elements[i])
+                i++;
+            if (i != 2 || get_direction(elements))
                 return (1);
         }
         else if (elements[0] && ft_strlen(elements[0])  == 1)
         {
-            if (check_colors(elements))
+            while (elements[i])
+                i++;
+            if (i != 4 ||check_colors(elements))
                 return (1);
         }
         free_tab(elements);
