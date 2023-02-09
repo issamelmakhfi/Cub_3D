@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:40:07 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/08 21:39:41 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/10 00:57:05 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,18 +144,51 @@ char    *join_rest(char *str, size_t len)
 
 int charachtersCHeck(char ch, int *check)
 {
-    if (ch == '1' || ch == '0' || ch == '2' || ch == 'N' || ch == 'S' || ch == 'W' || ch == 'E' || ch == ' ')
+    char    *str;
+    char    *str1;
+    int i;
+    
+    i = 0;
+    str1 = "NSWE";
+    str = "102 ";
+    while (str[i] && str1[i])
     {
-        if (ch == 'N' || ch == 'S' || ch == 'W' || ch == 'E')
-            *check = *check + 1;
-        else if (ch != '1' && ch != '0' && ch != '2' && ch != ' ')
-            *check = 0;
-        else
+        if (ch == str[i])
             return (0);
+        if (ch == str1[i])
+        {
+            *check = *check + 1;
+            if (*check > 1)
+                return (1);
+            return (0);
+        }
+        i++;
     }
-    if (*check != 1)
-        return (1);
-    return (0);
+    return (1);
+}
+
+void player_check(char **map_arr, int i, int j)
+{
+    char *str;
+    int     idx = 0;
+
+    str = "NSWE";
+    while (str[idx])
+    {
+        if ((j > 0) && (map_arr[i][j + 1] == '0' || map_arr[i][j - 1] == '0' || map_arr[i][j - 1] == str[idx] || map_arr[i][j + 1] == str[idx]))
+            error_handler("MAP ERROR1", 1);
+        if (map_arr[i + 1])
+        {
+            if (map_arr[i + 1][j] == '0'|| map_arr[i + 1][j] == 'P')
+                error_handler("MAP ERROR2", 1);
+        }
+        if (i && map_arr[i - 1][j])
+        {
+            if (map_arr[i - 1][j] == '0' || map_arr[i - 1][j] == 'P')
+                error_handler("MAP ERROR3", 1);
+        }
+        idx++;
+    }
 }
 
 void    fill_map(t_info *info)
@@ -180,26 +213,34 @@ void    fill_map(t_info *info)
         while (info->map_arr[i][j])
         {
             if (charachtersCHeck(info->map_arr[i][j], &check))
+            {
+                printf("%s\n", info->map_arr[i]);
+                printf("%c\n", info->map_arr[i][j]);
                 error_handler("MAP ERROR0", 1);
+            }
             if (info->map_arr[i][j] == ' ' || info->map_arr[i][j] == '2')
             {
-                if ((j > 0) && (info->map_arr[i][j + 1] == '0' || info->map_arr[i][j - 1] == '0' || info->map_arr[i][j - 1] == 'P' || info->map_arr[i][j + 1] == 'P'))
-                    error_handler("MAP ERROR1", 1);
-                else if (info->map_arr[i + 1])
-                {
-                    if (info->map_arr[i + 1][j] == '0'|| info->map_arr[i + 1][j] == 'P')
-                        error_handler("MAP ERROR2", 1);
-                }
-                if (i && info->map_arr[i - 1][j])
-                {
-                    if (info->map_arr[i - 1][j] == '0' || info->map_arr[i - 1][j] == 'P')
-                        error_handler("MAP ERROR3", 1);
-                }
+                player_check(info->map_arr, i, j);
+                // if ((j > 0) && (info->map_arr[i][j + 1] == '0' || info->map_arr[i][j - 1] == '0' || info->map_arr[i][j - 1] == 'P' || info->map_arr[i][j + 1] == 'P'))
+                //     error_handler("MAP ERROR1", 1);
+                // if (info->map_arr[i + 1])
+                // {
+                //     if (info->map_arr[i + 1][j] == '0'|| info->map_arr[i + 1][j] == 'P')
+                //         error_handler("MAP ERROR2", 1);
+                // }
+                // if (i && info->map_arr[i - 1][j])
+                // {
+                //     if (info->map_arr[i - 1][j] == '0' || info->map_arr[i - 1][j] == 'P')
+                //         error_handler("MAP ERROR3", 1);
+                // }
             }
             j++;
         }
         i++;
     }
+    if (!check)
+        error_handler("NEED PLAYER", 1);
+        
 
 }
 
