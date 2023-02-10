@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:40:07 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/10 00:57:05 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/10 19:01:27 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,52 +27,6 @@ int get_direction(char **direction, t_map *list)
     else if (direction[0] && !ft_strcmp(direction[0], "EA"))
         check_path(direction[1], list);
     else
-        return (1);
-    return (0);
-}
-
-int check_colors(char **colors)
-{
-    int i = 1;
-    char    *tmp;
-
-    if (colors[0] && (!ft_strcmp(colors[0], "F") || !ft_strcmp(colors[0], "C")))
-    {
-        while (colors[i])
-        {
-            tmp = ft_strtrim(colors[i], ",");
-            if (check_digit(tmp))
-            {
-                free (tmp);
-                return (1);
-            }
-            if (ft_atoi(tmp) > 256)
-            {
-                free(tmp);
-                return (1);
-            }
-            i++;
-            free(tmp);
-        }
-    }
-    else
-        return (1);
-    return (0);
-}
-
-int checkDup(t_map *elements, char  *first_elements, int len)
-{
-    t_map *tmp;
-    int check = 0;
-
-    tmp = elements;
-    while (tmp)
-    {
-        if (!ft_strncmp(tmp->elements, first_elements, len))
-            check++;
-        tmp = tmp->next;
-    }
-    if (check > 1)
         return (1);
     return (0);
 }
@@ -111,62 +65,6 @@ int check_elements(t_map *list_elements)
     return (0);
 }
 
-char    *join_rest(char *str, size_t len)
-{
-    char    *tmp;
-    int s;
-    size_t i;
-
-    i = 0;
-    tmp = malloc(sizeof(char) * len + 1);
-    if (!tmp)
-        return (NULL);
-    s = 0;
-    while (i < len)
-    {
-        if (i < ft_strlen(str))
-            tmp[i] = str[i];
-        else
-            tmp[i] = '2';
-        i++;
-    }
-    tmp[i] = '\0';
-    i = 0;
-    while (tmp[i] == ' ')
-    {
-        tmp[i] = '2';
-        i++;
-    }
-    i = 0;
-    free(str);
-    return (tmp);
-}
-
-int charachtersCHeck(char ch, int *check)
-{
-    char    *str;
-    char    *str1;
-    int i;
-    
-    i = 0;
-    str1 = "NSWE";
-    str = "102 ";
-    while (str[i] && str1[i])
-    {
-        if (ch == str[i])
-            return (0);
-        if (ch == str1[i])
-        {
-            *check = *check + 1;
-            if (*check > 1)
-                return (1);
-            return (0);
-        }
-        i++;
-    }
-    return (1);
-}
-
 void player_check(char **map_arr, int i, int j)
 {
     char *str;
@@ -191,15 +89,16 @@ void player_check(char **map_arr, int i, int j)
     }
 }
 
-void    fill_map(t_info *info)
+void    searchMap(t_info *info)
 {
     int i;
     int j;
     size_t len;
-    int check = 0;
+    int check;
 
     i = 0;
     j = 0;
+    check = 0;
     len = getLongestLen(info->map_arr);
     while (info->map_arr[i])
     {
@@ -213,27 +112,9 @@ void    fill_map(t_info *info)
         while (info->map_arr[i][j])
         {
             if (charachtersCHeck(info->map_arr[i][j], &check))
-            {
-                printf("%s\n", info->map_arr[i]);
-                printf("%c\n", info->map_arr[i][j]);
                 error_handler("MAP ERROR0", 1);
-            }
             if (info->map_arr[i][j] == ' ' || info->map_arr[i][j] == '2')
-            {
                 player_check(info->map_arr, i, j);
-                // if ((j > 0) && (info->map_arr[i][j + 1] == '0' || info->map_arr[i][j - 1] == '0' || info->map_arr[i][j - 1] == 'P' || info->map_arr[i][j + 1] == 'P'))
-                //     error_handler("MAP ERROR1", 1);
-                // if (info->map_arr[i + 1])
-                // {
-                //     if (info->map_arr[i + 1][j] == '0'|| info->map_arr[i + 1][j] == 'P')
-                //         error_handler("MAP ERROR2", 1);
-                // }
-                // if (i && info->map_arr[i - 1][j])
-                // {
-                //     if (info->map_arr[i - 1][j] == '0' || info->map_arr[i - 1][j] == 'P')
-                //         error_handler("MAP ERROR3", 1);
-                // }
-            }
             j++;
         }
         i++;
@@ -244,13 +125,42 @@ void    fill_map(t_info *info)
 
 }
 
+// t_map   *fill_elements(char *str, t_map *Chead, int fd)
+// {
+//     t_map *cub = NULL;
+//     (void)fd;
+    
+
+//     if (!Chead) 
+//     {
+//         Chead = cub = malloc(sizeof(t_map));
+//         cub->elements = strdup(str);
+//         cub->next = NULL;
+//     }
+//     else 
+//     {
+//         cub->next = malloc(sizeof(t_map));
+//         cub = cub->next;
+//         cub->elements = strdup(str);
+//         cub->next = NULL;
+//     }
+//     // while (Chead)
+//     // {
+//     //     printf("%s\n", Chead->elements);
+//     //     Chead = Chead->next;
+//     // }
+//     return (Chead);
+// }
+
 int parss_map(char *av)
 {
     int fd;
     char *str;
     t_info  *info;
-    t_map *tmp = NULL, *head = NULL;
-    t_map *cub = NULL, *Chead = NULL;
+    t_map   *tmp = NULL; 
+    t_map   *head = NULL;
+    t_map   *cub = NULL;
+    t_map   *Chead = NULL;
 
     info = malloc(sizeof(info));
     if (!info)
@@ -264,6 +174,7 @@ int parss_map(char *av)
     {
         if (i < 6)
         {
+            // Chead = fill_elements(str, Chead, fd);
             if (str[0] == '\0')
             {
                 free(str);
@@ -307,10 +218,12 @@ int parss_map(char *av)
     if (check_elements(Chead))
         error_handler("ELEMENTS ERROR", 1);
     lsttoarray(head, info);
-    // i = 0;
-    // while (info->map_arr[i])
-    //     printf("%s\n", info->map_arr[i++]);
-    fill_map(info);
+    searchMap(info);
+    while (head)
+    {
+        printf("%s\n", head->map_tab);
+        head = head->next;
+    }
     free_stuff(info, head, Chead);
     return (0);
 }

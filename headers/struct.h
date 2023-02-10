@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:16:30 by Ma3ert            #+#    #+#             */
-/*   Updated: 2023/02/08 18:24:21 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/10 18:04:10 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # define INTERSECTION_FOUND 1
 # define DOOR_FOUND 2
-# define CELL_SIZE 500
+# define CELL_SIZE 50
 # define FOV 60
 # define HALF_FOV 30
 # define ANG_IN_D 0.05555555555

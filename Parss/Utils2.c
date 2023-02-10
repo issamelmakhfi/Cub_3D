@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 21:50:39 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/06 20:13:03 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/10 16:25:43 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,52 @@ int checkLine(char *line)
         i++;
     }
     return (0);
+}
+
+int checkDup(t_map *elements, char  *first_elements, int len)
+{
+    t_map *tmp;
+    int check = 0;
+
+    tmp = elements;
+    while (tmp)
+    {
+        if (!ft_strncmp(tmp->elements, first_elements, len))
+            check++;
+        tmp = tmp->next;
+    }
+    if (check > 1)
+        return (1);
+    return (0);
+}
+
+char    *join_rest(char *str, size_t len)
+{
+    char    *tmp;
+    int s;
+    size_t i;
+
+    i = 0;
+    tmp = malloc(sizeof(char) * len + 1);
+    if (!tmp)
+        return (NULL);
+    s = 0;
+    while (i < len)
+    {
+        if (i < ft_strlen(str))
+            tmp[i] = str[i];
+        else
+            tmp[i] = '2';
+        i++;
+    }
+    tmp[i] = '\0';
+    i = 0;
+    while (tmp[i] == ' ')
+    {
+        tmp[i] = '2';
+        i++;
+    }
+    i = 0;
+    free(str);
+    return (tmp);
 }
