@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 21:50:39 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/10 16:25:43 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/11 18:57:55 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,12 @@ int checkDup(t_map *elements, char  *first_elements, int len)
     tmp = elements;
     while (tmp)
     {
+        // printf("%s\n", tmp->elements);
         if (!ft_strncmp(tmp->elements, first_elements, len))
             check++;
         tmp = tmp->next;
     }
-    if (check > 1)
+    if (check != 1)
         return (1);
     return (0);
 }

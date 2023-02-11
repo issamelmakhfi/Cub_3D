@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:05:13 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/10 16:27:07 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/11 18:16:30 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 int     parss_map(char *av);
 char    *get_filename_ext(char *filename);
 void    error_handler(char *mssg, int exit_status);
-void    check_path(char *path, t_map *list);
+void    check_path(char *path);
 void    free_tab(char **tab);
 int     check_digit(char *str);
 void    lsttoarray(t_map *map, t_info *info);

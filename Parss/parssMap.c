@@ -6,26 +6,22 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:40:07 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/10 19:01:27 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/11 19:01:36 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/parss.h"
 
-int get_direction(char **direction, t_map *list)
+int get_direction(char **direction)
 {
-    if (direction[0] && !ft_strcmp(direction[0], "NO") && !list->check)
-    {
-        check_path(direction[1], list);
-    }
+    if (direction[0] && !ft_strcmp(direction[0], "NO"))
+        check_path(direction[1]);
     else if (direction[0] && !ft_strcmp(direction[0], "SO"))
-    {
-        check_path(direction[1], list);
-    }
+        check_path(direction[1]);
     else if (direction[0] && !ft_strcmp(direction[0], "WE"))
-        check_path(direction[1], list);
+        check_path(direction[1]);
     else if (direction[0] && !ft_strcmp(direction[0], "EA"))
-        check_path(direction[1], list);
+        check_path(direction[1]);
     else
         return (1);
     return (0);
@@ -48,7 +44,7 @@ int check_elements(t_map *list_elements)
             
             while (elements[i])
                 i++;
-            if (i != 2 || get_direction(elements, list) || checkDup(list, elements[0], 2))
+            if (i != 2 || get_direction(elements) || checkDup(list, elements[0], 2))
                 return (1);
         }
         else if (elements[0] && ft_strlen(elements[0])  == 1)
@@ -58,6 +54,8 @@ int check_elements(t_map *list_elements)
             if (i != 4 || check_colors(elements) || checkDup(list, elements[0], 1))
                 return (1);
         }
+        else
+            return (1);
         free_tab(elements);
         elements = NULL;
         list = list->next;
@@ -195,12 +193,12 @@ int parss_map(char *av)
         }
         else
         {
-            if (!str[0])
-            {
-                free(str);
-                str = get_next_line(fd);
-                continue;
-            }
+            // if (!str[0])
+            // {
+            //     free(str);
+            //     str = get_next_line(fd);
+            //     continue;
+            // }
             if (!head) {
                 head = tmp = malloc(sizeof(t_map));
                 tmp->map_tab = strdup(str);
@@ -218,12 +216,10 @@ int parss_map(char *av)
     if (check_elements(Chead))
         error_handler("ELEMENTS ERROR", 1);
     lsttoarray(head, info);
+    i = 0;
     searchMap(info);
-    while (head)
-    {
-        printf("%s\n", head->map_tab);
-        head = head->next;
-    }
+    // while (info->map_arr[i])
+    //     printf("%s\n", info->map_arr[i++]);
     free_stuff(info, head, Chead);
     return (0);
 }
