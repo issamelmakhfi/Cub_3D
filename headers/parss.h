@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:05:13 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/11 18:16:30 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/11 22:10:05 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 #include <string.h>
 #include <errno.h>
 
-int     parss_map(char *av);
+int     parss_map(char *av, t_info *cubInfo, t_position *pos);
 char    *get_filename_ext(char *filename);
 void    error_handler(char *mssg, int exit_status);
 void    check_path(char *path);

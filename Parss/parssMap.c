@@ -6,11 +6,11 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:40:07 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/11 19:01:36 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/12 12:40:08 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/parss.h"
+#include "../headers/cub3d.h"
 
 int get_direction(char **direction)
 {
@@ -66,6 +66,7 @@ int check_elements(t_map *list_elements)
 void player_check(char **map_arr, int i, int j)
 {
     char *str;
+
     int     idx = 0;
 
     str = "NSWE";
@@ -119,38 +120,10 @@ void    searchMap(t_info *info)
     }
     if (!check)
         error_handler("NEED PLAYER", 1);
-        
 
 }
 
-// t_map   *fill_elements(char *str, t_map *Chead, int fd)
-// {
-//     t_map *cub = NULL;
-//     (void)fd;
-    
-
-//     if (!Chead) 
-//     {
-//         Chead = cub = malloc(sizeof(t_map));
-//         cub->elements = strdup(str);
-//         cub->next = NULL;
-//     }
-//     else 
-//     {
-//         cub->next = malloc(sizeof(t_map));
-//         cub = cub->next;
-//         cub->elements = strdup(str);
-//         cub->next = NULL;
-//     }
-//     // while (Chead)
-//     // {
-//     //     printf("%s\n", Chead->elements);
-//     //     Chead = Chead->next;
-//     // }
-//     return (Chead);
-// }
-
-int parss_map(char *av)
+int parss_map(char *av, t_info *cubInfo, t_position *pos)
 {
     int fd;
     char *str;
@@ -160,9 +133,7 @@ int parss_map(char *av)
     t_map   *cub = NULL;
     t_map   *Chead = NULL;
 
-    info = malloc(sizeof(info));
-    if (!info)
-        return 1;
+    info = cubInfo;
     fd = open(av,  O_RDONLY);
     if (fd < 0)
         error_handler("No such file or directory", 1);
@@ -172,7 +143,6 @@ int parss_map(char *av)
     {
         if (i < 6)
         {
-            // Chead = fill_elements(str, Chead, fd);
             if (str[0] == '\0')
             {
                 free(str);
@@ -193,12 +163,12 @@ int parss_map(char *av)
         }
         else
         {
-            // if (!str[0])
-            // {
-            //     free(str);
-            //     str = get_next_line(fd);
-            //     continue;
-            // }
+            if (!str[0])
+            {
+                free(str);
+                str = get_next_line(fd);
+                continue;
+            }
             if (!head) {
                 head = tmp = malloc(sizeof(t_map));
                 tmp->map_tab = strdup(str);
@@ -216,10 +186,8 @@ int parss_map(char *av)
     if (check_elements(Chead))
         error_handler("ELEMENTS ERROR", 1);
     lsttoarray(head, info);
-    i = 0;
     searchMap(info);
-    // while (info->map_arr[i])
-    //     printf("%s\n", info->map_arr[i++]);
+    initData(info, pos);
     free_stuff(info, head, Chead);
     return (0);
 }

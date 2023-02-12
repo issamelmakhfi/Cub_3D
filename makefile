@@ -1,4 +1,5 @@
 SRC = main.c ./Parss/parssMap.c  ./Parss/errorHandler.c ./Parss/Utils.c ./Parss/Utils2.c  ./Parss/Utils3.c \
+	./Coordonates/getCells.c \
 	./42Get_next_line/get_next_line.c \
 	./42Get_next_line/get_next_line_utils.c \
 	#  ./exec/raycasting.c \
@@ -23,11 +24,11 @@ LIBFT = 42Libft/libft.a
 all: libft_r $(NAME)
 
 $(NAME): $(OBJ) $(HEADERS)
-	@$(CC) $(FLAGS) $(LIBFT) $(MLX_FLAGS) $(OBJ) -o $(NAME)
+	$(CC) $(FLAGS) $(LIBFT) -Lmlx -lmlx $(MLX_FLAGS) $(OBJ) -o $(NAME)
 	@echo "\033[0;32mCub3D Done!\033[0m"
 
 %.o : %.c $(HEADERS)
-	@$(CC) $(FLAGS) -Iminilibx -c $< -o $@
+	$(CC) $(FLAGS) -Imlx -c $< -o $@
 
 libft_r :
 	@ make -C 42Libft/
