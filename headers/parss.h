@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:05:13 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/11 22:10:05 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/12 22:47:11 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 #include <string.h>
 #include <errno.h>
 
-int     parss_map(char *av, t_info *cubInfo, t_position *pos);
+int     parss_map(char *av, t_info *cubInfo, t_position *pos, t_mlx *mlx);
 char    *get_filename_ext(char *filename);
 void    error_handler(char *mssg, int exit_status);
 void    check_path(char *path);
@@ -38,5 +38,6 @@ int     checkDup(t_map *elements, char  *first_elements, int len);
 char    *join_rest(char *str, size_t len);
 int check_colors(char **colors);
 int charachtersCHeck(char ch, int *check);
+void    miniMap(t_info *info, t_position *pos, t_mlx *mlx);
 
 #endif

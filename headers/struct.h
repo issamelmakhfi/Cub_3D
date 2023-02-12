@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:16:30 by Ma3ert            #+#    #+#             */
-/*   Updated: 2023/02/10 18:04:10 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/12 19:53:55 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,22 @@
 # define CLOSE 4
 
 
+typedef struct s_mlx
+{
+	void	*ptr;
+	void	*win_ptr;
+	int		color;
+}	t_mlx;
+
+typedef struct	s_data 
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}	t_data;
+
 typedef	struct s_map
 {
 	char	*map_tab;
@@ -43,6 +59,7 @@ typedef struct s_info
 	char			**map_arr;
 	int				map_h;
 	int				map_w;
+	int				cell_size;
 	t_map			*map;
 }	t_info;
 

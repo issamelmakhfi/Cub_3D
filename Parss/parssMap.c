@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:40:07 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/12 12:40:08 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/12 23:10:02 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void    searchMap(t_info *info)
 
 }
 
-int parss_map(char *av, t_info *cubInfo, t_position *pos)
+int parss_map(char *av, t_info *cubInfo, t_position *pos, t_mlx *mlx)
 {
     int fd;
     char *str;
@@ -188,6 +188,12 @@ int parss_map(char *av, t_info *cubInfo, t_position *pos)
     lsttoarray(head, info);
     searchMap(info);
     initData(info, pos);
+    if ((WIN_H / info->map_h) < (WIN_W / info->map_w))
+		info->cell_size = WIN_H / info->map_h;
+	else
+		info->cell_size = WIN_W / info->map_w;
+    printf("%d %d\n", (WIN_H / info->map_h), (WIN_W / info->map_w));
+    miniMap(info, pos, mlx);
     free_stuff(info, head, Chead);
     return (0);
 }

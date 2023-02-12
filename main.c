@@ -6,40 +6,105 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:49:10 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/12 13:41:19 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/12 23:39:35 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./headers/cub3d.h"
 
-void    miniMap(t_info *info, t_position *pos)
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	*(unsigned int*)dst = color;
+}
+
+void    draw(int x, int y, t_data *img, t_info *info, t_mlx *mlx)
+{
+    x *= info->cell_size;
+    y *= info->cell_size;
+    int i = x;
+    int j = y;
+    
+    while (j - y < info->cell_size)
+    {
+        i = x;
+        while (i - x < info->cell_size)
+        {
+            my_mlx_pixel_put(img, i, j, mlx->color);
+            i++;
+        }
+        j++;
+    }
+}
+
+void    miniMap(t_info *info, t_position *pos, t_mlx *mlx)
 {
     (void)pos;
-    void    *ptr;
+    int x = 0;
+    int y = 0;
+    int idx = 0;
+	int k = 0;
+    // void    *img_ptr;
+    t_data  img;
+    // (void)info;
 
-    ptr = mlx_init();
-    printf("%d %d\n" , info->map_w, info->map_h);
-    mlx_new_window(ptr, info->map_w * CELL_SIZE, info->map_h * CELL_SIZE, "Cub3D");
-    mlx_loop(ptr);
+    mlx->ptr = mlx_init();
+    img.img = mlx_new_image(mlx->ptr, WIN_W, WIN_H);
+    mlx->win_ptr = mlx_new_window(mlx->ptr, WIN_W, WIN_H, "Cub3D");
+	mlx->color = 0xFFFFFF;
+	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
+    while (x < info->map_w)
+    {
+        y = 0;
+        while (y < info->map_h)
+        {
+	        mlx->color = 0x000000;
+            if (info->map_arr[y][x] == '0' || info->map_arr[y][x] == '2')
+                mlx->color = 0xFFFFFF;
+            draw(x, y, &img, info, mlx);
+            y++;
+        }
+        x++;
+    }
+    // printf("%d %d\n", y, x);
+    mlx_put_image_to_window(mlx->ptr, mlx->win_ptr, img.img, k, idx);
+    // while (k < WIN_W)
+    // {
+    //     idx = 0;
+    //     while (idx < WIN_H)
+    //     {
+
+    //         idx++;
+    //     }
+    //     k++;   
+    // }
+    // printf("|%d|\n", k);
+    mlx_loop(mlx->ptr);
     
 }
 
 int main(int ac, char **av)
 {
-    t_info   *cub;
+    t_info   *info;
     t_position  *pos;
+    t_mlx		*mlx;
     int fd;
 
     fd = open("map.cub", O_RDONLY);
-    cub = malloc(sizeof(t_info));
+    info = malloc(sizeof(t_info));
     pos = malloc(sizeof(t_position));
+    mlx = malloc(sizeof(t_mlx));
     if (ac != 2)
         return (1);
     if (!get_filename_ext(av[1]) || ft_strcmp(get_filename_ext(av[1]), ".cub"))
         error_handler("No such file or directory", 1);
-    parss_map(av[1], cub, pos);
-    miniMap(cub, pos);
-    free (cub);
+    parss_map(av[1], info, pos, mlx);
+
+    // miniMap(info, pos, mlx);
+    free (info);
     free (pos);
+	free(mlx);
     return (0);
 }
