@@ -1,5 +1,6 @@
 SRC = main.c ./Parss/parssMap.c  ./Parss/errorHandler.c ./Parss/Utils.c ./Parss/Utils2.c  ./Parss/Utils3.c \
 	./Coordonates/getCells.c \
+	./Parss/execution.c \
 	./42Get_next_line/get_next_line.c \
 	./42Get_next_line/get_next_line_utils.c \
 	#  ./exec/raycasting.c \

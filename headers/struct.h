@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:16:30 by Ma3ert            #+#    #+#             */
-/*   Updated: 2023/02/12 19:53:55 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/13 15:45:01 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,12 @@
 # define N_RAY WIN_W
 # define OPEN 3
 # define CLOSE 4
+# define LEFT_ARROW		123
+# define RIGHT_ARROW	124
+# define DOWN_ARROW		125
+# define UP_ARROW		126
 
 
-typedef struct s_mlx
-{
-	void	*ptr;
-	void	*win_ptr;
-	int		color;
-}	t_mlx;
 
 typedef struct	s_data 
 {
@@ -63,6 +61,16 @@ typedef struct s_info
 	t_map			*map;
 }	t_info;
 
+typedef struct s_mlx
+{
+	void	*ptr;
+	void	*win_ptr;
+	int		color;
+	int		x;
+	int		y;
+	t_info	*info;
+	t_data	data;
+}	t_mlx;
 typedef struct s_position
 {
 	int		x_cell;

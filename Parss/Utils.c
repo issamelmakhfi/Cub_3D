@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 20:12:05 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/11 18:19:39 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/13 13:15:57 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	lsttoarray(t_map *map, t_info *info)
 	list = map;
     info->map_arr = malloc(sizeof(char *) * ft_lstsize(list) + 1);
     if (!info->map_arr)
-        return;
+        return ;
 	while (list)
 	{
 		(info->map_arr)[i++] = ft_strdup(list->map_tab);

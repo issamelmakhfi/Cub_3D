@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:07:45 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/12 12:40:23 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/13 12:54:35 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@
 #include <errno.h>
 
 void    initData(t_info *info, t_position *pos);
+int	keey_move(int code, t_mlx *mlx);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:05:13 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/12 22:47:11 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/13 15:44:40 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,16 @@
 #include <string.h>
 #include <errno.h>
 
-int     parss_map(char *av, t_info *cubInfo, t_position *pos, t_mlx *mlx);
+////////////////////////////// Parss ////////////////////////////////
+
+void	fill_data(char *av, t_map **head, t_map **Chead);
+void    searchMap(t_info *info, t_map *head, t_map *Chead, t_position *pos);
 char    *get_filename_ext(char *filename);
 void    error_handler(char *mssg, int exit_status);
 void    check_path(char *path);
 void    free_tab(char **tab);
 int     check_digit(char *str);
-void    lsttoarray(t_map *map, t_info *info);
+void	lsttoarray(t_map *map, t_info *info);
 int     ft_lstsize(t_map *lst);
 void    free_stuff(t_info *info, t_map *head, t_map *Chead);
 size_t  getLongestLen(char **str);
@@ -38,6 +41,12 @@ int     checkDup(t_map *elements, char  *first_elements, int len);
 char    *join_rest(char *str, size_t len);
 int check_colors(char **colors);
 int charachtersCHeck(char ch, int *check);
+
+/////////////////////// MLX //////////////////////////////
+
+
 void    miniMap(t_info *info, t_position *pos, t_mlx *mlx);
+void	start_execution(t_info *info, t_position *pos, t_mlx *mlx);
+void    draw(t_data *img, t_info *info, t_mlx *mlx);
 
 #endif

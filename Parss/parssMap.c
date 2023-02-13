@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:40:07 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/13 12:05:43 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/13 15:48:35 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void player_check(char **map_arr, int i, int j)
     }
 }
 
-void    searchMap(t_info *info)
+void    searchMap(t_info *info, t_map *head, t_map *Chead, t_position *pos)
 {
     int i;
     int j;
@@ -98,6 +98,10 @@ void    searchMap(t_info *info)
     i = 0;
     j = 0;
     check = 0;
+	if (check_elements(Chead))
+        error_handler("ELEMENTS ERROR", 1);
+    lsttoarray(head, info);
+	initData(info, pos);
     len = getLongestLen(info->map_arr);
     while (info->map_arr[i])
     {
@@ -123,17 +127,13 @@ void    searchMap(t_info *info)
 
 }
 
-int parss_map(char *av, t_info *cubInfo, t_position *pos, t_mlx *mlx)
+void	fill_data(char *av, t_map **head, t_map **Chead)
 {
     int fd;
     char *str;
-    t_info  *info;
     t_map   *tmp = NULL; 
-    t_map   *head = NULL;
     t_map   *cub = NULL;
-    t_map   *Chead = NULL;
 
-    info = cubInfo;
     fd = open(av,  O_RDONLY);
     if (fd < 0)
         error_handler("No such file or directory", 1);
@@ -149,8 +149,8 @@ int parss_map(char *av, t_info *cubInfo, t_position *pos, t_mlx *mlx)
                 str = get_next_line(fd);
                 continue;
             }
-            if (!Chead) {
-                Chead = cub = malloc(sizeof(t_map));
+            if (!(*Chead)) {
+                (*Chead) = cub = malloc(sizeof(t_map));
                 cub->elements = strdup(str);
                 cub->next = NULL;
             } else {
@@ -169,8 +169,8 @@ int parss_map(char *av, t_info *cubInfo, t_position *pos, t_mlx *mlx)
                 str = get_next_line(fd);
                 continue;
             }
-            if (!head) {
-                head = tmp = malloc(sizeof(t_map));
+            if (!(*head)) {
+                (*head) = tmp = malloc(sizeof(t_map));
                 tmp->map_tab = strdup(str);
                 tmp->next = NULL;
             } else {
@@ -183,16 +183,4 @@ int parss_map(char *av, t_info *cubInfo, t_position *pos, t_mlx *mlx)
         free(str);
         str = get_next_line(fd);
     }
-    if (check_elements(Chead))
-        error_handler("ELEMENTS ERROR", 1);
-    lsttoarray(head, info);
-    searchMap(info);
-    initData(info, pos);
-    if ((WIN_H / info->map_h) < (WIN_W / info->map_w))
-		info->cell_size = WIN_H / info->map_h;
-	else
-		info->cell_size = WIN_W / info->map_w;
-    miniMap(info, pos, mlx);
-    free_stuff(info, head, Chead);
-    return (0);
 }
