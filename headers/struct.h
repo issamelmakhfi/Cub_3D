@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:16:30 by Ma3ert            #+#    #+#             */
-/*   Updated: 2023/02/13 15:45:01 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/13 23:57:20 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,16 +61,6 @@ typedef struct s_info
 	t_map			*map;
 }	t_info;
 
-typedef struct s_mlx
-{
-	void	*ptr;
-	void	*win_ptr;
-	int		color;
-	int		x;
-	int		y;
-	t_info	*info;
-	t_data	data;
-}	t_mlx;
 typedef struct s_position
 {
 	int		x_cell;
@@ -78,8 +68,26 @@ typedef struct s_position
 	double	virtual_px;
 	double	virtual_py;
 	double	pov;
+	int		down_arrow;
+	int		up_arrow;
+	int		left_arrow;
+	int		right_arrow;
 	t_info	*map;
 }	t_position;
+
+typedef struct s_mlx
+{
+	void	*ptr;
+	void	*win_ptr;
+	int		color;
+	int		x;
+	int		y;
+	int		Cx;
+	int		Cy;
+	t_info	*info;
+	t_data	data;
+	t_position	*pos;
+}	t_mlx;
 
 typedef struct s_ray
 {

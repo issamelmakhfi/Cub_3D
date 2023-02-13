@@ -6,21 +6,61 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:42:45 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/13 15:47:35 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/13 23:59:50 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/cub3d.h"
 
-int	keey_move(int code, t_mlx *mlx)
+int	keyup(int code, t_mlx *mlx)
 {
-	printf("%d\n", code);
+	printf("here3\n");
 	if (code == DOWN_ARROW)
-		mlx->y += 1;
+		mlx->pos->down_arrow = 0;
+	if (code == UP_ARROW)
+		mlx->pos->up_arrow = 0;
+	if (code == LEFT_ARROW)
+		mlx->pos->left_arrow = 0;
+	if (code == RIGHT_ARROW)
+		mlx->pos->right_arrow = 0;
+	return (0);
+}
+
+int	move_player(t_mlx *mlx)
+{
+	printf("here1\n");
+	if (mlx->pos->down_arrow)
+		mlx->pos->y_cell++;
+	if (mlx->pos->up_arrow)
+		mlx->pos->y_cell--;
+	if (mlx->pos->left_arrow)
+		mlx->pos->x_cell--;
+	if (mlx->pos->right_arrow)
+		mlx->pos->x_cell++;
+	return (0);
+}
+
+int	keypress(int code, t_mlx *mlx)
+{
+	printf("here\n");
 	if (code == 53)
 		exit(0);
-	mlx->color = 0xFF0000;
-	draw(&mlx->data, mlx->info, mlx);
+	if (code == DOWN_ARROW)
+		mlx->pos->down_arrow = 1;
+	if (code == UP_ARROW)
+		mlx->pos->up_arrow = 1;
+	if (code == LEFT_ARROW)
+		mlx->pos->left_arrow = 1;
+	if (code == RIGHT_ARROW)
+		mlx->pos->right_arrow = 1;
+	// miniMap(mlx->info, mlx->pos, mlx);
+	return (0);
+}
+
+int	key_move(t_mlx *mlx)
+{
+	move_player(mlx);
+	miniMap(mlx->info, mlx->pos, mlx);
 	return (0);
 }
 
@@ -34,8 +74,12 @@ void	start_execution(t_info *info, t_position *pos, t_mlx *mlx)
 		info->cell_size = WIN_H / info->map_h;
 	else
 		info->cell_size = WIN_W / info->map_w;
+	mlx->info = info;
+	mlx->pos = pos;
     miniMap(info, pos, mlx);
-	mlx_put_image_to_window(mlx->ptr, mlx->win_ptr, mlx->data.img, 0, 0);
-	mlx_key_hook(mlx->win_ptr, keey_move, mlx);
+	mlx_hook(mlx->win_ptr, 2, 0, keypress, mlx);
+	mlx_hook(mlx->win_ptr, 2, (1L<<1), keyup, mlx);
+	mlx_loop_hook(mlx->ptr, key_move, mlx);
+	// mlx_key_hook(mlx->win_ptr, keey_move, mlx);
     mlx_loop(mlx->ptr);
 }

@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:49:10 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/13 15:48:17 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/13 21:46:12 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,33 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
+void	draw_player(t_data *img, t_info *info, t_mlx *mlx)
+{
+	(void)info;
+	int	x = 0;
+	int i = mlx->pos->virtual_px;
+	int j = mlx->pos->virtual_py;
+
+	while (x < 10)
+	{
+		printf("here\n");
+		my_mlx_pixel_put(img, i, j, mlx->color);
+		x++;
+		i++;
+		j++;
+	}
+}
+
 void    draw(t_data *img, t_info *info, t_mlx *mlx)
 {
 	int x;
 	int y;
+	
     x = mlx->x * info->cell_size;
     y = mlx->y * info->cell_size;
     int i = x;
     int j = y;
-    
+
     while (j - y < info->cell_size - 1)
     {
         i = x;
@@ -46,7 +64,7 @@ void    miniMap(t_info *info, t_position *pos, t_mlx *mlx)
     (void)pos;
 	mlx->x = 0;
 	mlx->y = 0;
-    
+
     while (mlx->x < info->map_w)
     {
         mlx->y = 0;
@@ -55,13 +73,20 @@ void    miniMap(t_info *info, t_position *pos, t_mlx *mlx)
 	        mlx->color = 0xFFFFFF;
             if (info->map_arr[mlx->y][mlx->x] == '0')
                 mlx->color = 0x000000;
-            if (info->map_arr[mlx->y][mlx->x] == 'N')
-                mlx->color = 0xFF0000;
-            draw(&mlx->data, info, mlx);
+            if (pos->x_cell == mlx->x && pos->y_cell == mlx->y)
+			{
+				mlx->color = 0xFF0000;
+				// draw_player(&mlx->data, info, mlx);
+			}
+			// else
+			// {
+				draw(&mlx->data, info, mlx);
+			// }
             mlx->y++;
         }
         mlx->x++;
     }
+	mlx_put_image_to_window(mlx->ptr, mlx->win_ptr, mlx->data.img, 0, 0);
 }
 
 int main(int ac, char **av)

@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:07:02 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/13 14:43:25 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/13 19:16:54 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ void    initData(t_info *info, t_position *pos)
                 if (info->map_arr[i][j] == str[idx])
                 {
                     initPov(pos, str[idx]);
-                    pos->x_cell = j + 1;
-                    pos->y_cell = i + 1;
+                    pos->x_cell = j;
+                    pos->y_cell = i;
                 }
                 idx++;
             }
