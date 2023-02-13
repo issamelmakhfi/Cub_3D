@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:49:10 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/12 23:39:35 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/13 12:05:22 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ void    draw(int x, int y, t_data *img, t_info *info, t_mlx *mlx)
     int i = x;
     int j = y;
     
-    while (j - y < info->cell_size)
+    while (j - y < info->cell_size - 1)
     {
         i = x;
-        while (i - x < info->cell_size)
+        while (i - x < info->cell_size - 1)
         {
             my_mlx_pixel_put(img, i, j, mlx->color);
             i++;
@@ -41,14 +41,12 @@ void    draw(int x, int y, t_data *img, t_info *info, t_mlx *mlx)
 
 void    miniMap(t_info *info, t_position *pos, t_mlx *mlx)
 {
+    t_data  img;
     (void)pos;
     int x = 0;
     int y = 0;
     int idx = 0;
 	int k = 0;
-    // void    *img_ptr;
-    t_data  img;
-    // (void)info;
 
     mlx->ptr = mlx_init();
     img.img = mlx_new_image(mlx->ptr, WIN_W, WIN_H);
@@ -60,27 +58,17 @@ void    miniMap(t_info *info, t_position *pos, t_mlx *mlx)
         y = 0;
         while (y < info->map_h)
         {
-	        mlx->color = 0x000000;
-            if (info->map_arr[y][x] == '0' || info->map_arr[y][x] == '2')
-                mlx->color = 0xFFFFFF;
+	        mlx->color = 0xFFFFFF;
+            if (info->map_arr[y][x] == '0')
+                mlx->color = 0x000000;
+            if (info->map_arr[y][x] == 'N')
+                mlx->color = 0xFF0000;
             draw(x, y, &img, info, mlx);
             y++;
         }
         x++;
     }
-    // printf("%d %d\n", y, x);
     mlx_put_image_to_window(mlx->ptr, mlx->win_ptr, img.img, k, idx);
-    // while (k < WIN_W)
-    // {
-    //     idx = 0;
-    //     while (idx < WIN_H)
-    //     {
-
-    //         idx++;
-    //     }
-    //     k++;   
-    // }
-    // printf("|%d|\n", k);
     mlx_loop(mlx->ptr);
     
 }
