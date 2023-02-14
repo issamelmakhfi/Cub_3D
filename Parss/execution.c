@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:42:45 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/13 23:59:50 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/14 23:57:55 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 int	keyup(int code, t_mlx *mlx)
 {
-	printf("here3\n");
 	if (code == DOWN_ARROW)
 		mlx->pos->down_arrow = 0;
 	if (code == UP_ARROW)
+	{
 		mlx->pos->up_arrow = 0;
+	}
 	if (code == LEFT_ARROW)
 		mlx->pos->left_arrow = 0;
 	if (code == RIGHT_ARROW)
@@ -26,40 +27,74 @@ int	keyup(int code, t_mlx *mlx)
 	return (0);
 }
 
-int	move_player(t_mlx *mlx)
-{
-	printf("here1\n");
-	if (mlx->pos->down_arrow)
-		mlx->pos->y_cell++;
-	if (mlx->pos->up_arrow)
-		mlx->pos->y_cell--;
-	if (mlx->pos->left_arrow)
-		mlx->pos->x_cell--;
-	if (mlx->pos->right_arrow)
-		mlx->pos->x_cell++;
-	return (0);
-}
+// int	move_player(t_mlx *mlx)
+// {
+// 	if (mlx->pos->down_arrow)
+// 	{
+// 		if (mlx->info->map_arr[mlx->pos->x_cell][mlx->pos->y_cell + 1] == '1')
+// 		{
+// 			printf("no %c\n", mlx->info->map_arr[mlx->pos->x_cell][mlx->pos->y_cell + 1]);
+// 			return 1;
+// 		}
+// 		mlx->pos->y_cell++;
+// 		printf("yes %c\n", mlx->info->map_arr[mlx->pos->x_cell][mlx->pos->y_cell]);
+// 	}
+// 	else if (mlx->pos->up_arrow)
+// 	{
+// 		if (mlx->info->map_arr[mlx->pos->x_cell][mlx->pos->y_cell - 1] == '1')
+// 			return 1;
+// 		mlx->pos->y_cell--;
+// 	}
+// 	else if (mlx->pos->left_arrow)
+// 	{
+// 		if (mlx->info->map_arr[mlx->pos->x_cell - 1][mlx->pos->y_cell] == '1')
+// 			return 1;
+// 		mlx->pos->x_cell--;
+// 	}
+// 	else if (mlx->pos->right_arrow)
+// 	{
+// 		if (mlx->info->map_arr[mlx->pos->x_cell + 1][mlx->pos->y_cell] == '1')
+// 			return 1;
+// 		mlx->pos->x_cell++;
+// 	}
+// 	return (0);
+// }
 
 int	keypress(int code, t_mlx *mlx)
 {
-	printf("here\n");
 	if (code == 53)
 		exit(0);
 	if (code == DOWN_ARROW)
-		mlx->pos->down_arrow = 1;
+	{
+		if (mlx->info->map_arr[mlx->pos->y_cell + 1][mlx->pos->x_cell] == '1')
+			return 1;
+		mlx->pos->y_cell++;
+	}
 	if (code == UP_ARROW)
-		mlx->pos->up_arrow = 1;
+	{
+		if (mlx->info->map_arr[mlx->pos->y_cell - 1][mlx->pos->x_cell] == '1')
+			return 1;
+		mlx->pos->y_cell--;
+	}
 	if (code == LEFT_ARROW)
-		mlx->pos->left_arrow = 1;
+	{
+		if (mlx->info->map_arr[mlx->pos->y_cell][mlx->pos->x_cell - 1] == '1')
+			return 1;
+		mlx->pos->x_cell--;
+	}
 	if (code == RIGHT_ARROW)
-		mlx->pos->right_arrow = 1;
-	// miniMap(mlx->info, mlx->pos, mlx);
+	{
+		if (mlx->info->map_arr[mlx->pos->y_cell][mlx->pos->x_cell + 1] == '1')
+			return 1;
+		mlx->pos->x_cell++;
+	}
+	miniMap(mlx->info, mlx->pos, mlx);
 	return (0);
 }
 
 int	key_move(t_mlx *mlx)
 {
-	move_player(mlx);
+	// move_player(mlx);
 	miniMap(mlx->info, mlx->pos, mlx);
 	return (0);
 }
@@ -78,8 +113,7 @@ void	start_execution(t_info *info, t_position *pos, t_mlx *mlx)
 	mlx->pos = pos;
     miniMap(info, pos, mlx);
 	mlx_hook(mlx->win_ptr, 2, 0, keypress, mlx);
-	mlx_hook(mlx->win_ptr, 2, (1L<<1), keyup, mlx);
-	mlx_loop_hook(mlx->ptr, key_move, mlx);
-	// mlx_key_hook(mlx->win_ptr, keey_move, mlx);
+	// mlx_hook(mlx->win_ptr, 3, (1L<<1), keyup, mlx);
+	// mlx_loop_hook(mlx->ptr, key_move, mlx);
     mlx_loop(mlx->ptr);
 }

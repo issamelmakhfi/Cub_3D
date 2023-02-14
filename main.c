@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:49:10 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/13 21:46:12 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/14 23:01:01 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,15 @@ void    miniMap(t_info *info, t_position *pos, t_mlx *mlx)
     (void)pos;
 	mlx->x = 0;
 	mlx->y = 0;
-
+	
     while (mlx->x < info->map_w)
     {
         mlx->y = 0;
         while (mlx->y < info->map_h)
         {
-	        mlx->color = 0xFFFFFF;
+	        mlx->color = 0x000000;
             if (info->map_arr[mlx->y][mlx->x] == '0')
-                mlx->color = 0x000000;
+                mlx->color = 0xFFFFFF;
             if (pos->x_cell == mlx->x && pos->y_cell == mlx->y)
 			{
 				mlx->color = 0xFF0000;

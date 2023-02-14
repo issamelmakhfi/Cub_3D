@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:07:02 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/13 19:16:54 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/14 23:40:50 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void    initData(t_info *info, t_position *pos)
         }
         i++;
     }
+	printf("-->%d %d\n", pos->x_cell, pos->y_cell);
     pos->virtual_px = (pos->x_cell - 0.5) * CELL_SIZE;
     pos->virtual_py = (pos->y_cell - 0.5) * CELL_SIZE;
     info->map_h = i;
