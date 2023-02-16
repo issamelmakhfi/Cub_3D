@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:49:10 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/14 23:01:01 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/16 23:34:09 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,72 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-void	draw_player(t_data *img, t_info *info, t_mlx *mlx)
+int	abs(int n)
 {
-	(void)info;
-	int	x = 0;
-	int i = mlx->pos->virtual_px;
-	int j = mlx->pos->virtual_py;
+	if (n > 0)
+		return (n);
+	else
+		return (n * (-1));
+}
 
-	while (x < 10)
+void	DDA(t_mlx *mlx, int x1, int y1)
+{
+	int dx;
+	int dy;
+	int	steps;
+	float x_inc;
+	float y_inc;
+	float X;
+	float Y;
+	int i;
+
+	i = 0;
+	dx = x1;
+	dy = y1;
+	// printf("%d %d\n", dx, dy);
+	if (abs(dx) > abs(dy))
+		steps = abs(dx);
+	else
+		steps = abs(dy);
+	x_inc = dx / (float)steps;
+	y_inc = dy / (float)steps;
+	
+	X = mlx->pos->virtual_px;
+	Y = mlx->pos->virtual_py;
+	while (i <= steps)
 	{
-		printf("here\n");
-		my_mlx_pixel_put(img, i, j, mlx->color);
-		x++;
+		my_mlx_pixel_put(&mlx->data, X, Y, RED);
+		X += x_inc;
+		Y += y_inc;
 		i++;
-		j++;
 	}
+	// printf("(%f,%f)\n", X, Y);
+	// exit(1);
+}
+
+void	draw_player(t_mlx *mlx)
+{
+	double	T = 0;
+	int x = mlx->pos->virtual_px;
+	int y= mlx->pos->virtual_py;
+
+	int i = 0;
+	mlx->pos->rotationSpeed = 2;
+	while (i < 5)
+	{
+		T=0;	
+		while (T < 360)
+		{
+			x = i * cos(T) + mlx->pos->virtual_px;
+			y = i * sin(T) + mlx->pos->virtual_py;
+			my_mlx_pixel_put(&mlx->data, x, y, 0xFF0000);
+			T++;
+		}
+		i++;
+	}
+	
+	DDA(mlx, cos(mlx->pos->rotationAngle) * 60, 60 * sin(mlx->pos->rotationAngle));
+	// printf("|%f %f|\n", mlx->pos->virtual_px, mlx->pos->virtual_py);
 }
 
 void    draw(t_data *img, t_info *info, t_mlx *mlx)
@@ -47,6 +98,8 @@ void    draw(t_data *img, t_info *info, t_mlx *mlx)
     int i = x;
     int j = y;
 
+
+	
     while (j - y < info->cell_size - 1)
     {
         i = x;
@@ -65,27 +118,22 @@ void    miniMap(t_info *info, t_position *pos, t_mlx *mlx)
 	mlx->x = 0;
 	mlx->y = 0;
 	
+	clear_draw(mlx);
     while (mlx->x < info->map_w)
     {
         mlx->y = 0;
         while (mlx->y < info->map_h)
         {
-	        mlx->color = 0x000000;
-            if (info->map_arr[mlx->y][mlx->x] == '0')
-                mlx->color = 0xFFFFFF;
-            if (pos->x_cell == mlx->x && pos->y_cell == mlx->y)
-			{
-				mlx->color = 0xFF0000;
-				// draw_player(&mlx->data, info, mlx);
-			}
-			// else
-			// {
-				draw(&mlx->data, info, mlx);
-			// }
+	        mlx->color = 0xFFFFFF;
+            if (info->map_arr[mlx->y][mlx->x] == '0' || info->map_arr[mlx->y][mlx->x] == 'S')
+                mlx->color = 0x000000;
+			draw(&mlx->data, info, mlx);
+
             mlx->y++;
         }
         mlx->x++;
     }
+	draw_player(mlx);
 	mlx_put_image_to_window(mlx->ptr, mlx->win_ptr, mlx->data.img, 0, 0);
 }
 
@@ -96,9 +144,7 @@ int main(int ac, char **av)
     t_mlx		*mlx;
 	t_map   *head = NULL;
 	t_map   *Chead = NULL;
-    int fd;
 
-    fd = open("map.cub", O_RDONLY);
     info = malloc(sizeof(t_info));
     pos = malloc(sizeof(t_position));
     mlx = malloc(sizeof(t_mlx));

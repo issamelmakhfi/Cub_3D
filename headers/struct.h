@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:16:30 by Ma3ert            #+#    #+#             */
-/*   Updated: 2023/02/13 23:57:20 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/16 14:16:29 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@
 # define RIGHT_ARROW	124
 # define DOWN_ARROW		125
 # define UP_ARROW		126
+
+# define _W 13
+# define _A 0
+# define _S 1
+# define _D 2
+#define PI 3.142857
+# define RED 0xFF0000
 
 
 
@@ -72,6 +79,14 @@ typedef struct s_position
 	int		up_arrow;
 	int		left_arrow;
 	int		right_arrow;
+	int		turnDirection;
+	int		walkDirection;
+	double		rotationAngle;
+	double		rotationSpeed;
+	int		_w;
+	int		_a;
+	int		_s;
+	int		_d;
 	t_info	*map;
 }	t_position;
 

@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:07:02 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/14 23:40:50 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/15 15:07:57 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,12 @@ void    initData(t_info *info, t_position *pos)
         }
         i++;
     }
-	printf("-->%d %d\n", pos->x_cell, pos->y_cell);
-    pos->virtual_px = (pos->x_cell - 0.5) * CELL_SIZE;
-    pos->virtual_py = (pos->y_cell - 0.5) * CELL_SIZE;
     info->map_h = i;
     info->map_w = getLongestLen(info->map_arr);
+	if ((WIN_H / info->map_h) < (WIN_W / info->map_w))
+		info->cell_size = WIN_H / info->map_h;
+	else
+		info->cell_size = WIN_W / info->map_w;
+    pos->virtual_px = ((pos->x_cell) * info->cell_size) + (info->cell_size * 0.5);
+    pos->virtual_py = (pos->y_cell) * info->cell_size + (info->cell_size * 0.5);
 }
