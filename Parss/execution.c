@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:42:45 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/17 20:47:22 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/17 22:37:19 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,45 +85,57 @@ int	keypress(t_mlx *mlx)
 	int	Cy = 0;
 	if (mlx->pos->_s)
 	{
-		Cy = ((mlx->pos->virtual_py + 5) / mlx->info->cell_size);
-		// if (mlx->info->map_arr[Cy][mlx->pos->x_cell] == '1')
-		// 	return 1;
-		mlx->pos->virtual_py = mlx->pos->virtual_py + (sin(mlx->pos->rotationAngle) * 5);
+		Cy = ((mlx->pos->virtual_py + (cos(mlx->pos->rotationAngle) * 5)) / mlx->info->cell_size);
+		Cx = ((mlx->pos->virtual_px + (sin(mlx->pos->rotationAngle) * 5)) / mlx->info->cell_size);
+		printf("%c\n", mlx->info->map_arr[Cy][Cx]);
+		if (mlx->info->map_arr[Cy][Cx] == '1')
+		{
+			printf("OK\n");
+			return 1;
+		}
+		mlx->pos->virtual_py = mlx->pos->virtual_py + (cos(mlx->pos->rotationAngle) * 5);
+		mlx->pos->virtual_px = mlx->pos->virtual_px + (sin(mlx->pos->rotationAngle) * 5);
 	}
 	if (mlx->pos->_w)
 	{
-		Cy = ((mlx->pos->virtual_py - 5) / mlx->info->cell_size);
-		// if (mlx->info->map_arr[Cy][mlx->pos->x_cell] == '1')
-		// 	return 1;
-		mlx->pos->virtual_py = mlx->pos->virtual_py - (sin(mlx->pos->rotationAngle) * 5);
+		Cy = ((mlx->pos->virtual_py - (cos(mlx->pos->rotationAngle) * 5)) / mlx->info->cell_size);
+		Cx = ((mlx->pos->virtual_px - (sin(mlx->pos->rotationAngle) * 5)) / mlx->info->cell_size);
+		printf("%c\n", mlx->info->map_arr[Cy][Cx]);
+		if (mlx->info->map_arr[Cy][Cx] == '1')
+		{
+			printf("HERE\n");
+			fflush(stdout);		
+			return 1;
+		}
+		mlx->pos->virtual_py = mlx->pos->virtual_py - (cos(mlx->pos->rotationAngle) * 5);
+		mlx->pos->virtual_px = mlx->pos->virtual_px - (sin(mlx->pos->rotationAngle) * 5);
 	}
 	if (mlx->pos->_a)
 	{
-		Cx = ((mlx->pos->virtual_px - 5) / mlx->info->cell_size);
-		// if (mlx->info->map_arr[mlx->pos->y_cell][Cx] == '1')
-		// 	return 1;
+		Cx = ((mlx->pos->virtual_px - (cos(mlx->pos->rotationAngle) * 5)) / mlx->info->cell_size);
+		printf("%c\n", mlx->info->map_arr[Cy][Cx]);
+		if (mlx->info->map_arr[mlx->pos->y_cell][Cx] == '1')
+		{
+			printf("JIJI\n");
+			return 1;
+		}
 		mlx->pos->virtual_px = mlx->pos->virtual_px - (cos(mlx->pos->rotationAngle) * 5);
 	}
 	if (mlx->pos->_d)
 	{
-		Cx = ((mlx->pos->virtual_px + 5) / mlx->info->cell_size);
-		// if (mlx->info->map_arr[mlx->pos->y_cell][Cx] == '1')
-		// 	return 1;
+		Cx = ((mlx->pos->virtual_px + (cos(mlx->pos->rotationAngle) * 5)) / mlx->info->cell_size);
+		printf("%c\n", mlx->info->map_arr[Cy][Cx]);
+		if (mlx->info->map_arr[mlx->pos->y_cell][Cx] == '1')
+			return 1;
 		mlx->pos->virtual_px = mlx->pos->virtual_px + (cos(mlx->pos->rotationAngle) * 5);
 	}
 	if (mlx->pos->right_arrow)
 	{
-		if (mlx->pos->rotationAngle <= 2 * PI)
-			mlx->pos->rotationAngle = mlx->pos->rotationAngle + 0.09;
-		else
-			mlx->pos->rotationAngle = 0;
+			mlx->pos->rotationAngle = mlx->pos->rotationAngle + (-1 * 0.09);
 	}
 	if (mlx->pos->left_arrow)
 	{
-		if (mlx->pos->rotationAngle > 0)
-			mlx->pos->rotationAngle = mlx->pos->rotationAngle + (-1 * 0.09);
-		else
-			mlx->pos->rotationAngle = 0;
+		mlx->pos->rotationAngle = mlx->pos->rotationAngle + (1 * 0.09);
 	}
 	clear_draw(&mlx);
 	miniMap(mlx->info, mlx->pos, mlx);
@@ -140,7 +152,7 @@ void	start_execution(t_info *info, t_position *pos, t_mlx *mlx)
 
 	mlx->info = info;
 	mlx->pos = pos;
-	mlx->pos->rotationAngle = E * (PI / 180);
+	mlx->pos->rotationAngle = mlx->pos->pov * (M_PI / 180);
     miniMap(info, pos, mlx);
 	mlx_hook(mlx->win_ptr, 2, (1L<<0), keyD, mlx);
 	mlx_hook(mlx->win_ptr, 3, (1L<<1), keyup, mlx);

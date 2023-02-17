@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:49:10 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/17 20:49:26 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/17 22:09:54 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,15 @@ void	DDA(t_mlx *mlx, int x1, int y1)
 	int i;
 
 	i = 0;
-	printf("%d %d\n", x1 , y1);
 	dx = mlx->pos->virtual_px - x1;
 	dy = mlx->pos->virtual_py - y1;
 	if (abs(dx) > abs(dy))
 		steps = abs(dx);
 	else
 		steps = abs(dy);
-	x_inc = dx / (float)steps;
+	x_inc =  (dx / (float)steps);
 	y_inc = dy / (float)steps;
-	
+
 	X = mlx->pos->virtual_px;
 	Y = mlx->pos->virtual_py;
 	while (i <= steps)
@@ -59,7 +58,6 @@ void	DDA(t_mlx *mlx, int x1, int y1)
 		Y += y_inc;
 		i++;
 	}
-	// exit(1);
 }
 
 void	draw_player(t_mlx *mlx)
@@ -82,7 +80,6 @@ void	draw_player(t_mlx *mlx)
 		}
 		i++;
 	}
-	printf("%f %f\n", mlx->pos->virtual_px, mlx->pos->virtual_py);
 	DDA(mlx, (sin(mlx->pos->rotationAngle) * 60) + mlx->pos->virtual_px, (cos(mlx->pos->rotationAngle) * 60) + mlx->pos->virtual_py);
 }
 
