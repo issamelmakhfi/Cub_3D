@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:49:10 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/16 23:34:09 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/17 20:49:26 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
-
+	
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
@@ -40,9 +40,9 @@ void	DDA(t_mlx *mlx, int x1, int y1)
 	int i;
 
 	i = 0;
-	dx = x1;
-	dy = y1;
-	// printf("%d %d\n", dx, dy);
+	printf("%d %d\n", x1 , y1);
+	dx = mlx->pos->virtual_px - x1;
+	dy = mlx->pos->virtual_py - y1;
 	if (abs(dx) > abs(dy))
 		steps = abs(dx);
 	else
@@ -59,7 +59,6 @@ void	DDA(t_mlx *mlx, int x1, int y1)
 		Y += y_inc;
 		i++;
 	}
-	// printf("(%f,%f)\n", X, Y);
 	// exit(1);
 }
 
@@ -83,9 +82,8 @@ void	draw_player(t_mlx *mlx)
 		}
 		i++;
 	}
-	
-	DDA(mlx, cos(mlx->pos->rotationAngle) * 60, 60 * sin(mlx->pos->rotationAngle));
-	// printf("|%f %f|\n", mlx->pos->virtual_px, mlx->pos->virtual_py);
+	printf("%f %f\n", mlx->pos->virtual_px, mlx->pos->virtual_py);
+	DDA(mlx, (sin(mlx->pos->rotationAngle) * 60) + mlx->pos->virtual_px, (cos(mlx->pos->rotationAngle) * 60) + mlx->pos->virtual_py);
 }
 
 void    draw(t_data *img, t_info *info, t_mlx *mlx)
@@ -118,15 +116,14 @@ void    miniMap(t_info *info, t_position *pos, t_mlx *mlx)
 	mlx->x = 0;
 	mlx->y = 0;
 	
-	clear_draw(mlx);
     while (mlx->x < info->map_w)
     {
         mlx->y = 0;
         while (mlx->y < info->map_h)
         {
-	        mlx->color = 0xFFFFFF;
-            if (info->map_arr[mlx->y][mlx->x] == '0' || info->map_arr[mlx->y][mlx->x] == 'S')
-                mlx->color = 0x000000;
+	        mlx->color = 0x000000;
+            if (info->map_arr[mlx->y][mlx->x] == '0' || info->map_arr[mlx->y][mlx->x] == 'N')
+                mlx->color = 0xFFFFFF;
 			draw(&mlx->data, info, mlx);
 
             mlx->y++;
