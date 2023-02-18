@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:16:30 by Ma3ert            #+#    #+#             */
-/*   Updated: 2023/02/18 15:18:08 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/18 21:20:04 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,22 +88,9 @@ typedef struct s_position
 	int		_s;
 	int		_d;
 	int		tmpX;
-	t_info	*map;
+	t_info	*info;
 }	t_position;
 
-typedef struct s_mlx
-{
-	void	*ptr;
-	void	*win_ptr;
-	int		color;
-	int		x;
-	int		y;
-	int		Cx;
-	int		Cy;
-	t_info	*info;
-	t_data	data;
-	t_position	*pos;
-}	t_mlx;
 
 typedef struct s_ray
 {
@@ -111,8 +98,8 @@ typedef struct s_ray
 	int			first;
 	int			v_skip;
 	int			h_skip;
-	double		x_save;
-	double		y_save;
+	double		x_save; //(x,y)
+	double		y_save; //(x,y)
 	double		ray_pov;
 	int			index;
 	double		xi ;
@@ -130,10 +117,24 @@ typedef struct s_ray
 	int			ycell_v;
 	int			xcell_h;
 	int			ycell_h;
-	double		save_distance;
+	double		save_distance; // distance between 7ayt :)
 	double		ray_h;
 	t_position	*player;
 }				t_ray;
+typedef struct s_mlx
+{
+	void	*ptr;
+	void	*win_ptr;
+	int		color;
+	int		x;
+	int		y;
+	int		Cx;
+	int		Cy;
+	t_info	*info;
+	t_data	data;
+	t_ray	*rays;
+	t_position	*pos;
+}	t_mlx;
 
 typedef struct s_table
 {

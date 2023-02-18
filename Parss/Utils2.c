@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 21:50:39 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/12 19:28:05 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/18 20:35:10 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void    free_stuff(t_info *info, t_map *head, t_map *Chead)
 size_t  getLongestLen(char **str)
 {
     int i;
-    size_t  len;
+    int  len;
 
     i = 0;
     len = 0;
@@ -87,11 +87,11 @@ int checkDup(t_map *elements, char  *first_elements, int len)
     return (0);
 }
 
-char    *join_rest(char *str, size_t len)
+char    *join_rest(char *str, int len)
 {
     char    *tmp;
     int s;
-    size_t i;
+    int i;
 
     i = 0;
     tmp = malloc(sizeof(char) * len + 1);

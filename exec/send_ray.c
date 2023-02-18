@@ -3,54 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   send_ray.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 15:20:11 by Ma3ert            #+#    #+#             */
-/*   Updated: 2022/09/21 18:36:47 by Ma3ert           ###   ########.fr       */
+/*   Updated: 2023/02/18 22:56:55 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/cub3d.h"
 
-void	calcul_next_h_inter(t_table *table, t_ray *ray, t_position position)
+void	calcul_next_h_inter(t_table *table, t_ray *ray, t_position *position)
 {
 	double	yside;
 
 	yside = 0;
 	if (ray->ray_pov > 270 || ray->ray_pov <= 90)
-		yside = position.virtual_py - ray->ybound;
+		yside = position->virtual_py - ray->ybound;
 	else
-		yside = ray->ybound - position.virtual_py;
+		yside = ray->ybound - position->virtual_py;
 	if (ray->quadrant == 1 || ray->quadrant == 3)
 		ray->xi = calcul_opposite(table->tan_table[ray->index], yside);
 	else
 		ray->xi = calcul_adjacent(table->tan_table[ray->index], yside);
 	if (ray->quadrant == 3 || ray->quadrant == 4)
-		ray->xi = position.virtual_px - ray->xi;
+		ray->xi = position->virtual_px - ray->xi;
 	else
-		ray->xi = position.virtual_px + ray->xi;
+		ray->xi = position->virtual_px + ray->xi;
 }
 
-void	calcul_next_v_inter(t_table *table, t_ray *ray, t_position position)
+void	calcul_next_v_inter(t_table *table, t_ray *ray, t_position *position)
 {
 	double	xside;
 
 	xside = 0;
 	if (ray->ray_pov <= 180 && ray->ray_pov > 0)
-		xside = ray->xbound - position.virtual_px;
+		xside = ray->xbound - position->virtual_px;
 	else
-		xside = position.virtual_px - ray->xbound;
+		xside = position->virtual_px - ray->xbound;
 	if (ray->quadrant == 1 || ray->quadrant == 3)
 		ray->yi = calcul_adjacent(table->tan_table[ray->index], xside);
 	else
 		ray->yi = calcul_opposite(table->tan_table[ray->index], xside);
 	if (ray->quadrant == 4 || ray->quadrant == 1)
-		ray->yi = position.virtual_py - ray->yi;
+		ray->yi = position->virtual_py - ray->yi;
 	else
-		ray->yi = position.virtual_py + ray->yi;
+		ray->yi = position->virtual_py + ray->yi;
 }
 
-void	calcul_distance(t_table *table, t_ray *ray, t_position position)
+void	calcul_distance(t_table *table, t_ray *ray, t_position *position)
 {
 	triangle_sides(ray, position, table);
 	if ((ray->h_distance < ray->v_distance || ray->v_skip) && !(ray->h_skip))
@@ -59,7 +59,7 @@ void	calcul_distance(t_table *table, t_ray *ray, t_position position)
 		ray->y_save = ray->ybound;
 		ray->save_distance = ray->h_distance;
 		ray->first = 'h';
-		if (position.map->map_tab[ray->ycell_h][ray->xcell_h] == 'C')
+		if (position->info->map_arr[ray->ycell_h][ray->xcell_h] == 'C')
 			ray->door = DOOR_FOUND;
 	}
 	else
@@ -68,22 +68,22 @@ void	calcul_distance(t_table *table, t_ray *ray, t_position position)
 		ray->y_save = ray->yi;
 		ray->save_distance = ray->v_distance;
 		ray->first = 'v';
-		if (position.map->map_tab[ray->ycell_v][ray->xcell_v] == 'C')
+		if (position->info->map_arr[ray->ycell_v][ray->xcell_v] == 'C')
 			ray->door = DOOR_FOUND;
 	}
 }
 
-int	check_cell_type(t_ray *ray, t_position position)
+int	check_cell_type(t_ray *ray, t_position *position)
 {
 	calcul_cells(ray);
 	check_skip(ray, position);
 	if (!(ray->h_skip) \
-			&& (position.map->map_tab[ray->ycell_h][ray->xcell_h] == '1' || \
-			position.map->map_tab[ray->ycell_h][ray->xcell_h] == 'C'))
+			&& (position->info->map_arr[ray->ycell_h][ray->xcell_h] == '1' || \
+			position->info->map_arr[ray->ycell_h][ray->xcell_h] == 'C'))
 		ray->h_hit = INTERSECTION_FOUND;
 	if ((!(ray->v_skip) && \
-			(position.map->map_tab[ray->ycell_v][ray->xcell_v] == '1' || \
-			position.map->map_tab[ray->ycell_v][ray->xcell_v] == 'C')))
+			(position->info->map_arr[ray->ycell_v][ray->xcell_v] == '1' || \
+			position->info->map_arr[ray->ycell_v][ray->xcell_v] == 'C')))
 		ray->v_hit = INTERSECTION_FOUND;
 	if (ray->v_hit && ray->h_hit)
 		return (INTERSECTION_FOUND);
@@ -94,7 +94,7 @@ int	check_cell_type(t_ray *ray, t_position position)
 	return (0);
 }
 
-void	send_ray(t_table *table, t_ray *ray, t_position position)
+void	send_ray(t_table *table, t_ray *ray, t_position *position)
 {
 	int	inter;
 

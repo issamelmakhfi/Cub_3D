@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:05:13 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/13 19:14:15 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/18 20:35:22 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void    free_stuff(t_info *info, t_map *head, t_map *Chead);
 size_t  getLongestLen(char **str);
 int     checkLine(char *line);
 int     checkDup(t_map *elements, char  *first_elements, int len);
-char    *join_rest(char *str, size_t len);
+char    *join_rest(char *str, int len);
 int check_colors(char **colors);
 int charachtersCHeck(char ch, int *check);
 

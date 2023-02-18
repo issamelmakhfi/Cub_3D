@@ -3,9 +3,9 @@ SRC = main.c ./Parss/parssMap.c  ./Parss/errorHandler.c ./Parss/Utils.c ./Parss/
 	./Parss/execution.c \
 	./42Get_next_line/get_next_line.c \
 	./42Get_next_line/get_next_line_utils.c \
-	#  ./exec/raycasting.c \
-	# ./exec/send_ray.c \
-	# ./exec/cells.c ./exec/raycasting_tools.c
+	 ./exec/raycasting.c \
+	./exec/send_ray.c \
+	./exec/cells.c ./exec/raycasting_tools.c
 
 OBJ = $(SRC:.c=.o)
 

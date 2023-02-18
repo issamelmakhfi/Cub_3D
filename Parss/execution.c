@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:42:45 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/18 19:38:19 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/18 22:12:19 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,19 +158,27 @@ int	mouse_move(int x, int y, t_mlx *mlx)
 
 void	start_execution(t_info *info, t_position *pos, t_mlx *mlx)
 {
+	t_table	*table = malloc(sizeof(t_table));
+	t_ray *rays = malloc(sizeof(t_ray) * N_RAY);
+	
+	pos->info = info;
 	mlx->ptr = mlx_init();
     mlx->data.img = mlx_new_image(mlx->ptr, WIN_W, WIN_H);
 	mlx->win_ptr = mlx_new_window(mlx->ptr, WIN_W, WIN_H, "Cub3D");
 	mlx->data.addr = mlx_get_data_addr(mlx->data.img, &mlx->data.bits_per_pixel, &mlx->data.line_length, &mlx->data.endian);
+	create_trigonometric_tables(6480, table, 0);
+	casting_rays(table, rays, pos);
 
 	mlx->info = info;
 	mlx->pos = pos;
+	// mlx->rays = *rays;
 	mlx->pos->rotationAngle = mlx->pos->pov * (M_PI / 180);
+	// printf("%f\n", mlx->rays[10].save_distance);
     miniMap(info, pos, mlx);
 	mlx_hook(mlx->win_ptr, 2, (1L<<0), keyD, mlx);
 	mlx_hook(mlx->win_ptr, 3, (1L<<1), keyup, mlx);
 	// mlx_hook(mlx->win_ptr, 6, 0L,&mouse_move, mlx);
-	
 	mlx_loop_hook(mlx->ptr, keypress, mlx);
+	
     mlx_loop(mlx->ptr);
 }

@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 15:20:18 by Ma3ert            #+#    #+#             */
-/*   Updated: 2023/01/11 20:08:40 by Ma3ert           ###   ########.fr       */
+/*   Updated: 2023/02/18 22:12:59 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/cub3d.h"
 
-double	calcul_ray_pov(t_position position, int ray)
+double	calcul_ray_pov(t_position *position, int ray)
 {
 	double	ray_pov;
 	double	frif;
 
-	frif = position.pov - 30;
+	frif = position->pov - 30;
 	ray_pov = frif + ray * ANG_IN_D;
 	if (ray_pov >= 360)
 		ray_pov = ray_pov - 360;
@@ -52,24 +52,24 @@ int	calcul_ray_angle(t_ray *ray, double ray_pov)
 	return (index);
 }
 
-void	calcul_first_vertical(t_table *table, t_ray *ray, t_position position)
+void	calcul_first_vertical(t_table *table, t_ray *ray, t_position *position)
 {
 	double	diff;
 	double	side;
 
-	diff = position.virtual_py;
+	diff = position->virtual_py;
 	side = 0.0;
 	if (ray->ray_pov < 180 && ray->ray_pov >= 0)
 	{
-		ray->xbound = CELL_SIZE * (position.x_cell + 1);
+		ray->xbound = CELL_SIZE * (position->x_cell + 1);
 		ray->x_step = CELL_SIZE;
-		side = ray->xbound - position.virtual_px;
+		side = ray->xbound - position->virtual_px;
 	}
 	else
 	{
-		ray->xbound = CELL_SIZE * position.x_cell;
+		ray->xbound = CELL_SIZE * position->x_cell;
 		ray->x_step = CELL_SIZE * (-1.0);
-		side = position.virtual_px - ray->xbound;
+		side = position->virtual_px - ray->xbound;
 	}
 	if (ray->quadrant == 1 || ray->quadrant == 3)
 		ray->yi = calcul_adjacent(table->tan_table[ray->index], side);
@@ -81,24 +81,24 @@ void	calcul_first_vertical(t_table *table, t_ray *ray, t_position position)
 		ray->yi = diff + ray->yi;
 }
 
-void	calcul_first_horizontal(t_table *table, t_ray *ray, t_position position)
+void	calcul_first_horizontal(t_table *table, t_ray *ray, t_position *position)
 {
 	double	diff;
 	double	side;
 
-	diff = position.virtual_px;
+	diff = position->virtual_px;
 	side = 0.0;
 	if (ray->ray_pov > 270 || ray->ray_pov <= 90)
 	{
 		ray->y_step = CELL_SIZE * (-1.0);
-		ray->ybound = position.y_cell * CELL_SIZE;
-		side = position.virtual_py - ray->ybound;
+		ray->ybound = position->y_cell * CELL_SIZE;
+		side = position->virtual_py - ray->ybound;
 	}
 	else
 	{
 		ray->y_step = CELL_SIZE;
-		ray->ybound = (position.y_cell + 1) * CELL_SIZE;
-		side = ray->ybound - position.virtual_py;
+		ray->ybound = (position->y_cell + 1) * CELL_SIZE;
+		side = ray->ybound - position->virtual_py;
 	}
 	if (ray->quadrant == 2 || ray->quadrant == 4)
 		ray->xi = calcul_adjacent(table->tan_table[ray->index], side);
@@ -110,7 +110,7 @@ void	calcul_first_horizontal(t_table *table, t_ray *ray, t_position position)
 		ray->xi = diff + ray->xi;
 }
 
-void	casting_rays(t_table *table, t_ray *rays, t_position position)
+void	casting_rays(t_table *table, t_ray *rays, t_position *position)
 {
 	int	i;
 

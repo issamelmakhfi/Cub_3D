@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting_tools.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 18:43:44 by Ma3ert            #+#    #+#             */
-/*   Updated: 2022/09/21 19:17:39 by Ma3ert           ###   ########.fr       */
+/*   Updated: 2023/02/18 20:48:05 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/cub3d.h"
+#include "../headers/cub3d.h"
 
 void	create_trigonometric_tables(int narc, t_table *table, int i)
 {
@@ -67,30 +67,30 @@ void	ft_distance(t_ray *ray, double ad, double op, t_table *table)
 	}
 }
 
-void	triangle_sides(t_ray *ray, t_position position, t_table *table)
+void	triangle_sides(t_ray *ray, t_position *position, t_table *table)
 {
 	double	opposite;
 	double	adjacent;
 
 	if (ray->quadrant == 1)
 	{
-		opposite = ray->xbound - position.virtual_px;
-		adjacent = position.virtual_py - ray->ybound;
+		opposite = ray->xbound - position->virtual_px;
+		adjacent = position->virtual_py - ray->ybound;
 	}
 	else if (ray->quadrant == 2)
 	{
-		opposite = ray->ybound - position.virtual_py;
-		adjacent = ray->xbound - position.virtual_px;
+		opposite = ray->ybound - position->virtual_py;
+		adjacent = ray->xbound - position->virtual_px;
 	}
 	else if (ray->quadrant == 3)
 	{
-		opposite = position.virtual_px - ray->xbound;
-		adjacent = ray->ybound - position.virtual_py;
+		opposite = position->virtual_px - ray->xbound;
+		adjacent = ray->ybound - position->virtual_py;
 	}
 	else
 	{
-		opposite = position.virtual_py - ray->ybound;
-		adjacent = position.virtual_px - ray->xbound;
+		opposite = position->virtual_py - ray->ybound;
+		adjacent = position->virtual_px - ray->xbound;
 	}
 	ft_distance(ray, adjacent, opposite, table);
 }
