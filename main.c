@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:49:10 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/17 22:09:54 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/18 14:17:41 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ void	DDA(t_mlx *mlx, int x1, int y1)
 		my_mlx_pixel_put(&mlx->data, X, Y, RED);
 		X += x_inc;
 		Y += y_inc;
+		if (Y < 0 || X < 0 || Y > WIN_H || X > WIN_W)
+			break;
 		i++;
 	}
 }

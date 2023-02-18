@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:16:23 by Ma3ert            #+#    #+#             */
-/*   Updated: 2023/02/11 20:44:56 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/18 15:52:22 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "struct.h"
 # include "parss.h"
 # include "Coordonates.h"
+#include "../minilibx/mlx.h"
 
 # include <mlx.h>
 # include <stdio.h>

@@ -13,7 +13,7 @@ NAME = cub3D
 
 HEADERS = ./headers/cub3d.h ./headers/struct.h ./headers/parss.h ./42Get_next_line/get_next_line.h
 
-CC = gcc
+CC = cc
 
 MLX_FLAGS = -framework OpenGL -framework AppKit 
 
@@ -25,17 +25,15 @@ LIBFT = 42Libft/libft.a
 all: libft_r $(NAME)
 
 $(NAME): $(OBJ) $(HEADERS)
-	$(CC) $(FLAGS) $(LIBFT) -Lmlx -lmlx $(MLX_FLAGS) $(OBJ) -o $(NAME)
+	$(CC) $(FLAGS) $(LIBFT) -lmlx  minilibx/libmlx.a $(MLX_FLAGS) $(OBJ) -o $(NAME)
 	@echo "\033[0;32mCub3D Done!\033[0m"
 
 %.o : %.c $(HEADERS)
-	$(CC) $(FLAGS) -Imlx -c $< -o $@
+	$(CC) $(FLAGS) -Imlx  -c $< -o $@
 
 libft_r :
 	@ make -C 42Libft/
 	@echo "\033[0;32m42Libft Done!\033[0m"
-# $(MLX):
-# 		make -C minilibx/
 
 clean:
 	@make clean -C 42libft/

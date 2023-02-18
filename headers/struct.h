@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:16:30 by Ma3ert            #+#    #+#             */
-/*   Updated: 2023/02/16 14:16:29 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/18 15:18:08 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ typedef struct s_position
 	int		_a;
 	int		_s;
 	int		_d;
+	int		tmpX;
 	t_info	*map;
 }	t_position;
 
