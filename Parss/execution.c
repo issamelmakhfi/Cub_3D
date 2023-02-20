@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:42:45 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/20 22:21:13 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/20 22:58:47 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,19 +94,21 @@ int	keypress(t_mlx *mlx)
 	{
 		if (map_collisions(mlx, mlx->pos->virtual_px, mlx->pos->virtual_py + 10))
 			return 1;
-		mlx->pos->virtual_py += 10;
+		mlx->pos->virtual_px -= mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 20 / 13;
+		mlx->pos->virtual_py += mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 20 / 13;
 	}
 	if (mlx->pos->_w)
 	{
 		if (map_collisions(mlx, mlx->pos->virtual_px, mlx->pos->virtual_py - 10))
 			return 1;
-		mlx->pos->virtual_py -= 10;
+		mlx->pos->virtual_px += mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 20 / 13;
+		mlx->pos->virtual_py -= mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 20 / 13;
 	}
 	if (mlx->pos->_a)
 	{
 		if (map_collisions(mlx, mlx->pos->virtual_px - 10, mlx->pos->virtual_py))
 			return 1;
-		mlx->pos->virtual_px -= 10;
+		mlx->pos->virtual_px -= cos(mlx->pos->pov) * 5;
 	}
 	if (mlx->pos->_d)
 	{
