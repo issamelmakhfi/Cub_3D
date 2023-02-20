@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:49:10 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/20 16:05:09 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/20 19:45:41 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,13 @@ void	DDA(t_mlx *mlx, int x1, int y1)
 
 	X = mlx->pos->virtual_px;
 	Y = mlx->pos->virtual_py;
+	float t = 0.9;
 	while (i <= steps)
 	{
 		my_mlx_pixel_put(&mlx->data, X, Y, 0xFF0000);
 		X += x_inc;
 		Y += y_inc;
+		t -= 0.05;
 		if (Y < 0 || X < 0 || Y > WIN_H || X > WIN_W)
 			break;
 		i++;
@@ -84,7 +86,7 @@ void	draw_player(t_mlx *mlx)
 	}
 	i = 0;
 	// DDA(mlx, (cos(mlx->pos->rotationAngle) * 60) + mlx->pos->virtual_px, (sin(mlx->pos->rotationAngle) * 60) + mlx->pos->virtual_py);
-	// DDA(mlx, 0,  0);
+	// DDA(mlx, mlx->rays[N_RAY / 2].x_save,  mlx->rays[N_RAY / 2].y_save);
 	while (i < N_RAY)
 	{
 		DDA(mlx, mlx->rays[i].x_save , mlx->rays[i].y_save);
