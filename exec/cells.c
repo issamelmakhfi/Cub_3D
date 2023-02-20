@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 18:50:24 by Ma3ert            #+#    #+#             */
-/*   Updated: 2023/02/18 22:13:28 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/20 15:40:55 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	calcul_cells(t_ray *ray)
 {
-	ray->xcell_v = ray->xbound / CELL_SIZE;
+	ray->xcell_v = ray->xbound / CELL_SIZE; //(xcell in map)
 	ray->ycell_v = ray->yi / CELL_SIZE;
-	ray->ycell_h = ray->ybound / CELL_SIZE;
+	ray->ycell_h = ray->ybound / CELL_SIZE; //ycell in map
 	ray->xcell_h = ray->xi / CELL_SIZE;
 	if (ray->ray_pov >= 180 && ray->ray_pov < 360)
 		ray->xcell_v -= 1;
@@ -69,7 +69,7 @@ void	check_skip(t_ray *ray, t_position *position)
 	{
 		if (ray->xcell_h > position->x_cell || ray->ycell_h > position->y_cell
 			|| ray->xcell_h < 0 || ray->ycell_h < 0)
-			ray->h_skip = 1;
+				ray->h_skip = 1;
 		if (ray->xcell_v > position->x_cell || ray->ycell_v > position->y_cell
 			|| ray->xcell_v < 0 || ray->ycell_v < 0)
 			ray->v_skip = 1;

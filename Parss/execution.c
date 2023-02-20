@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:42:45 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/18 22:12:19 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/20 19:06:27 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,6 @@ int	keypress(t_mlx *mlx)
 			return 1;
 		mlx->pos->virtual_py = mlx->pos->virtual_py - (cos(mlx->pos->rotationAngle) * 5);
 		mlx->pos->virtual_px = mlx->pos->virtual_px - (sin(mlx->pos->rotationAngle) * 5);
-		// printf("%d\n", mlx->info->cell_size);
-		// printf("%f %f\n", mlx->pos->virtual_px, mlx->pos->virtual_py);
 	}
 	if (mlx->pos->_a)
 	{
@@ -130,13 +128,21 @@ int	keypress(t_mlx *mlx)
 	}
 	if (mlx->pos->right_arrow)
 	{
-			mlx->pos->rotationAngle = mlx->pos->rotationAngle + (-1 * 0.09);
+		if (mlx->pos->pov > 360)
+			mlx->pos->pov = 0;
+		mlx->pos->pov += 10;
+		printf("%f\n", mlx->pos->pov);
 	}
 	if (mlx->pos->left_arrow)
 	{
-		mlx->pos->rotationAngle = mlx->pos->rotationAngle + (1 * 0.09);
+		if (mlx->pos->pov < 0)
+			mlx->pos->pov += 360;
+		mlx->pos->pov -= 10;
+		printf("%f\n", mlx->pos->pov);
 	}
 	clear_draw(&mlx);
+	create_trigonometric_tables(6480, mlx->table, 0);
+	casting_rays(mlx->table, mlx->rays, mlx->pos);
 	miniMap(mlx->info, mlx->pos, mlx);
 	return (0);
 }
@@ -171,9 +177,10 @@ void	start_execution(t_info *info, t_position *pos, t_mlx *mlx)
 
 	mlx->info = info;
 	mlx->pos = pos;
-	// mlx->rays = *rays;
+	mlx->rays = rays;
+	mlx->table = table;
+	// printf("-->%lf %lf\n", mlx->rays[0].x_save, mlx->rays[1000].y_save);
 	mlx->pos->rotationAngle = mlx->pos->pov * (M_PI / 180);
-	// printf("%f\n", mlx->rays[10].save_distance);
     miniMap(info, pos, mlx);
 	mlx_hook(mlx->win_ptr, 2, (1L<<0), keyD, mlx);
 	mlx_hook(mlx->win_ptr, 3, (1L<<1), keyup, mlx);

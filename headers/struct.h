@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:16:30 by Ma3ert            #+#    #+#             */
-/*   Updated: 2023/02/18 21:20:04 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/20 13:55:20 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # define INTERSECTION_FOUND 1
 # define DOOR_FOUND 2
-# define CELL_SIZE 50
+# define CELL_SIZE 20
 # define FOV 60
 # define HALF_FOV 30
 # define ANG_IN_D 0.05555555555
@@ -121,6 +121,12 @@ typedef struct s_ray
 	double		ray_h;
 	t_position	*player;
 }				t_ray;
+typedef struct s_table
+{
+	double	*tan_table;
+	double	*cos_table;
+	double	*sin_table;
+}				t_table;
 typedef struct s_mlx
 {
 	void	*ptr;
@@ -134,13 +140,8 @@ typedef struct s_mlx
 	t_data	data;
 	t_ray	*rays;
 	t_position	*pos;
+	t_table	*table;
 }	t_mlx;
 
-typedef struct s_table
-{
-	double	*tan_table;
-	double	*cos_table;
-	double	*sin_table;
-}				t_table;
 
 #endif
