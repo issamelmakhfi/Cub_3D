@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:42:45 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/20 19:46:40 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/20 22:21:13 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,7 @@ void clear_draw(t_mlx **mlx)
 int	keyup(int code, t_mlx *mlx)
 {
 	if (code == _W)
-	{
-		printf("RESET\n");
 		mlx->pos->_w = 0;
-	}
 	if (code == _A)
 		mlx->pos->_a = 0;
 	if (code == _S)
@@ -57,10 +54,7 @@ int	keyD(int code, t_mlx *mlx)
 	if (code == 53)
 		exit(0);
 	if (code == _W)
-	{
-		printf("here\n");
 		mlx->pos->_w = 1;
-	}
 	if (code == _A)
 		mlx->pos->_a = 1;
 	if (code == _S)
@@ -86,9 +80,7 @@ int	map_collisions(t_mlx *mlx, int Cx, int Cy)
 {
 	int	X;
 	int	Y;
-	
-	// if (Cx < 0 || Cx > WIN_W || Cy < 0 || Cy > WIN_H)
-	// 	return 1;
+
 	X = Cx / mlx->info->cell_size;
 	Y = Cy / mlx->info->cell_size;
 	if (mlx->info->map_arr[Y][X] && mlx->info->map_arr[Y][X] == '1')
@@ -98,41 +90,29 @@ int	map_collisions(t_mlx *mlx, int Cx, int Cy)
 
 int	keypress(t_mlx *mlx)
 {
-	int Cx = 0;
-	int	Cy = 0;
 	if (mlx->pos->_s)
 	{
-		Cy = mlx->pos->virtual_py + (cos(mlx->pos->rotationAngle) * 5);
-		Cx = mlx->pos->virtual_px + (sin(mlx->pos->rotationAngle) * 5);
-		if (map_collisions(mlx, Cx, Cy))
+		if (map_collisions(mlx, mlx->pos->virtual_px, mlx->pos->virtual_py + 10))
 			return 1;
-		mlx->pos->virtual_py = mlx->pos->virtual_py + (cos(mlx->pos->rotationAngle) * 5);
-		mlx->pos->virtual_px = mlx->pos->virtual_px + (sin(mlx->pos->rotationAngle) * 5);
+		mlx->pos->virtual_py += 10;
 	}
 	if (mlx->pos->_w)
 	{
-		// Cy = mlx->pos->virtual_py - (cos(mlx->pos->rotationAngle) * 5);
-		// Cx = mlx->pos->virtual_px - (sin(mlx->pos->rotationAngle) * 5);
-		// if (map_collisions(mlx, mlx->rays[0].x_save, mlx->rays[0].y_save))
-		// 	return 1;
-		printf("(%lf %lf)\n", mlx->pos->virtual_px, mlx->pos->virtual_py);
-		mlx->pos->virtual_py -= (mlx->pos->virtual_py - mlx->rays[N_RAY / 2].y_save) / 20;
-		mlx->pos->virtual_px -= (mlx->pos->virtual_px - mlx->rays[N_RAY / 2].x_save) / 20;
-		printf("%lf %lf\n", mlx->pos->virtual_px, mlx->pos->virtual_py);
+		if (map_collisions(mlx, mlx->pos->virtual_px, mlx->pos->virtual_py - 10))
+			return 1;
+		mlx->pos->virtual_py -= 10;
 	}
 	if (mlx->pos->_a)
 	{
-		// Cx = mlx->pos->virtual_px - (cos(mlx->pos->rotationAngle) * 5);
-		// if (map_collisions(mlx, Cx, mlx->pos->virtual_py))
-		// 	return 1;
-		mlx->pos->virtual_px = mlx->pos->virtual_px - ((mlx->pos->virtual_px - mlx->rays[N_RAY / 2].y_save) / 20);
+		if (map_collisions(mlx, mlx->pos->virtual_px - 10, mlx->pos->virtual_py))
+			return 1;
+		mlx->pos->virtual_px -= 10;
 	}
 	if (mlx->pos->_d)
 	{
-		Cx = mlx->pos->virtual_px + (cos(mlx->pos->rotationAngle) * 5);
-		if (map_collisions(mlx, Cx, mlx->pos->virtual_py))
+		if (map_collisions(mlx, mlx->pos->virtual_px + 10, mlx->pos->virtual_py))
 			return 1;
-		mlx->pos->virtual_px = mlx->pos->virtual_px + (cos(mlx->pos->rotationAngle) * 5);
+		mlx->pos->virtual_px += 10;
 	}
 	if (mlx->pos->right_arrow)
 	{
@@ -145,11 +125,13 @@ int	keypress(t_mlx *mlx)
 		if (mlx->pos->pov < 0)
 			mlx->pos->pov += 360;
 		mlx->pos->pov -= 10;
-		printf("%f\n", mlx->pos->pov);
 	}
+	mlx->pos->x_cell = mlx->pos->virtual_px / 20;
+	mlx->pos->y_cell = mlx->pos->virtual_py / 20;
 	clear_draw(&mlx);
 	create_trigonometric_tables(6480, mlx->table, 0);
 	casting_rays(mlx->table, mlx->rays, mlx->pos);
+	// printf("%f %f\n", mlx->rays[0].x_save, mlx->rays[0].y_save);
 	miniMap(mlx->info, mlx->pos, mlx);
 	return (0);
 }
@@ -185,7 +167,7 @@ void	start_execution(t_info *info, t_position *pos, t_mlx *mlx)
 	mlx->pos = pos;
 	mlx->rays = rays;
 	mlx->table = table;
-	// printf("-->%lf %lf\n", mlx->rays[0].x_save, mlx->rays[1000].y_save);
+
 	mlx->pos->rotationAngle = mlx->pos->pov * (M_PI / 180);
     // miniMap(info, pos, mlx);
 	mlx_hook(mlx->win_ptr, 2, (1L<<0), keyD, mlx);
