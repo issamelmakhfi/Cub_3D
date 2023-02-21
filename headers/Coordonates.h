@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:07:45 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/17 13:05:19 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/21 15:02:43 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@
 void    initData(t_info *info, t_position *pos);
 int	keey_move(int code, t_mlx *mlx);
 void clear_draw(t_mlx **mlx);
+void	map3D(t_mlx *mlx);
 
 #endif

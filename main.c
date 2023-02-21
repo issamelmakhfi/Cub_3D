@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:49:10 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/20 22:05:37 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/21 18:47:55 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,16 +77,14 @@ void	draw_player(t_mlx *mlx)
 		T=0;	
 		while (T < 360)
 		{
-			x = i * cos(T) + mlx->pos->virtual_px;
-			y = i * sin(T) + mlx->pos->virtual_py;
+			x = i * mlx->table->cos_table[(int)(T / ANG_IN_D)] + mlx->pos->virtual_px;
+			y = i * mlx->table->sin_table[(int)(T / ANG_IN_D)] + mlx->pos->virtual_py;
 			my_mlx_pixel_put(&mlx->data, x, y, 0xFF0000);
 			T++;
 		}
 		i++;
 	}
 	i = 0;
-	// DDA(mlx, (cos(mlx->pos->rotationAngle) * 60) + mlx->pos->virtual_px, (sin(mlx->pos->rotationAngle) * 60) + mlx->pos->virtual_py);
-	// DDA(mlx, mlx->rays[N_RAY / 2].x_save,  mlx->rays[N_RAY / 2].y_save);
 	while (i < N_RAY)
 	{
 		DDA(mlx, mlx->rays[i].x_save , mlx->rays[i].y_save);
@@ -140,6 +138,57 @@ void    miniMap(t_info *info, t_position *pos, t_mlx *mlx)
     }
 	draw_player(mlx);
 	mlx_put_image_to_window(mlx->ptr, mlx->win_ptr, mlx->data.img, 0, 0);
+}
+
+void	drawCell(t_mlx *mlx)
+{
+	mlx->x = 0;
+	
+	while (mlx->x < WIN_W)
+	{
+		mlx->y = 0;
+		while (mlx->y < WIN_H / 2)
+		{
+			my_mlx_pixel_put(&mlx->data, mlx->x, mlx->y, 0xFFF000);
+			mlx->y++;
+		}
+		mlx->x++;
+	}
+	mlx_put_image_to_window(mlx->ptr, mlx->win_ptr, mlx->data.img, 0, 0);
+}
+
+void	map3D(t_mlx *mlx)
+{
+	int	wallHeight=  0;
+	int	topPixel;
+	// int	bottomPixel;
+	
+	drawCell(mlx);
+	int i = 0;
+	int j = 0;
+	while (i < N_RAY)
+	{
+		wallHeight = (WIN_H / mlx->rays[i].save_distance) * 8;
+		j = 0;
+		while (j < wallHeight)
+		{
+			topPixel = ((WIN_H - wallHeight) / 2) + j;
+			if (topPixel > WIN_H)
+			{
+				printf("KOK\n");
+				topPixel = WIN_H;
+			}
+			if (topPixel < 0)
+			{
+				ft_putendl_fd("HERE", 1);
+			}
+			my_mlx_pixel_put(&mlx->data , i, topPixel, 0xFFF3d4);
+			j++;
+		}
+		i++;
+	}
+	mlx_put_image_to_window(mlx->ptr, mlx->win_ptr, mlx->data.img, 0, 0);
+	// drawFloor(mlx);
 }
 
 int main(int ac, char **av)

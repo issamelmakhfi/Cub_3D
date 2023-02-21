@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:42:45 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/20 22:58:47 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/21 18:42:12 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,14 @@ int	map_collisions(t_mlx *mlx, int Cx, int Cy)
 	int	X;
 	int	Y;
 
-	X = Cx / mlx->info->cell_size;
-	Y = Cy / mlx->info->cell_size;
+	X = floor(Cx / mlx->info->cell_size);
+	Y = floor(Cy / mlx->info->cell_size);
 	if (mlx->info->map_arr[Y][X] && mlx->info->map_arr[Y][X] == '1')
+	{
+		// printf("HERE\n");
 		return 1;
+	}
+	printf("%d %d\n", X, Y);
 	return 0;
 }
 
@@ -92,49 +96,51 @@ int	keypress(t_mlx *mlx)
 {
 	if (mlx->pos->_s)
 	{
-		if (map_collisions(mlx, mlx->pos->virtual_px, mlx->pos->virtual_py + 10))
+		if (map_collisions(mlx, mlx->pos->virtual_px - mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 5, mlx->pos->virtual_py + mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 5))
 			return 1;
-		mlx->pos->virtual_px -= mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 20 / 13;
-		mlx->pos->virtual_py += mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 20 / 13;
+		mlx->pos->virtual_px -= mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 5;
+		mlx->pos->virtual_py += mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 5;
 	}
 	if (mlx->pos->_w)
 	{
-		if (map_collisions(mlx, mlx->pos->virtual_px, mlx->pos->virtual_py - 10))
+		if (map_collisions(mlx, mlx->pos->virtual_px + mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 5, mlx->pos->virtual_py - mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 5))
 			return 1;
-		mlx->pos->virtual_px += mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 20 / 13;
-		mlx->pos->virtual_py -= mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 20 / 13;
+		mlx->pos->virtual_px += mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 5;
+		mlx->pos->virtual_py -= mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 5;
 	}
 	if (mlx->pos->_a)
 	{
-		if (map_collisions(mlx, mlx->pos->virtual_px - 10, mlx->pos->virtual_py))
+		if (map_collisions(mlx, mlx->pos->virtual_px - (mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 5), mlx->pos->virtual_py - mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 5))
 			return 1;
-		mlx->pos->virtual_px -= cos(mlx->pos->pov) * 5;
+		mlx->pos->virtual_px -= mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 5;
+		mlx->pos->virtual_py -= mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 5;
 	}
 	if (mlx->pos->_d)
 	{
-		if (map_collisions(mlx, mlx->pos->virtual_px + 10, mlx->pos->virtual_py))
+		if (map_collisions(mlx, mlx->pos->virtual_px + (mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 5), mlx->pos->virtual_py + mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 5))
 			return 1;
-		mlx->pos->virtual_px += 10;
+		mlx->pos->virtual_px += mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 5;
+		mlx->pos->virtual_py += mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 5;
 	}
 	if (mlx->pos->right_arrow)
 	{
 		if (mlx->pos->pov > 360)
 			mlx->pos->pov = 0;
-		mlx->pos->pov += 10;
+		mlx->pos->pov += 5;
 	}
 	if (mlx->pos->left_arrow)
 	{
 		if (mlx->pos->pov < 0)
 			mlx->pos->pov += 360;
-		mlx->pos->pov -= 10;
+		mlx->pos->pov -= 5;
 	}
-	mlx->pos->x_cell = mlx->pos->virtual_px / 20;
-	mlx->pos->y_cell = mlx->pos->virtual_py / 20;
+	mlx->pos->x_cell = floor(mlx->pos->virtual_px / 20);
+	mlx->pos->y_cell = floor(mlx->pos->virtual_py / 20);
 	clear_draw(&mlx);
 	create_trigonometric_tables(6480, mlx->table, 0);
 	casting_rays(mlx->table, mlx->rays, mlx->pos);
-	// printf("%f %f\n", mlx->rays[0].x_save, mlx->rays[0].y_save);
-	miniMap(mlx->info, mlx->pos, mlx);
+	// miniMap(mlx->info, mlx->pos, mlx);
+	map3D(mlx);
 	return (0);
 }
 
