@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:49:10 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/21 18:47:55 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/21 21:03:35 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,11 @@ void	DDA(t_mlx *mlx, int x1, int y1)
 
 	X = mlx->pos->virtual_px;
 	Y = mlx->pos->virtual_py;
-	float t = 0.9;
 	while (i <= steps)
 	{
 		my_mlx_pixel_put(&mlx->data, X, Y, 0xFF0000);
 		X += x_inc;
 		Y += y_inc;
-		t -= 0.05;
 		if (Y < 0 || X < 0 || Y > WIN_H || X > WIN_W)
 			break;
 		i++;
@@ -154,35 +152,31 @@ void	drawCell(t_mlx *mlx)
 		}
 		mlx->x++;
 	}
-	mlx_put_image_to_window(mlx->ptr, mlx->win_ptr, mlx->data.img, 0, 0);
+	mlx_put_image_to_window(mlx->ptr, mlx->win_ptr, mlx->data.img, 216, 104);
 }
 
 void	map3D(t_mlx *mlx)
 {
 	int	wallHeight=  0;
 	int	topPixel;
-	// int	bottomPixel;
+	double dis;
 	
 	drawCell(mlx);
 	int i = 0;
 	int j = 0;
 	while (i < N_RAY)
 	{
-		wallHeight = (WIN_H / mlx->rays[i].save_distance) * 8;
+		dis = mlx->rays[i].save_distance * mlx->table->cos_table[abs(N_RAY / 2 - i)];
+		wallHeight = (WIN_H / dis) * 60;
 		j = 0;
 		while (j < wallHeight)
 		{
 			topPixel = ((WIN_H - wallHeight) / 2) + j;
-			if (topPixel > WIN_H)
-			{
-				printf("KOK\n");
-				topPixel = WIN_H;
-			}
+			if (topPixel >= WIN_H)
+				topPixel = WIN_H - 1;
 			if (topPixel < 0)
-			{
-				ft_putendl_fd("HERE", 1);
-			}
-			my_mlx_pixel_put(&mlx->data , i, topPixel, 0xFFF3d4);
+				topPixel = 0;
+			my_mlx_pixel_put(&mlx->data , i, topPixel, 0xFFFFFF);
 			j++;
 		}
 		i++;
