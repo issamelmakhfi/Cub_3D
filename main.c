@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:49:10 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/21 21:48:30 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/21 23:49:55 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,9 @@ void	map3D(t_mlx *mlx)
 	drawCell(mlx);
 	int i = 0;
 	int j = 0;
+	// mlx->data.xpm_img = mlx_xpm_file_to_image(mlx->ptr, "./textures/BlueWalls.xpm", 20, 20);
+	// mlx_get_color_value()
+	// mlx_get_data_addr(mlx->data.xpm_img, &mlx->data.bits_per_pixel, &mlx->data.line_length, &mlx->data.endian);
 	while (i < N_RAY)
 	{
 		dis = mlx->rays[i].save_distance * mlx->table->cos_table[abs(N_RAY / 2 - i)];
