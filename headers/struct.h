@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:16:30 by Ma3ert            #+#    #+#             */
-/*   Updated: 2023/02/21 12:21:05 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/21 21:47:56 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,8 @@ typedef struct s_position
 	int		up_arrow;
 	int		left_arrow;
 	int		right_arrow;
-	int		turnDirection;
 	int		walkDirection;
 	double		rotationAngle;
-	double		rotationSpeed;
 	int		_w;
 	int		_a;
 	int		_s;

@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:49:10 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/21 21:03:35 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/21 21:48:30 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,13 @@ void	DDA(t_mlx *mlx, int x1, int y1)
 void	draw_player(t_mlx *mlx)
 {
 	double	T = 0;
-	int x = mlx->pos->virtual_px;
-	int y= mlx->pos->virtual_py;
+	int x; 
+	int y; 
+	int i;
 
-	int i = 0;
-	mlx->pos->rotationSpeed = 2;
+	x = mlx->pos->virtual_px;
+	y = mlx->pos->virtual_py;
+	i = 0;
 	while (i < 5)
 	{
 		T=0;	
@@ -90,45 +92,44 @@ void	draw_player(t_mlx *mlx)
 	}
 }
 
-void    draw(t_data *img, t_info *info, t_mlx *mlx)
+void    draw(t_mlx *mlx)
 {
 	int x;
 	int y;
 	
-    x = mlx->x * info->cell_size;
-    y = mlx->y * info->cell_size;
+    x = mlx->x * mlx->info->cell_size;
+    y = mlx->y * mlx->info->cell_size;
     int i = x;
     int j = y;
 
 
 	
-    while (j - y < info->cell_size - 1)
+    while (j - y < mlx->info->cell_size - 1)
     {
         i = x;
-        while (i - x < info->cell_size - 1)
+        while (i - x < mlx->info->cell_size - 1)
         {
-            my_mlx_pixel_put(img, i, j, mlx->color);
+            my_mlx_pixel_put(&mlx->data, i, j, mlx->color);
             i++;
         }
         j++;
     }
 }
 
-void    miniMap(t_info *info, t_position *pos, t_mlx *mlx)
+void    miniMap(t_mlx *mlx)
 {
-    (void)pos;
 	mlx->x = 0;
 	mlx->y = 0;
 	
-    while (mlx->x < info->map_w)
+    while (mlx->x < mlx->info->map_w)
     {
         mlx->y = 0;
-        while (mlx->y < info->map_h)
+        while (mlx->y < mlx->info->map_h)
         {
 	        mlx->color = 0x000000;
-            if (info->map_arr[mlx->y][mlx->x] == '0' || info->map_arr[mlx->y][mlx->x] == 'N')
+            if (mlx->info->map_arr[mlx->y][mlx->x] == '0' || mlx->info->map_arr[mlx->y][mlx->x] == 'N')
                 mlx->color = 0xFFFFFF;
-			draw(&mlx->data, info, mlx);
+			draw(mlx);
 
             mlx->y++;
         }

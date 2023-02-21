@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:05:13 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/18 20:35:22 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/21 21:46:02 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ int charachtersCHeck(char ch, int *check);
 /////////////////////// MLX //////////////////////////////
 
 
-void    miniMap(t_info *info, t_position *pos, t_mlx *mlx);
+void    miniMap(t_mlx *mlx);
 void	start_execution(t_info *info, t_position *pos, t_mlx *mlx);
-void    draw(t_data *img, t_info *info, t_mlx *mlx);
+void    draw(t_mlx *mlx);
 
 #endif

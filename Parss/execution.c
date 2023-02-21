@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:42:45 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/21 21:00:19 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/21 21:49:40 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,11 @@ int	keyup(int code, t_mlx *mlx)
 	if (code == DOWN_ARROW)
 		mlx->pos->down_arrow = 0;
 	if (code == UP_ARROW)
-	{
 		mlx->pos->up_arrow = 0;
-	}
 	if (code == LEFT_ARROW)
-	{
 		mlx->pos->left_arrow = 0;
-		mlx->pos->turnDirection = 0;
-	}
 	if (code == RIGHT_ARROW)
-	{
 		mlx->pos->right_arrow = 0;
-		mlx->pos->turnDirection = 0;
-	}
 	return (0);
 }
 
@@ -66,13 +58,9 @@ int	keyD(int code, t_mlx *mlx)
 	if (code == UP_ARROW)
 		mlx->pos->up_arrow = 1;
 	if (code == LEFT_ARROW)
-	{
 		mlx->pos->left_arrow = 1;
-	}
 	if (code == RIGHT_ARROW)
-	{
 		mlx->pos->right_arrow = 1;
-	}
 	return (0);
 }
 
@@ -83,13 +71,9 @@ int	map_collisions(t_mlx *mlx, int Cx, int Cy)
 
 	X = floor(Cx / mlx->info->cell_size);
 	Y = floor(Cy / mlx->info->cell_size);
-	// printf("%d %d\n", X, Y);
 	if (mlx->info->map_arr[Y][X] && mlx->info->map_arr[Y][X] == '1')
-	{
-		// ft_putendl_fd("LP", 2);
-		return 1;
-	}
-	return 0;
+		return (1);
+	return (0);
 }
 
 int	keypress(t_mlx *mlx)
@@ -139,7 +123,7 @@ int	keypress(t_mlx *mlx)
 	clear_draw(&mlx);
 	create_trigonometric_tables(6480, mlx->table, 0);
 	casting_rays(mlx->table, mlx->rays, mlx->pos);
-	miniMap(mlx->info, mlx->pos, mlx);
+	// miniMap(mlx);
 	map3D(mlx);
 	return (0);
 }
@@ -177,11 +161,11 @@ void	start_execution(t_info *info, t_position *pos, t_mlx *mlx)
 	mlx->table = table;
 
 	mlx->pos->rotationAngle = mlx->pos->pov * (M_PI / 180);
-    // miniMap(info, pos, mlx);
 	mlx_hook(mlx->win_ptr, 2, (1L<<0), keyD, mlx);
 	mlx_hook(mlx->win_ptr, 3, (1L<<1), keyup, mlx);
 	// mlx_hook(mlx->win_ptr, 6, 0L,&mouse_move, mlx);
 	mlx_loop_hook(mlx->ptr, keypress, mlx);
-	
     mlx_loop(mlx->ptr);
+	free(table);
+	free(rays);
 }
