@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:42:45 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/21 21:49:40 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/22 18:30:45 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,16 +110,16 @@ int	keypress(t_mlx *mlx)
 	{
 		if (mlx->pos->pov > 360)
 			mlx->pos->pov = 0;
-		mlx->pos->pov += 5;
+		mlx->pos->pov += 3;
 	}
 	if (mlx->pos->left_arrow)
 	{
 		if (mlx->pos->pov < 0)
 			mlx->pos->pov += 360;
-		mlx->pos->pov -= 5;
+		mlx->pos->pov -= 3;
 	}
-	mlx->pos->x_cell = floor(mlx->pos->virtual_px / 20);
-	mlx->pos->y_cell = floor(mlx->pos->virtual_py / 20);
+	mlx->pos->x_cell = floor(mlx->pos->virtual_px / CELL_SIZE);
+	mlx->pos->y_cell = floor(mlx->pos->virtual_py / CELL_SIZE);
 	clear_draw(&mlx);
 	create_trigonometric_tables(6480, mlx->table, 0);
 	casting_rays(mlx->table, mlx->rays, mlx->pos);

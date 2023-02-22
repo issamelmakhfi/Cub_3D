@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:07:02 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/20 15:18:14 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/22 18:31:48 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void    initData(t_info *info, t_position *pos)
 		info->cell_size = WIN_H / info->map_h;
 	else
 		info->cell_size = WIN_W / info->map_w;
-    pos->virtual_px = ((pos->x_cell) * info->cell_size) + (info->cell_size * 0.5);
-    pos->virtual_py = (pos->y_cell) * info->cell_size + (info->cell_size * 0.5);
+	info->cell_size = CELL_SIZE;
+    pos->virtual_px = CELL_SIZE * (pos->x_cell + 0.5);
+    pos->virtual_py = CELL_SIZE * (pos->y_cell + 0.5);
 }

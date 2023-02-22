@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:49:10 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/21 23:49:55 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/22 13:27:57 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,18 @@ void	drawCell(t_mlx *mlx)
 		mlx->y = 0;
 		while (mlx->y < WIN_H / 2)
 		{
-			my_mlx_pixel_put(&mlx->data, mlx->x, mlx->y, 0xFFF000);
+			my_mlx_pixel_put(&mlx->data, mlx->x, mlx->y, 0x000000);
+			mlx->y++;
+		}
+		mlx->x++;
+	}
+	mlx->x = 0;
+	while (mlx->x < WIN_W)
+	{
+		mlx->y = WIN_H / 2;
+		while (mlx->y < WIN_H)
+		{
+			my_mlx_pixel_put(&mlx->data, mlx->x, mlx->y, 0xC0C0C0);
 			mlx->y++;
 		}
 		mlx->x++;
@@ -166,8 +177,6 @@ void	map3D(t_mlx *mlx)
 	int i = 0;
 	int j = 0;
 	// mlx->data.xpm_img = mlx_xpm_file_to_image(mlx->ptr, "./textures/BlueWalls.xpm", 20, 20);
-	// mlx_get_color_value()
-	// mlx_get_data_addr(mlx->data.xpm_img, &mlx->data.bits_per_pixel, &mlx->data.line_length, &mlx->data.endian);
 	while (i < N_RAY)
 	{
 		dis = mlx->rays[i].save_distance * mlx->table->cos_table[abs(N_RAY / 2 - i)];
