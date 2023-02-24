@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:49:10 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/22 13:27:57 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/24 16:54:10 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,35 +167,56 @@ void	drawCell(t_mlx *mlx)
 	mlx_put_image_to_window(mlx->ptr, mlx->win_ptr, mlx->data.img, 216, 104);
 }
 
+void	xpm_image(t_mlx *mlx)
+{
+	mlx->image.img = mlx_xpm_file_to_image(mlx->ptr, "./textures/pillar.xpm", &mlx->image.x, &mlx->image.y);
+	mlx->image.addr =(int*)mlx_get_data_addr(mlx->image.img, &mlx->image.bits_per_pixel, &mlx->image.line_length, &mlx->image.endian);
+}
+
+int get_texture_color (t_mlx *mlx, int x, int y)
+{
+    int a;
+	if (x >= mlx->image.x - 1 || y >= mlx->image.y - 1 || x < 0 || y < 0)
+		return (0);
+    a = mlx->image.addr[y * mlx->image.x + x];
+    return (a);
+}
+
 void	map3D(t_mlx *mlx)
 {
-	int	wallHeight=  0;
+	int	wallHeight =  0;
 	int	topPixel;
 	double dis;
+	int i = 0;
+	int j;
+	int offset = 0;
 	
 	drawCell(mlx);
-	int i = 0;
-	int j = 0;
-	// mlx->data.xpm_img = mlx_xpm_file_to_image(mlx->ptr, "./textures/BlueWalls.xpm", 20, 20);
+	xpm_image(mlx);
 	while (i < N_RAY)
 	{
 		dis = mlx->rays[i].save_distance * mlx->table->cos_table[abs(N_RAY / 2 - i)];
-		wallHeight = (WIN_H / dis) * 60;
+		wallHeight = (WIN_H / dis) * CELL_SIZE;
 		j = 0;
 		while (j < wallHeight)
 		{
+			if (mlx->rays[i].first == 'v')
+				offset = (int)mlx->rays[i].y_save % CELL_SIZE * ((double)mlx->image.x / CELL_SIZE);
+			else
+				offset = (int)mlx->rays[i].x_save % CELL_SIZE * ((double)mlx->image.x / CELL_SIZE);
+				
+			int color = get_texture_color(mlx, offset, j * ((double)mlx->image.y / (double)wallHeight));
 			topPixel = ((WIN_H - wallHeight) / 2) + j;
 			if (topPixel >= WIN_H)
 				topPixel = WIN_H - 1;
 			if (topPixel < 0)
 				topPixel = 0;
-			my_mlx_pixel_put(&mlx->data , i, topPixel, 0xFFFFFF);
+			my_mlx_pixel_put(&mlx->data , i, topPixel, color);
 			j++;
 		}
 		i++;
 	}
 	mlx_put_image_to_window(mlx->ptr, mlx->win_ptr, mlx->data.img, 0, 0);
-	// drawFloor(mlx);
 }
 
 int main(int ac, char **av)
@@ -215,6 +236,7 @@ int main(int ac, char **av)
         error_handler("No such file or directory", 1);
     fill_data(av[1], &head, &Chead);
 	searchMap(info, head, Chead, pos);
+	// initData(info, pos);
 	start_execution(info, pos, mlx);
 
 	free_stuff(info, head, Chead);

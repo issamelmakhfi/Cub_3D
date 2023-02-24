@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:42:45 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/22 18:30:45 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/24 16:45:52 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ int	map_collisions(t_mlx *mlx, int Cx, int Cy)
 	int	X;
 	int	Y;
 
-	X = floor(Cx / mlx->info->cell_size);
-	Y = floor(Cy / mlx->info->cell_size);
+	X = roundf(Cx / mlx->info->cell_size);
+	Y = roundf(Cy / mlx->info->cell_size);
 	if (mlx->info->map_arr[Y][X] && mlx->info->map_arr[Y][X] == '1')
 		return (1);
 	return (0);
@@ -80,31 +80,31 @@ int	keypress(t_mlx *mlx)
 {
 	if (mlx->pos->_s)
 	{
-		if (map_collisions(mlx, mlx->pos->virtual_px - mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 3, mlx->pos->virtual_py + mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 3))
+		if (map_collisions(mlx, mlx->pos->virtual_px - mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4, mlx->pos->virtual_py + mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4))
 			return 1;
-		mlx->pos->virtual_px -= mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 3;
-		mlx->pos->virtual_py += mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 3;
+		mlx->pos->virtual_px -= mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
+		mlx->pos->virtual_py += mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
 	}
 	if (mlx->pos->_w)
 	{
-		if (map_collisions(mlx, mlx->pos->virtual_px + mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 3, mlx->pos->virtual_py - mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 3))
+		if (map_collisions(mlx, mlx->pos->virtual_px + mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4, mlx->pos->virtual_py - mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4))
 			return 1;
-		mlx->pos->virtual_px += mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 3;
-		mlx->pos->virtual_py -= mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 3;
+		mlx->pos->virtual_px += mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
+		mlx->pos->virtual_py -= mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
 	}
 	if (mlx->pos->_a)
 	{
-		if (map_collisions(mlx, mlx->pos->virtual_px - (mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 3), mlx->pos->virtual_py - mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 3))
+		if (map_collisions(mlx, mlx->pos->virtual_px - (mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4), mlx->pos->virtual_py - mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4))
 			return 1;
-		mlx->pos->virtual_px -= mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 3;
-		mlx->pos->virtual_py -= mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 3;
+		mlx->pos->virtual_px -= mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
+		mlx->pos->virtual_py -= mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
 	}
 	if (mlx->pos->_d)
 	{
-		if (map_collisions(mlx, mlx->pos->virtual_px + (mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 3), mlx->pos->virtual_py + mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 3))
+		if (map_collisions(mlx, mlx->pos->virtual_px + (mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4), mlx->pos->virtual_py + mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4))
 			return 1;
-		mlx->pos->virtual_px += mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 3;
-		mlx->pos->virtual_py += mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 3;
+		mlx->pos->virtual_px += mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
+		mlx->pos->virtual_py += mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
 	}
 	if (mlx->pos->right_arrow)
 	{

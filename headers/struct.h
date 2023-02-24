@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:16:30 by Ma3ert            #+#    #+#             */
-/*   Updated: 2023/02/22 14:57:21 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/23 17:00:35 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,17 @@ typedef struct s_table
 	double	*cos_table;
 	double	*sin_table;
 }				t_table;
+
+typedef struct s_image
+{
+	void	*img;
+	int	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	int		x;
+	int		y;
+}	t_image;
 typedef struct s_mlx
 {
 	void	*ptr;
@@ -140,15 +151,7 @@ typedef struct s_mlx
 	t_ray	*rays;
 	t_position	*pos;
 	t_table	*table;
+	t_image	image;
 }	t_mlx;
-
-typedef struct s_textur
-{
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}	t_textur;
 
 #endif

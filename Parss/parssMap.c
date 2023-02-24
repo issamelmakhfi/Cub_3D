@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:40:07 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/20 15:14:18 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/24 16:54:07 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void    searchMap(t_info *info, t_map *head, t_map *Chead, t_position *pos)
     int j;
     size_t len;
     int check;
-
+	(void)pos;
     i = 0;
     j = 0;
     check = 0;
