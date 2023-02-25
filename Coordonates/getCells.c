@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:07:02 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/24 16:43:56 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/25 15:56:36 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,12 @@ void    initData(t_info *info, t_position *pos)
     info->map_h = i;
     info->map_w = getLongestLen(info->map_arr);
 	if ((WIN_H / info->map_h) < (WIN_W / info->map_w))
-		info->cell_size = WIN_H / info->map_h;
+		info->cell_sizeMap = WIN_H / info->map_h;
 	else
-		info->cell_size = WIN_W / info->map_w;
+		info->cell_sizeMap = WIN_W / info->map_w;
 	info->cell_size = CELL_SIZE;
     pos->virtual_px = info->cell_size * (pos->x_cell + 0.5);
     pos->virtual_py = info->cell_size * (pos->y_cell + 0.5);
+	pos->map_px = info->cell_sizeMap * (pos->x_cell + 0.5);
+	pos->map_py = info->cell_sizeMap * (pos->y_cell + 0.5);
 }

@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:42:45 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/24 16:45:52 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/25 16:08:12 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,8 @@ int	keypress(t_mlx *mlx)
 	clear_draw(&mlx);
 	create_trigonometric_tables(6480, mlx->table, 0);
 	casting_rays(mlx->table, mlx->rays, mlx->pos);
-	// miniMap(mlx);
-	map3D(mlx);
+	miniMap(mlx);
+	// map3D(mlx);
 	return (0);
 }
 
@@ -135,7 +135,7 @@ int	mouse_move(int x, int y, t_mlx *mlx)
 	if (x > 0 && x < WIN_W)
 	{
 		mlx_mouse_hide();
-		mlx->pos->rotationAngle = mlx->pos->rotationAngle + (((WIN_W/2) - x) * (M_PI / 180)) / 20;
+		// mlx->pos->rotationAngle = mlx->pos->rotationAngle + (((WIN_W/2) - x) * (M_PI / 180)) / 20;
 		mlx_mouse_move(mlx->win_ptr, WIN_W / 2, WIN_H / 2);
 		mlx->pos->tmpX = WIN_W / 2;
 	}
@@ -160,7 +160,7 @@ void	start_execution(t_info *info, t_position *pos, t_mlx *mlx)
 	mlx->rays = rays;
 	mlx->table = table;
 
-	mlx->pos->rotationAngle = mlx->pos->pov * (M_PI / 180);
+	// mlx->pos->rotationAngle = mlx->pos->pov * (M_PI / 180);
 	mlx_hook(mlx->win_ptr, 2, (1L<<0), keyD, mlx);
 	mlx_hook(mlx->win_ptr, 3, (1L<<1), keyup, mlx);
 	// mlx_hook(mlx->win_ptr, 6, 0L,&mouse_move, mlx);

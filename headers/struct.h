@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:16:30 by Ma3ert            #+#    #+#             */
-/*   Updated: 2023/02/23 17:00:35 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/25 15:50:07 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_info
 	int				map_h;
 	int				map_w;
 	int				cell_size;
+	int				cell_sizeMap;
 	t_map			*map;
 }	t_info;
 
@@ -75,13 +76,13 @@ typedef struct s_position
 	int		y_cell;
 	double	virtual_px;
 	double	virtual_py;
+	double	map_px;
+	double	map_py;
 	double	pov;
 	int		down_arrow;
 	int		up_arrow;
 	int		left_arrow;
 	int		right_arrow;
-	int		walkDirection;
-	double		rotationAngle;
 	int		_w;
 	int		_a;
 	int		_s;

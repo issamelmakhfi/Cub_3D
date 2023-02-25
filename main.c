@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:49:10 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/24 16:54:10 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/25 20:39:29 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	DDA(t_mlx *mlx, int x1, int y1)
 	int i;
 
 	i = 0;
-	dx = x1 - mlx->pos->virtual_px;
-	dy = y1 - mlx->pos->virtual_py;
+	dx = x1 - mlx->pos->map_px;
+	dy = y1 - mlx->pos->map_py;
 	if (abs(dx) > abs(dy))
 		steps = abs(dx);
 	else
@@ -49,8 +49,8 @@ void	DDA(t_mlx *mlx, int x1, int y1)
 	x_inc =  (dx / (float)steps);
 	y_inc = dy / (float)steps;
 
-	X = mlx->pos->virtual_px;
-	Y = mlx->pos->virtual_py;
+	X = mlx->pos->map_px;
+	Y = mlx->pos->map_py;
 	while (i <= steps)
 	{
 		my_mlx_pixel_put(&mlx->data, X, Y, 0xFF0000);
@@ -69,16 +69,16 @@ void	draw_player(t_mlx *mlx)
 	int y; 
 	int i;
 
-	x = mlx->pos->virtual_px;
-	y = mlx->pos->virtual_py;
+	x = mlx->pos->map_px;
+	y = mlx->pos->map_py;
 	i = 0;
 	while (i < 5)
 	{
 		T=0;	
 		while (T < 360)
 		{
-			x = i * mlx->table->cos_table[(int)(T / ANG_IN_D)] + mlx->pos->virtual_px;
-			y = i * mlx->table->sin_table[(int)(T / ANG_IN_D)] + mlx->pos->virtual_py;
+			x = i * mlx->table->cos_table[(int)(T / ANG_IN_D)] + mlx->pos->map_px;
+			y = i * mlx->table->sin_table[(int)(T / ANG_IN_D)] + mlx->pos->map_py;
 			my_mlx_pixel_put(&mlx->data, x, y, 0xFF0000);
 			T++;
 		}
@@ -87,7 +87,7 @@ void	draw_player(t_mlx *mlx)
 	i = 0;
 	while (i < N_RAY)
 	{
-		DDA(mlx, mlx->rays[i].x_save , mlx->rays[i].y_save);
+		DDA(mlx, mlx->rays[i].x_save * ((double)mlx->info->cell_sizeMap / CELL_SIZE), mlx->rays[i].y_save * ((double)mlx->info->cell_sizeMap / CELL_SIZE));
 		i++;
 	}
 }
@@ -97,17 +97,17 @@ void    draw(t_mlx *mlx)
 	int x;
 	int y;
 	
-    x = mlx->x * mlx->info->cell_size;
-    y = mlx->y * mlx->info->cell_size;
+    x = mlx->x * mlx->info->cell_sizeMap;
+    y = mlx->y * mlx->info->cell_sizeMap;
     int i = x;
     int j = y;
 
 
 	
-    while (j - y < mlx->info->cell_size - 1)
+    while (j - y < mlx->info->cell_sizeMap - 1)
     {
         i = x;
-        while (i - x < mlx->info->cell_size - 1)
+        while (i - x < mlx->info->cell_sizeMap - 1)
         {
             my_mlx_pixel_put(&mlx->data, i, j, mlx->color);
             i++;
@@ -130,7 +130,6 @@ void    miniMap(t_mlx *mlx)
             if (mlx->info->map_arr[mlx->y][mlx->x] == '0' || mlx->info->map_arr[mlx->y][mlx->x] == 'N')
                 mlx->color = 0xFFFFFF;
 			draw(mlx);
-
             mlx->y++;
         }
         mlx->x++;
