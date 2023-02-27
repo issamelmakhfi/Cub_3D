@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:49:10 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/27 01:21:43 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/27 20:52:57 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void	DDA(t_mlx *mlx, int x1, int y1)
 	int i;
 
 	i = 0;
-	dx = x1 - (mlx->pos->virtual_px * 0.8);
-	dy = y1 - (mlx->pos->virtual_py * 0.8);
+	dx = x1 - (mlx->pos->virtual_px * ((double)mlx->info->cell_sizeMap / CELL_SIZE));
+	dy = y1 - (mlx->pos->virtual_py * ((double)mlx->info->cell_sizeMap / CELL_SIZE));
 	if (abs(dx) > abs(dy))
 		steps = abs(dx);
 	else
@@ -51,15 +51,13 @@ void	DDA(t_mlx *mlx, int x1, int y1)
 	x_inc = dx / (float)steps;
 	y_inc = dy / (float)steps;
 
-	X = mlx->pos->virtual_px * 0.8;
-	Y = mlx->pos->virtual_py * 0.8;
+	X = mlx->pos->virtual_px * ((double)mlx->info->cell_sizeMap / CELL_SIZE);
+	Y = mlx->pos->virtual_py * ((double)mlx->info->cell_sizeMap / CELL_SIZE);
 	while (i <= steps)
 	{
-		my_mlx_pixel_put(&mlx->data, X * 0.2, Y * 0.2, 0xFF0000);
+		my_mlx_pixel_put(&mlx->data, X * mlx->pos->space, Y * mlx->pos->space, 0xFF0000);
 		X += x_inc;
 		Y += y_inc;
-		// if (Y < 0 || X < 0 || Y > WIN_H || X > WIN_W)
-		// 	break;
 		i++;
 	}
 }
@@ -71,17 +69,18 @@ void	draw_player(t_mlx *mlx)
 	int y; 
 	int i;
 
-	x = mlx->pos->map_px * 0.8;
-	y = mlx->pos->map_py * 0.8;
+	x = mlx->pos->virtual_px * ((double)mlx->info->cell_sizeMap / CELL_SIZE);
+	y = mlx->pos->virtual_py * ((double)mlx->info->cell_sizeMap / CELL_SIZE);
+
 	i = 0;
 	while (i < 5)
 	{
 		T=0;	
 		while (T < 360)
 		{
-			x = i * mlx->table->cos_table[(int)(T / ANG_IN_D)] + (mlx->pos->virtual_px * 0.8);
-			y = i * mlx->table->sin_table[(int)(T / ANG_IN_D)] + (mlx->pos->virtual_py * 0.8);
-			my_mlx_pixel_put(&mlx->data, x * 0.2, y * 0.2, 0xFF0000);
+			x = i * mlx->table->cos_table[(int)(T / ANG_IN_D)] + (mlx->pos->virtual_px * ((double)mlx->info->cell_sizeMap / CELL_SIZE));
+			y = i * mlx->table->sin_table[(int)(T / ANG_IN_D)] + (mlx->pos->virtual_py * ((double)mlx->info->cell_sizeMap / CELL_SIZE));
+			my_mlx_pixel_put(&mlx->data, x * mlx->pos->space, y * mlx->pos->space, 0xFF0000);
 			T++;
 		}
 		i++;
@@ -106,12 +105,12 @@ void    draw(t_mlx *mlx)
 
 
 	
-    while (j - y < mlx->info->cell_sizeMap - 8)
+    while (j - y < mlx->info->cell_sizeMap - mlx->pos->b_cells)
     {
         i = x;
-        while (i - x < mlx->info->cell_sizeMap - 8)
+        while (i - x < mlx->info->cell_sizeMap - mlx->pos->b_cells)
         {
-            my_mlx_pixel_put(&mlx->data, i * 0.2, j * 0.2, mlx->color);
+            my_mlx_pixel_put(&mlx->data, i * mlx->pos->space, j * mlx->pos->space, mlx->color);
             i++;
         }
         j++;
@@ -128,9 +127,15 @@ void    miniMap(t_mlx *mlx)
         mlx->y = 0;
         while (mlx->y < mlx->info->map_h)
         {
-	        mlx->color = 0x000000;
+			if (mlx->info->map_arr[mlx->y][mlx->x] == '1')
+	        	mlx->color = 0x000000;
             if (mlx->info->map_arr[mlx->y][mlx->x] == '0' || mlx->info->map_arr[mlx->y][mlx->x] == 'N')
                 mlx->color = 0xFFFFFF;
+			if (mlx->info->map_arr[mlx->y][mlx->x] == ' ')
+			{
+				mlx->y++;
+				continue;
+			}
 			draw(mlx);
             mlx->y++;
         }
@@ -149,7 +154,7 @@ void	drawCell(t_mlx *mlx)
 		mlx->y = 0;
 		while (mlx->y < WIN_H / 2)
 		{
-			my_mlx_pixel_put(&mlx->data, mlx->x, mlx->y, 0x000000);
+			my_mlx_pixel_put(&mlx->data, mlx->x, mlx->y, 0xA300FF);
 			mlx->y++;
 		}
 		mlx->x++;
@@ -170,7 +175,7 @@ void	drawCell(t_mlx *mlx)
 
 void	xpm_image(t_mlx *mlx)
 {
-	mlx->image.img = mlx_xpm_file_to_image(mlx->ptr, "./textures/pillar.xpm", &mlx->image.x, &mlx->image.y);
+	mlx->image.img = mlx_xpm_file_to_image(mlx->ptr, mlx->info->map->path_N, &mlx->image.x, &mlx->image.y);
 	mlx->image.addr =(int*)mlx_get_data_addr(mlx->image.img, &mlx->image.bits_per_pixel, &mlx->image.line_length, &mlx->image.endian);
 }
 
@@ -199,15 +204,18 @@ void	map3D(t_mlx *mlx)
 		dis = mlx->rays[i].save_distance * mlx->table->cos_table[abs(N_RAY / 2 - i)];
 		wallHeight = (WIN_H / dis) * CELL_SIZE;
 		j = 0;
+		if (mlx->rays[i].first == 'v')
+			offset = (int)mlx->rays[i].y_save % CELL_SIZE * ((double)mlx->image.x / CELL_SIZE);
+		else
+			offset = (int)mlx->rays[i].x_save % CELL_SIZE * ((double)mlx->image.x / CELL_SIZE);
+		if (((WIN_H - wallHeight) / 2) <= 0)
+			j  = -1 * (((WIN_H - wallHeight) / 2));
 		while (j < wallHeight)
 		{
-			if (mlx->rays[i].first == 'v')
-				offset = (int)mlx->rays[i].y_save % CELL_SIZE * ((double)mlx->image.x / CELL_SIZE);
-			else
-				offset = (int)mlx->rays[i].x_save % CELL_SIZE * ((double)mlx->image.x / CELL_SIZE);
-				
 			int color = get_texture_color(mlx, offset, j * ((double)mlx->image.y / (double)wallHeight));
 			topPixel = ((WIN_H - wallHeight) / 2) + j;
+			if (topPixel > WIN_H)
+				break;
 			my_mlx_pixel_put(&mlx->data , i, topPixel, color);
 			j++;
 		}
@@ -233,7 +241,6 @@ int main(int ac, char **av)
         error_handler("No such file or directory", 1);
     fill_data(av[1], &head, &Chead);
 	searchMap(info, head, Chead, pos);
-	// initData(info, pos);
 	start_execution(info, pos, mlx);
 
 	free_stuff(info, head, Chead);

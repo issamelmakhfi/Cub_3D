@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:42:45 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/27 01:23:42 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/27 20:05:29 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@ void clear_draw(t_mlx **mlx)
 
 int	keyup(int code, t_mlx *mlx)
 {
+	if (code == 49)
+	{
+		mlx->pos->b_cells = 3;
+		mlx->pos->miniMap = 0;
+		mlx->pos->space = 0.3;
+	}
 	if (code == _W)
 		mlx->pos->_w = 0;
 	if (code == _A)
@@ -42,6 +48,8 @@ int	keyup(int code, t_mlx *mlx)
 
 int	keyD(int code, t_mlx *mlx)
 {
+	if (code == 49)
+		mlx->pos->miniMap = 1;
 	if (code == 53)
 		exit(0);
 	if (code == _W)
@@ -91,6 +99,7 @@ int	keypress(t_mlx *mlx)
 {
 	int x_save = mlx->pos->virtual_px;
 	int y_save = mlx->pos->virtual_py;
+
 	if (mlx->pos->_s)
 	{
 		if (map_collisions(mlx, mlx->pos->virtual_px - mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4, mlx->pos->virtual_py + mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4))
@@ -139,9 +148,13 @@ int	keypress(t_mlx *mlx)
 			mlx->pos->pov += 360;
 		mlx->pos->pov -= 3;
 	}
+	if (mlx->pos->miniMap)
+	{
+		mlx->pos->b_cells = 2;
+		mlx->pos->space = 0.8;
+	}
 	mlx->pos->x_cell = floor(mlx->pos->virtual_px / CELL_SIZE);
 	mlx->pos->y_cell = floor(mlx->pos->virtual_py / CELL_SIZE);
-	
 	clear_draw(&mlx);
 	create_trigonometric_tables(6480, mlx->table, 0);
 	casting_rays(mlx->table, mlx->rays, mlx->pos);
@@ -158,7 +171,7 @@ int	mouse_move(int x, int y, t_mlx *mlx)
 	{
 		mlx_mouse_hide();
 		mlx_mouse_move(mlx->win_ptr, WIN_W / 2, WIN_H / 2);
-		mlx->pos->tmpX = WIN_W / 2;
+		// mlx->pos->tmpX = WIN_W / 2;
 	}
 	return 0;	
 }

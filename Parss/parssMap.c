@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:40:07 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/24 16:54:07 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/27 21:27:11 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int check_elements(t_map *list_elements)
         elements = ft_split(list->elements, ' ');
         if (elements[0] && ft_strlen(elements[0]) == 2)
         {
-            
             while (elements[i])
                 i++;
             if (i != 2 || get_direction(elements) || checkDup(list, elements[0], 2))
@@ -94,7 +93,7 @@ void    searchMap(t_info *info, t_map *head, t_map *Chead, t_position *pos)
     int j;
     size_t len;
     int check;
-	(void)pos;
+
     i = 0;
     j = 0;
     check = 0;
@@ -124,6 +123,7 @@ void    searchMap(t_info *info, t_map *head, t_map *Chead, t_position *pos)
     }
     if (!check)
         error_handler("NEED PLAYER", 1);
+	printf("%s\n", Chead->path_N);
 }
 
 void	fill_data(char *av, t_map **head, t_map **Chead)

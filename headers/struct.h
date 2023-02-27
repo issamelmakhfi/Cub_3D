@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:16:30 by Ma3ert            #+#    #+#             */
-/*   Updated: 2023/02/27 00:19:44 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/27 21:29:15 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,10 @@ typedef	struct s_map
 	char	*map_tab;
 	char	*elements;
 	int		check;
+	char			*path_N;
+	char			*path_S;
+	char			*path_E;
+	char			*path_A;
 	struct s_map	*next;
 }	t_map;
 
@@ -67,6 +71,10 @@ typedef struct s_info
 	int				map_w;
 	int				cell_size;
 	int				cell_sizeMap;
+	char			*path_N;
+	char			*path_S;
+	char			*path_E;
+	char			*path_A;
 	t_map			*map;
 }	t_info;
 
@@ -87,7 +95,9 @@ typedef struct s_position
 	int		_a;
 	int		_s;
 	int		_d;
-	int		tmpX;
+	double	space;
+	int		miniMap;
+	int		b_cells;
 	t_info	*info;
 }	t_position;
 

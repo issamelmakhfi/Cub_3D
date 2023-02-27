@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:07:02 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/25 15:56:36 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/27 18:08:20 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,6 @@ void    initData(t_info *info, t_position *pos)
     pos->virtual_py = info->cell_size * (pos->y_cell + 0.5);
 	pos->map_px = info->cell_sizeMap * (pos->x_cell + 0.5);
 	pos->map_py = info->cell_sizeMap * (pos->y_cell + 0.5);
+	pos->space = 0.3;
+	pos->b_cells = info->cell_sizeMap * 0.1 ;
 }
