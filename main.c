@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:49:10 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/26 00:22:21 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/27 01:21:43 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,24 +42,24 @@ void	DDA(t_mlx *mlx, int x1, int y1)
 	int i;
 
 	i = 0;
-	dx = x1 - mlx->pos->map_px;
-	dy = y1 - mlx->pos->map_py;
+	dx = x1 - (mlx->pos->virtual_px * 0.8);
+	dy = y1 - (mlx->pos->virtual_py * 0.8);
 	if (abs(dx) > abs(dy))
 		steps = abs(dx);
 	else
 		steps = abs(dy);
-	x_inc =  (dx / (float)steps);
+	x_inc = dx / (float)steps;
 	y_inc = dy / (float)steps;
 
-	X = mlx->pos->map_px;
-	Y = mlx->pos->map_py;
+	X = mlx->pos->virtual_px * 0.8;
+	Y = mlx->pos->virtual_py * 0.8;
 	while (i <= steps)
 	{
-		my_mlx_pixel_put(&mlx->data, X, Y, 0xFF0000);
+		my_mlx_pixel_put(&mlx->data, X * 0.2, Y * 0.2, 0xFF0000);
 		X += x_inc;
 		Y += y_inc;
-		if (Y < 0 || X < 0 || Y > WIN_H || X > WIN_W)
-			break;
+		// if (Y < 0 || X < 0 || Y > WIN_H || X > WIN_W)
+		// 	break;
 		i++;
 	}
 }
@@ -71,17 +71,17 @@ void	draw_player(t_mlx *mlx)
 	int y; 
 	int i;
 
-	x = mlx->pos->map_px;
-	y = mlx->pos->map_py;
+	x = mlx->pos->map_px * 0.8;
+	y = mlx->pos->map_py * 0.8;
 	i = 0;
 	while (i < 5)
 	{
 		T=0;	
 		while (T < 360)
 		{
-			x = i * mlx->table->cos_table[(int)(T / ANG_IN_D)] + mlx->pos->map_px;
-			y = i * mlx->table->sin_table[(int)(T / ANG_IN_D)] + mlx->pos->map_py;
-			my_mlx_pixel_put(&mlx->data, x, y, 0xFF0000);
+			x = i * mlx->table->cos_table[(int)(T / ANG_IN_D)] + (mlx->pos->virtual_px * 0.8);
+			y = i * mlx->table->sin_table[(int)(T / ANG_IN_D)] + (mlx->pos->virtual_py * 0.8);
+			my_mlx_pixel_put(&mlx->data, x * 0.2, y * 0.2, 0xFF0000);
 			T++;
 		}
 		i++;
@@ -106,12 +106,12 @@ void    draw(t_mlx *mlx)
 
 
 	
-    while (j - y < mlx->info->cell_sizeMap - 1)
+    while (j - y < mlx->info->cell_sizeMap - 8)
     {
         i = x;
-        while (i - x < mlx->info->cell_sizeMap - 1)
+        while (i - x < mlx->info->cell_sizeMap - 8)
         {
-            my_mlx_pixel_put(&mlx->data, i, j, mlx->color);
+            my_mlx_pixel_put(&mlx->data, i * 0.2, j * 0.2, mlx->color);
             i++;
         }
         j++;
@@ -208,10 +208,6 @@ void	map3D(t_mlx *mlx)
 				
 			int color = get_texture_color(mlx, offset, j * ((double)mlx->image.y / (double)wallHeight));
 			topPixel = ((WIN_H - wallHeight) / 2) + j;
-			// if (topPixel >= WIN_H)
-			// 	topPixel = WIN_H - 1;
-			// if (topPixel < 0)
-			// 	topPixel = 0;
 			my_mlx_pixel_put(&mlx->data , i, topPixel, color);
 			j++;
 		}

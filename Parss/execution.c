@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:42:45 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/26 00:21:45 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/27 01:23:42 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,16 +89,16 @@ int	map_collisions2(t_mlx *mlx, int Cx, int Cy)
 
 int	keypress(t_mlx *mlx)
 {
+	int x_save = mlx->pos->virtual_px;
+	int y_save = mlx->pos->virtual_py;
 	if (mlx->pos->_s)
 	{
 		if (map_collisions(mlx, mlx->pos->virtual_px - mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4, mlx->pos->virtual_py + mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4))
 			return 1;
 		mlx->pos->virtual_px -= mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
 		mlx->pos->virtual_py += mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
-		// if (map_collisions2(mlx, mlx->pos->map_px - (mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4), mlx->pos->map_py + mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4))
-		// 	return 1;
-		// mlx->pos->map_px -= mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
-		// mlx->pos->map_py += mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
+		mlx->pos->map_px += mlx->pos->virtual_px - x_save;
+		mlx->pos->map_py += mlx->pos->virtual_py - y_save;
 	}
 	if (mlx->pos->_w)
 	{
@@ -106,10 +106,8 @@ int	keypress(t_mlx *mlx)
 			return 1;
 		mlx->pos->virtual_px += mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
 		mlx->pos->virtual_py -= mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
-		// if (map_collisions2(mlx, mlx->pos->map_px + (mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4), mlx->pos->map_py - mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4))
-		// 	return 1;
-		// mlx->pos->map_px += mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
-		// mlx->pos->map_py -= mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
+		mlx->pos->map_px += mlx->pos->virtual_px - x_save;
+		mlx->pos->map_py += mlx->pos->virtual_py - y_save;
 	}
 	if (mlx->pos->_a)
 	{
@@ -117,10 +115,8 @@ int	keypress(t_mlx *mlx)
 			return 1;
 		mlx->pos->virtual_px -= mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
 		mlx->pos->virtual_py -= mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
-		if (map_collisions2(mlx, mlx->pos->map_px - (mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4), mlx->pos->map_py - mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4))
-			return 1;
-		mlx->pos->map_px -= mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
-		mlx->pos->map_py -= mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
+		mlx->pos->map_px += mlx->pos->virtual_px - x_save;
+		mlx->pos->map_py += mlx->pos->virtual_py - y_save;
 	}
 	if (mlx->pos->_d)
 	{
@@ -128,10 +124,8 @@ int	keypress(t_mlx *mlx)
 			return 1;
 		mlx->pos->virtual_py += mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
 		mlx->pos->virtual_px += mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
-		if (map_collisions2(mlx, mlx->pos->map_px + (mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4), mlx->pos->map_py + mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4))
-			return 1;
-		mlx->pos->map_px += mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
-		mlx->pos->map_py += mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
+		mlx->pos->map_px += mlx->pos->virtual_px - x_save;
+		mlx->pos->map_py += mlx->pos->virtual_py - y_save;
 	}
 	if (mlx->pos->right_arrow)
 	{
@@ -147,13 +141,12 @@ int	keypress(t_mlx *mlx)
 	}
 	mlx->pos->x_cell = floor(mlx->pos->virtual_px / CELL_SIZE);
 	mlx->pos->y_cell = floor(mlx->pos->virtual_py / CELL_SIZE);
-	// printf("%f %f\n", mlx->pos->virtual_px, mlx->pos->virtual_py);
 	
 	clear_draw(&mlx);
 	create_trigonometric_tables(6480, mlx->table, 0);
 	casting_rays(mlx->table, mlx->rays, mlx->pos);
-	// miniMap(mlx);
 	map3D(mlx);
+	miniMap(mlx);
 	return (0);
 }
 
@@ -164,7 +157,6 @@ int	mouse_move(int x, int y, t_mlx *mlx)
 	if (x > 0 && x < WIN_W)
 	{
 		mlx_mouse_hide();
-		// mlx->pos->rotationAngle = mlx->pos->rotationAngle + (((WIN_W/2) - x) * (M_PI / 180)) / 20;
 		mlx_mouse_move(mlx->win_ptr, WIN_W / 2, WIN_H / 2);
 		mlx->pos->tmpX = WIN_W / 2;
 	}
