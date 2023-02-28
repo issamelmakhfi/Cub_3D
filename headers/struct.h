@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:16:30 by Ma3ert            #+#    #+#             */
-/*   Updated: 2023/02/27 21:29:15 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/28 23:52:11 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,13 @@ typedef	struct s_map
 	char	*map_tab;
 	char	*elements;
 	int		check;
-	char			*path_N;
-	char			*path_S;
-	char			*path_E;
-	char			*path_A;
 	struct s_map	*next;
 }	t_map;
 
 typedef struct s_info
 {
 	char			**map_arr;
+	char			**elements;
 	int				map_h;
 	int				map_w;
 	int				cell_size;
@@ -74,7 +71,8 @@ typedef struct s_info
 	char			*path_N;
 	char			*path_S;
 	char			*path_E;
-	char			*path_A;
+	char			*path_W;
+	char			*texture;
 	t_map			*map;
 }	t_info;
 
@@ -87,6 +85,7 @@ typedef struct s_position
 	double	map_px;
 	double	map_py;
 	double	pov;
+	int		povTextur;
 	int		down_arrow;
 	int		up_arrow;
 	int		left_arrow;
@@ -98,6 +97,9 @@ typedef struct s_position
 	double	space;
 	int		miniMap;
 	int		b_cells;
+	int		wall_color;
+	int		wallHeight;
+	int	offset;
 	t_info	*info;
 }	t_position;
 
@@ -141,13 +143,20 @@ typedef struct s_table
 typedef struct s_image
 {
 	void	*img;
-	int	*addr;
+	int		*addr;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
 	int		x;
 	int		y;
 }	t_image;
+typedef struct s_texter
+{
+	t_image	E_img;
+	t_image	N_img;
+	t_image	S_img;
+	t_image	W_img;
+}	t_texter;
 typedef struct s_mlx
 {
 	void	*ptr;
@@ -163,6 +172,7 @@ typedef struct s_mlx
 	t_position	*pos;
 	t_table	*table;
 	t_image	image;
+	t_texter	textur;
 }	t_mlx;
 
 #endif

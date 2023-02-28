@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:49:10 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/27 20:52:57 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/01 00:25:21 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,45 +175,80 @@ void	drawCell(t_mlx *mlx)
 
 void	xpm_image(t_mlx *mlx)
 {
-	mlx->image.img = mlx_xpm_file_to_image(mlx->ptr, mlx->info->map->path_N, &mlx->image.x, &mlx->image.y);
-	mlx->image.addr =(int*)mlx_get_data_addr(mlx->image.img, &mlx->image.bits_per_pixel, &mlx->image.line_length, &mlx->image.endian);
+	mlx->textur.E_img.img = mlx_xpm_file_to_image(mlx->ptr, mlx->info->path_E ,&mlx->textur.E_img.x, &mlx->textur.E_img.y);
+	mlx->textur.N_img.img = mlx_xpm_file_to_image(mlx->ptr, mlx->info->path_N ,&mlx->textur.N_img.x, &mlx->textur.N_img.y);
+	mlx->textur.S_img.img = mlx_xpm_file_to_image(mlx->ptr, mlx->info->path_S ,&mlx->textur.S_img.x, &mlx->textur.S_img.y);
+	mlx->textur.W_img.img = mlx_xpm_file_to_image(mlx->ptr, mlx->info->path_W ,&mlx->textur.W_img.x, &mlx->textur.W_img.y);
+	
+	mlx->textur.E_img.addr =(int*)mlx_get_data_addr(mlx->textur.E_img.img, &mlx->textur.E_img.bits_per_pixel, &mlx->textur.E_img.line_length, &mlx->textur.E_img.endian);
+	mlx->textur.N_img.addr =(int*)mlx_get_data_addr(mlx->textur.N_img.img, &mlx->textur.N_img.bits_per_pixel, &mlx->textur.N_img.line_length, &mlx->textur.N_img.endian);
+	mlx->textur.S_img.addr =(int*)mlx_get_data_addr(mlx->textur.S_img.img, &mlx->textur.S_img.bits_per_pixel, &mlx->textur.S_img.line_length, &mlx->textur.S_img.endian);
+	mlx->textur.W_img.addr =(int*)mlx_get_data_addr(mlx->textur.W_img.img, &mlx->textur.W_img.bits_per_pixel, &mlx->textur.W_img.line_length, &mlx->textur.W_img.endian);
 }
 
-int get_texture_color (t_mlx *mlx, int x, int y)
+int	get_offset(int direction, int x, int y, int img_x)
 {
-    int a;
-	if (x >= mlx->image.x - 1 || y >= mlx->image.y - 1 || x < 0 || y < 0)
+	if (direction == 'v')
+		return (y % CELL_SIZE * ((double)img_x / CELL_SIZE));
+	else
+		return (x % CELL_SIZE * ((double)img_x / CELL_SIZE));
+}
+
+int get_texture_color (t_mlx *mlx, int y, int i)
+{
+    int color = 0;
+	t_image tmp_image;
+
+	if (mlx->pos->povTextur == E)
+		tmp_image = mlx->textur.E_img;
+	if (mlx->pos->povTextur == N)
+		tmp_image = mlx->textur.N_img;
+	if (mlx->pos->povTextur == S)
+		tmp_image = mlx->textur.S_img;
+	if (mlx->pos->povTextur == W)
+		tmp_image = mlx->textur.W_img;
+	y *= (double)tmp_image.y / (double)mlx->pos->wallHeight;
+	mlx->pos->offset = get_offset(mlx->rays[i].first , mlx->rays[i].x_save , mlx->rays[i].y_save, tmp_image.x);
+	if (mlx->pos->offset >= tmp_image.x - 1 || y  >= tmp_image.y - 1 || mlx->pos->offset < 0 || y < 0)
 		return (0);
-    a = mlx->image.addr[y * mlx->image.x + x];
-    return (a);
+	color = tmp_image.addr[y * tmp_image.x + mlx->pos->offset];
+    return (color);
 }
 
 void	map3D(t_mlx *mlx)
 {
-	int	wallHeight =  0;
 	int	topPixel;
 	double dis;
 	int i = 0;
 	int j;
-	int offset = 0;
 	
 	drawCell(mlx);
 	xpm_image(mlx);
 	while (i < N_RAY)
 	{
 		dis = mlx->rays[i].save_distance * mlx->table->cos_table[abs(N_RAY / 2 - i)];
-		wallHeight = (WIN_H / dis) * CELL_SIZE;
+		mlx->pos->wallHeight = (WIN_H / dis) * CELL_SIZE;
 		j = 0;
 		if (mlx->rays[i].first == 'v')
-			offset = (int)mlx->rays[i].y_save % CELL_SIZE * ((double)mlx->image.x / CELL_SIZE);
-		else
-			offset = (int)mlx->rays[i].x_save % CELL_SIZE * ((double)mlx->image.x / CELL_SIZE);
-		if (((WIN_H - wallHeight) / 2) <= 0)
-			j  = -1 * (((WIN_H - wallHeight) / 2));
-		while (j < wallHeight)
 		{
-			int color = get_texture_color(mlx, offset, j * ((double)mlx->image.y / (double)wallHeight));
-			topPixel = ((WIN_H - wallHeight) / 2) + j;
+			if (mlx->rays[i].ray_pov >= 0 && mlx->rays[i].ray_pov <= 180)
+				mlx->pos->povTextur = E;
+			if (mlx->rays[i].ray_pov >= 180 && mlx->rays[i].ray_pov <= 360)
+				mlx->pos->povTextur = W;
+		}
+		else if (mlx->rays[i].first == 'h')
+		{
+			if ((mlx->rays[i].ray_pov >= 0 && mlx->rays[i].ray_pov <= 90) || (mlx->rays[i].ray_pov >= 270 && mlx->rays[i].ray_pov < 360))
+				mlx->pos->povTextur = N;
+			else
+				mlx->pos->povTextur = S;
+		}
+		if (((WIN_H - mlx->pos->wallHeight) / 2) <= 0)
+			j  = -1 * (((WIN_H - mlx->pos->wallHeight) / 2));
+		while (j < mlx->pos->wallHeight)
+		{
+			int color = get_texture_color(mlx, j, i);
+			topPixel = ((WIN_H - mlx->pos->wallHeight) / 2) + j;
 			if (topPixel > WIN_H)
 				break;
 			my_mlx_pixel_put(&mlx->data , i, topPixel, color);

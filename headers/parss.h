@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:05:13 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/21 21:46:02 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/28 14:17:04 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int     checkDup(t_map *elements, char  *first_elements, int len);
 char    *join_rest(char *str, int len);
 int check_colors(char **colors);
 int charachtersCHeck(char ch, int *check);
+void	lsttoarray2(t_map *map, t_info *info);
 
 /////////////////////// MLX //////////////////////////////
 

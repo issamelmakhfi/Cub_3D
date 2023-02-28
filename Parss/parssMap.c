@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:40:07 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/27 21:27:11 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/28 14:17:33 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void    searchMap(t_info *info, t_map *head, t_map *Chead, t_position *pos)
 	if (check_elements(Chead))
         error_handler("ELEMENTS ERROR", 1);
     lsttoarray(head, info);
+	lsttoarray2(Chead, info);
 	initData(info, pos);
     len = getLongestLen(info->map_arr);
     while (info->map_arr[i])
@@ -123,7 +124,6 @@ void    searchMap(t_info *info, t_map *head, t_map *Chead, t_position *pos)
     }
     if (!check)
         error_handler("NEED PLAYER", 1);
-	printf("%s\n", Chead->path_N);
 }
 
 void	fill_data(char *av, t_map **head, t_map **Chead)

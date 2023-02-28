@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:42:45 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/27 20:05:29 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/01 00:23:04 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void clear_draw(t_mlx **mlx)
 {
 	mlx_destroy_image((*mlx)->ptr, (*mlx)->data.img);
+	mlx_clear_window((*mlx)->ptr, (*mlx)->win_ptr);
 	(*mlx)->data.img = mlx_new_image((*mlx)->ptr, WIN_W, WIN_H);
 	(*mlx)->data.addr = mlx_get_data_addr((*mlx)->data.img, &(*mlx)->data.bits_per_pixel, &(*mlx)->data.line_length, &(*mlx)->data.endian);
 }
@@ -83,18 +84,6 @@ int	map_collisions(t_mlx *mlx, int Cx, int Cy)
 	return (0);
 }
 
-int	map_collisions2(t_mlx *mlx, int Cx, int Cy)
-{
-	int	X;
-	int	Y;
-
-	X = roundf(Cx / mlx->info->cell_sizeMap);
-	Y = roundf(Cy / mlx->info->cell_sizeMap);
-	if (mlx->info->map_arr[Y][X] && mlx->info->map_arr[Y][X] == '1')
-		return (1);
-	return (0);
-}
-
 int	keypress(t_mlx *mlx)
 {
 	int x_save = mlx->pos->virtual_px;
@@ -140,13 +129,13 @@ int	keypress(t_mlx *mlx)
 	{
 		if (mlx->pos->pov > 360)
 			mlx->pos->pov = 0;
-		mlx->pos->pov += 3;
+		mlx->pos->pov += 4;
 	}
 	if (mlx->pos->left_arrow)
 	{
 		if (mlx->pos->pov < 0)
 			mlx->pos->pov += 360;
-		mlx->pos->pov -= 3;
+		mlx->pos->pov -= 4;
 	}
 	if (mlx->pos->miniMap)
 	{

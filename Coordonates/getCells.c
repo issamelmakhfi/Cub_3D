@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:07:02 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/27 18:08:20 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/02/28 14:37:19 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void    initData(t_info *info, t_position *pos)
     int j;
     int idx;
     char    *str;
+	char	**tmp;
 
     i = 0;
     j = 0;
@@ -67,5 +68,20 @@ void    initData(t_info *info, t_position *pos)
 	pos->map_px = info->cell_sizeMap * (pos->x_cell + 0.5);
 	pos->map_py = info->cell_sizeMap * (pos->y_cell + 0.5);
 	pos->space = 0.3;
-	pos->b_cells = info->cell_sizeMap * 0.1 ;
+	pos->b_cells = info->cell_sizeMap * 0.1;
+	i = 0;
+	while (info->elements[i])
+	{
+		tmp = ft_split(info->elements[i], ' ');
+		if (!ft_strncmp(tmp[0], "NO", 2))
+			info->path_N = ft_strdup(tmp[1]);
+		else if (!ft_strncmp(tmp[0], "SO", 2))
+			info->path_S = ft_strdup(tmp[1]);
+		else if (!ft_strncmp(tmp[0], "WE", 2))
+			info->path_W = ft_strdup(tmp[1]);
+		else if (!ft_strncmp(tmp[0], "EA", 2))
+			info->path_E = ft_strdup(tmp[1]);
+		free_tab(tmp);
+		i++;
+	}
 }
