@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution.c                                        :+:      :+:    :+:   */
+/*   Draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:42:45 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/01 00:23:04 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/01 20:46:40 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	keyup(int code, t_mlx *mlx)
 {
 	if (code == 49)
 	{
-		mlx->pos->b_cells = 3;
+		mlx->pos->b_cells = mlx->info->cell_sizeMap * 0.3;
 		mlx->pos->miniMap = 0;
 		mlx->pos->space = 0.3;
 	}
@@ -139,7 +139,7 @@ int	keypress(t_mlx *mlx)
 	}
 	if (mlx->pos->miniMap)
 	{
-		mlx->pos->b_cells = 2;
+		mlx->pos->b_cells = mlx->info->cell_sizeMap * 0.5;
 		mlx->pos->space = 0.8;
 	}
 	mlx->pos->x_cell = floor(mlx->pos->virtual_px / CELL_SIZE);
@@ -182,8 +182,8 @@ void	start_execution(t_info *info, t_position *pos, t_mlx *mlx)
 	mlx->pos = pos;
 	mlx->rays = rays;
 	mlx->table = table;
+	xpm_image(mlx);
 
-	// mlx->pos->rotationAngle = mlx->pos->pov * (M_PI / 180);
 	mlx_hook(mlx->win_ptr, 2, (1L<<0), keyD, mlx);
 	mlx_hook(mlx->win_ptr, 3, (1L<<1), keyup, mlx);
 	// mlx_hook(mlx->win_ptr, 6, 0L,&mouse_move, mlx);

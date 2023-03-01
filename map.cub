@@ -1,7 +1,7 @@
-NO  ./textures/BlueWalls.xpm
-SO  ./textures/BlueWalls.xpm
-WE  ./textures/BlueWalls.xpm
-EA  ./textures/BlueWalls.xpm
+NO  ./textures/TECH.xpm
+SO  ./textures/TECH.xpm
+WE  ./textures/TECH.xpm
+EA  ./textures/TECH.xpm
 
 F 48, 168, 58
 C 51, 004, 056

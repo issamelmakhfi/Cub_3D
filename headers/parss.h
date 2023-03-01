@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:05:13 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/28 14:17:04 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/01 15:24:53 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,6 @@ void	lsttoarray2(t_map *map, t_info *info);
 void    miniMap(t_mlx *mlx);
 void	start_execution(t_info *info, t_position *pos, t_mlx *mlx);
 void    draw(t_mlx *mlx);
+void	xpm_image(t_mlx *mlx);
 
 #endif

@@ -1,9 +1,9 @@
 SRC = main.c ./Parss/parssMap.c  ./Parss/errorHandler.c ./Parss/Utils.c ./Parss/Utils2.c  ./Parss/Utils3.c \
 	./Coordonates/getCells.c \
-	./Parss/execution.c \
+	./Parss/Draw.c \
 	./42Get_next_line/get_next_line.c \
 	./42Get_next_line/get_next_line_utils.c \
-	 ./exec/raycasting.c \
+	./exec/raycasting.c \
 	./exec/send_ray.c \
 	./exec/cells.c ./exec/raycasting_tools.c
 
@@ -15,9 +15,9 @@ HEADERS = ./headers/cub3d.h ./headers/struct.h ./headers/parss.h ./42Get_next_li
 
 CC = cc
 
-MLX_FLAGS = -framework OpenGL -framework AppKit 
+MLX_FLAGS = -framework OpenGL -framework AppKit
 
-FLAGS = -Wall -Wextra -Werror -g 
+FLAGS = -Wall -Wextra -Werror -g -o3
 # -fsanitize=address
 
 LIBFT = 42Libft/libft.a

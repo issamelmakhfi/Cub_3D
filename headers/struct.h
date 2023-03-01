@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:16:30 by Ma3ert            #+#    #+#             */
-/*   Updated: 2023/02/28 23:52:11 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/01 19:44:15 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # define E 90
 # define S 180
 # define W 270
+# define F -1
 # define WIN_W 1080
 # define WIN_H 520
 # define N_RAY WIN_W
@@ -156,6 +157,7 @@ typedef struct s_texter
 	t_image	N_img;
 	t_image	S_img;
 	t_image	W_img;
+	t_image	F_img;
 }	t_texter;
 typedef struct s_mlx
 {

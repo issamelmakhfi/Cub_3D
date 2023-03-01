@@ -1,7 +1,7 @@
-NO  ./textures/test.xpm
-SO  ./textures/x.xpm
+NO  ./textures/pr.xpm
+SO  ./textures/pr.xpm
 WE  ./textures/pr.xpm
-EA  ./textures/BlueWalls.xpm
+EA  ./textures/pr.xpm
 
 F 48, 168, 58
 C 51, 004, 056
