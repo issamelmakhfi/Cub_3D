@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cells.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 18:50:24 by Ma3ert            #+#    #+#             */
-/*   Updated: 2023/02/20 21:37:16 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/01 14:42:49 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	calcul_cells(t_ray *ray)
 {
-	ray->xcell_v = ray->xbound / CELL_SIZE; //(xcell in map)
+	ray->xcell_v = ray->xbound / CELL_SIZE;
 	ray->ycell_v = ray->yi / CELL_SIZE;
-	ray->ycell_h = ray->ybound / CELL_SIZE; //ycell in map
+	ray->ycell_h = ray->ybound / CELL_SIZE;
 	ray->xcell_h = ray->xi / CELL_SIZE;
 	if (ray->ray_pov >= 180 && ray->ray_pov < 360)
 		ray->xcell_v -= 1;
@@ -72,7 +72,7 @@ void	check_skip(t_ray *ray, t_position *position)
 				ray->h_skip = 1;
 		if (ray->xcell_v > position->x_cell || ray->ycell_v > position->y_cell
 			|| ray->xcell_v < 0 || ray->ycell_v < 0)
-			ray->v_skip = 1;
+				ray->v_skip = 1;
 	}
 	else if (ray->quadrant == 1)
 	{

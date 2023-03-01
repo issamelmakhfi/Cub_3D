@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 15:20:18 by Ma3ert            #+#    #+#             */
-/*   Updated: 2023/02/21 12:49:38 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/01 14:36:23 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,24 +81,24 @@ void	calcul_first_vertical(t_table *table, t_ray *ray, t_position *position)
 		ray->yi = diff + ray->yi;
 }
 
-void	calcul_first_horizontal(t_table *table, t_ray *ray, t_position *position)
+void	calcul_first_horizontal(t_table *table, t_ray *ray, t_position *pos)
 {
 	double	diff;
 	double	side;
 
-	diff = position->virtual_px;
+	diff = pos->virtual_px;
 	side = 0.0;
 	if (ray->ray_pov > 270 || ray->ray_pov <= 90)
 	{
 		ray->y_step = CELL_SIZE * (-1.0);
-		ray->ybound = position->y_cell * CELL_SIZE;
-		side = position->virtual_py - ray->ybound;
+		ray->ybound = pos->y_cell * CELL_SIZE;
+		side = pos->virtual_py - ray->ybound;
 	}
 	else
 	{
 		ray->y_step = CELL_SIZE;
-		ray->ybound = (position->y_cell + 1) * CELL_SIZE;
-		side = ray->ybound - position->virtual_py;
+		ray->ybound = (pos->y_cell + 1) * CELL_SIZE;
+		side = ray->ybound - pos->virtual_py;
 	}
 	if (ray->quadrant == 2 || ray->quadrant == 4)
 		ray->xi = calcul_adjacent(table->tan_table[ray->index], side);
@@ -128,7 +128,6 @@ void	casting_rays(t_table *table, t_ray *rays, t_position *position)
 		rays[i].v_skip = 0;
 		rays[i].first = 0;
 		send_ray(table, &rays[i], position);
-		// printf("ybound: %lf xi: %lf xbound: %lf yi: %lf hs: %d vs: %d\n", rays[i].ybound, rays[i].xi, rays[i].xbound, rays[i].yi, rays[i].h_skip, rays[i].v_skip);
 		i++;
 	}
 }
