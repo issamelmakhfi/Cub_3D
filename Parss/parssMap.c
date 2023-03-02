@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:40:07 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/28 14:17:33 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/02 02:14:21 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,37 +29,37 @@ int get_direction(char **direction)
 
 int check_elements(t_map *list_elements)
 {
-    int i;
-    t_map   *list;
-    char **elements;
+	int i;
+	t_map   *list;
+	char **elements;
 
-    i = 0;
-    list = list_elements;
-    while (list)
-    {
-        list->check = 0;
-        elements = ft_split(list->elements, ' ');
-        if (elements[0] && ft_strlen(elements[0]) == 2)
-        {
-            while (elements[i])
-                i++;
-            if (i != 2 || get_direction(elements) || checkDup(list, elements[0], 2))
-                return (1);
-        }
-        else if (elements[0] && ft_strlen(elements[0])  == 1)
-        {
-            while (elements[i])
-                i++;
-            if (i != 4 || check_colors(elements) || checkDup(list, elements[0], 1))
-                return (1);
-        }
-        else
-            return (1);
-        free_tab(elements);
-        elements = NULL;
-        list = list->next;
-    }
-    return (0);
+	i = 0;
+	list = list_elements;
+	while (list)
+	{
+		list->check = 0;
+		elements = ft_split(list->elements, ' ');
+		if (elements[0] && ft_strlen(elements[0]) == 2)
+		{
+			while (elements[i])
+				i++;
+			if (i != 2 || get_direction(elements) || check_dup(list, elements[0], 2))
+				return (1);
+		}
+		else if (elements[0] && ft_strlen(elements[0])  == 1)
+		{
+			while (elements[i])
+				i++;
+			if (i != 4 || check_colors(elements) || check_dup(list, elements[0], 1))
+				return (1);
+		}
+		else
+			return (1);
+		free_tab(elements);
+		elements = NULL;
+		list = list->next;
+	}
+	return (0);
 }
 
 void player_check(char **map_arr, int i, int j)
@@ -87,7 +87,7 @@ void player_check(char **map_arr, int i, int j)
     }
 }
 
-void    searchMap(t_info *info, t_map *head, t_map *Chead, t_position *pos)
+void    searchMap(t_info *info, t_map *head, t_map *head2, t_position *pos)
 {
     int i;
     int j;
@@ -97,12 +97,12 @@ void    searchMap(t_info *info, t_map *head, t_map *Chead, t_position *pos)
     i = 0;
     j = 0;
     check = 0;
-	if (check_elements(Chead))
+	if (check_elements(head2))
         error_handler("ELEMENTS ERROR", 1);
     lsttoarray(head, info);
-	lsttoarray2(Chead, info);
-	initData(info, pos);
-    len = getLongestLen(info->map_arr);
+	lsttoarray2(head2, info);
+	init_data(info, pos);
+    len = get_longest_len(info->map_arr);
     while (info->map_arr[i])
     {
         info->map_arr[i] = join_rest(info->map_arr[i], len);
@@ -114,7 +114,7 @@ void    searchMap(t_info *info, t_map *head, t_map *Chead, t_position *pos)
         j = 0;
         while (info->map_arr[i][j])
         {
-            if (charachtersCHeck(info->map_arr[i][j], &check))
+            if (char_check(info->map_arr[i][j], &check))
                 error_handler("MAP ERROR0", 1);
             if (info->map_arr[i][j] == ' ' || info->map_arr[i][j] == '2')
                 player_check(info->map_arr, i, j);
@@ -126,60 +126,93 @@ void    searchMap(t_info *info, t_map *head, t_map *Chead, t_position *pos)
         error_handler("NEED PLAYER", 1);
 }
 
-void	fill_data(char *av, t_map **head, t_map **Chead)
-{
-    int fd;
-    char *str;
-    t_map   *tmp = NULL; 
-    t_map   *cub = NULL;
+// void	fill_list(char *str, t_map ***head)
+// {
+// 	t_map	*tmp;
 
-    fd = open(av,  O_RDONLY);
-    if (fd < 0)
-        error_handler("No such file or directory", 1);
-    str = get_next_line(fd);
-    int i = 0;
-    while (str)
-    {
-        if (i < 6)
-        {
-            if (str[0] == '\0')
-            {
-                free(str);
-                str = get_next_line(fd);
-                continue;
-            }
-            if (!(*Chead)) {
-                (*Chead) = cub = malloc(sizeof(t_map));
-                cub->elements = strdup(str);
-                cub->next = NULL;
-            } else {
-                cub->next = malloc(sizeof(t_map));
-                cub = cub->next;
-                cub->elements = strdup(str);
-                cub->next = NULL;
-            }
-            i++;
-        }
-        else
-        {
-            if (!str[0])
-            {
-                free(str);
-                str = get_next_line(fd);
-                continue;
-            }
-            if (!(*head)) {
-                (*head) = tmp = malloc(sizeof(t_map));
-                tmp->map_tab = strdup(str);
-                tmp->next = NULL;
-            } else {
-                tmp->next = malloc(sizeof(t_map));
-                tmp = tmp->next;
-                tmp->map_tab = strdup(str);
-                tmp->next = NULL;
-            }
-        }
-        free(str);
-        str = get_next_line(fd);
-    }
+// 	tmp = NULL;
+// 	if (!(*head))
+// 	{
+// 		tmp = malloc(sizeof(t_map));
+// 		*head = &tmp;
+// 		tmp->elements = strdup(str);
+// 		tmp->next = NULL;
+// 	}
+// 	else
+// 	{
+// 		tmp->next = malloc(sizeof(t_map));
+// 		tmp = tmp->next;
+// 		tmp->elements = strdup(str);
+// 		tmp->next = NULL;
+// 	}
+// }
+
+void	fill_data(char *av, t_map **head, t_map **head2)
+{
+	int		fd;
+	char	*str;
+	t_map	*tmp;
+	t_map	*cub;
+	int		i;
+
+	tmp = NULL;
+	cub = NULL;
+	i = 0;
+	fd = open(av,  O_RDONLY);
+	if (fd < 0)
+		error_handler("No such file or directory", 1);
+	str = get_next_line(fd);
+	while (str)
+	{
+		if (i < 6)
+		{
+			if (str[0] == '\0')
+			{
+				free(str);
+				str = get_next_line(fd);
+				continue ;
+			}
+			if (!(*head2))
+			{
+				cub = malloc(sizeof(t_map));
+				*head2 = cub;
+				cub->elements = strdup(str);
+				cub->next = NULL;
+			}
+			else
+			{
+				cub->next = malloc(sizeof(t_map));
+				cub = cub->next;
+				cub->elements = strdup(str);
+				cub->next = NULL;
+			}
+			i++;
+		}
+		else
+		{
+			if (!str[0])
+			{
+				free(str);
+				str = get_next_line(fd);
+				continue ;
+			}
+			// fill_list(str, head);
+			if (!(*head))
+			{
+				tmp = malloc(sizeof(t_map));
+				(*head) = tmp;
+				tmp->map_tab = strdup(str);
+				tmp->next = NULL;
+			}
+			else
+			{
+				tmp->next = malloc(sizeof(t_map));
+				tmp = tmp->next;
+				tmp->map_tab = strdup(str);
+				tmp->next = NULL;
+			}
+		}
+		free(str);
+		str = get_next_line(fd);
+	}
 }

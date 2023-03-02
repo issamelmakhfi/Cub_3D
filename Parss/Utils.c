@@ -6,70 +6,42 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 20:12:05 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/28 14:15:39 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/02 01:05:48 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/parss.h"
 
-
-void    check_path(char *path)
+void	check_path(char *path)
 {
-    int fd;
+	int	fd;
 
-    fd = open(path, O_RDONLY);
-    if (fd < 0)
-        error_handler("no such file or directory", 127);
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		error_handler("no such file or directory", 127);
 }
 
-void    free_tab(char **tab)
+void	free_tab(char **tab)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (tab[i] != NULL)
-    {
-        free(tab[i]);
-        i++;        
-    }
-    free(tab);
-}
-
-char    *get_filename_ext(char *filename)
-{
-    char *ptr;
-
-    ptr = ft_strchr(filename, '.');
-    if (!ptr)
-        return NULL;
-    return (ptr);
-}
-
-int check_digit(char *str)
-{
-    int i = 0;
-
-    while (str[i])
-    {
-        if (!ft_isdigit(str[i++]))
-            return (1);
-    }
-    return (0);
-}
-
-int	ft_lstsize(t_map *lst)
-{
-	int	len;
-
-	len = 0;
-	if (!lst)
-		return (0);
-	while (lst)
+	i = 0;
+	while (tab[i] != NULL)
 	{
-		len++;
-		lst = lst->next;
+		free(tab[i]);
+		i++;
 	}
-	return (len);
+	free(tab);
+}
+
+char	*get_filename_ext(char *filename)
+{
+	char	*ptr;
+
+	ptr = ft_strchr(filename, '.');
+	if (!ptr)
+		return (NULL);
+	return (ptr);
 }
 
 void	lsttoarray(t_map *map, t_info *info)
@@ -79,9 +51,9 @@ void	lsttoarray(t_map *map, t_info *info)
 
 	i = 0;
 	list = map;
-    info->map_arr = malloc(sizeof(char *) * ft_lstsize(list) + 1);
-    if (!info->map_arr)
-        return ;
+	info->map_arr = malloc(sizeof(char *) * ft_lstsize(list) + 1);
+	if (!info->map_arr)
+		return ;
 	while (list)
 	{
 		(info->map_arr)[i++] = ft_strdup(list->map_tab);
@@ -97,9 +69,9 @@ void	lsttoarray2(t_map *map, t_info *info)
 
 	i = 0;
 	list = map;
-    info->elements = malloc(sizeof(char *) * ft_lstsize(list) + 1);
-    if (!info->elements)
-        return ;
+	info->elements = malloc(sizeof(char *) * ft_lstsize(list) + 1);
+	if (!info->elements)
+		return ;
 	while (list)
 	{
 		info->elements[i++] = ft_strdup(list->elements);

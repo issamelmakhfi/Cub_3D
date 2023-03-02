@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:16:30 by Ma3ert            #+#    #+#             */
-/*   Updated: 2023/03/01 19:44:15 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/02 00:07:27 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,10 @@
 # define _A 0
 # define _S 1
 # define _D 2
-#define PI 3.142857
+# define PI 3.142857
 # define RED 0xFF0000
 
-
-
-typedef struct	s_data 
+typedef struct s_data
 {
 	void	*img;
 	void	*xpm_img;
@@ -53,11 +51,11 @@ typedef struct	s_data
 	int		endian;
 }	t_data;
 
-typedef	struct s_map
+typedef struct s_map
 {
-	char	*map_tab;
-	char	*elements;
-	int		check;
+	char			*map_tab;
+	char			*elements;
+	int				check;
 	struct s_map	*next;
 }	t_map;
 
@@ -74,6 +72,7 @@ typedef struct s_info
 	char			*path_E;
 	char			*path_W;
 	char			*texture;
+	int				color;
 	t_map			*map;
 }	t_info;
 
@@ -100,7 +99,10 @@ typedef struct s_position
 	int		b_cells;
 	int		wall_color;
 	int		wallHeight;
-	int	offset;
+	int		offset;
+	double	dis;
+	int		top_pixel;
+	double	adapter;
 	t_info	*info;
 }	t_position;
 
@@ -111,8 +113,8 @@ typedef struct s_ray
 	int			first;
 	int			v_skip;
 	int			h_skip;
-	double		x_save; //(x,y)
-	double		y_save; //(x,y)
+	double		x_save;
+	double		y_save;
 	double		ray_pov;
 	int			index;
 	double		xi ;
@@ -130,7 +132,7 @@ typedef struct s_ray
 	int			ycell_v;
 	int			xcell_h;
 	int			ycell_h;
-	double		save_distance; // distance between 7ayt :)
+	double		save_distance;
 	double		ray_h;
 	t_position	*player;
 }				t_ray;
@@ -159,21 +161,32 @@ typedef struct s_texter
 	t_image	W_img;
 	t_image	F_img;
 }	t_texter;
+
+typedef struct s_dda
+{
+	int		dx;
+	int		dy;
+	int		steps;
+	float	x_inc;
+	float	y_inc;
+	float	x_;
+	float	y_;
+}	t_dda;
 typedef struct s_mlx
 {
-	void	*ptr;
-	void	*win_ptr;
-	int		color;
-	int		x;
-	int		y;
-	int		Cx;
-	int		Cy;
-	t_info	*info;
-	t_data	data;
-	t_ray	*rays;
+	void		*ptr;
+	void		*win_ptr;
+	int			color;
+	int			x;
+	int			y;
+	int			Cx;
+	int			Cy;
+	t_info		*info;
+	t_data		data;
+	t_ray		*rays;
 	t_position	*pos;
-	t_table	*table;
-	t_image	image;
+	t_table		*table;
+	t_image		image;
 	t_texter	textur;
 }	t_mlx;
 

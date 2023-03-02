@@ -6,114 +6,104 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 21:50:39 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/02/18 20:35:10 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/02 01:06:02 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/parss.h"
 
-void    free_stuff(t_info *info, t_map *head, t_map *Chead)
+void	free_stuff(t_info *info, t_map *head, t_map *head2)
 {
-    free_tab(info->map_arr);
-    while (head)
-    {
-        free(head->map_tab);
-        free(head);
-        head = head->next;
-    }
-    while (Chead)
-    {
-        free(Chead->elements);
-        free(Chead);
-        Chead = Chead->next;
-    }
+	free_tab(info->map_arr);
+	while (head)
+	{
+		free(head->map_tab);
+		free(head);
+		head = head->next;
+	}
+	while (head2)
+	{
+		free(head2->elements);
+		free(head2);
+		head2 = head2->next;
+	}
+	free(info);
 }
 
-size_t  getLongestLen(char **str)
+size_t	get_longest_len(char **str)
 {
-    int i;
-    int  len;
+	int	i;
+	int	len;
 
-    i = 0;
-    len = 0;
-    while (str[i])
-    {
-        if (len < ft_strlen(str[i]))
-            len = ft_strlen(str[i]);
-        i++;
-    }
-    return (len);
+	i = 0;
+	len = 0;
+	while (str[i])
+	{
+		if (len < ft_strlen(str[i]))
+			len = ft_strlen(str[i]);
+		i++;
+	}
+	return (len);
 }
 
-int checkLine(char *line)
+int	check_dup(t_map *elements, char *first_elements, int len)
 {
-    int i;
+	t_map	*tmp;
+	int		check;
 
-    i = 0;
-    if (!line[0])
-        return (1);
-    while (line[i])
-    {
-        if (!ft_isdigit(line[i]))
-        {
-            if (line[i] == 'P' || line[i] == ' ')
-            {
-                i++;
-                continue;
-            }
-            else
-                return (1);
-        }
-        i++;
-    }
-    return (0);
+	tmp = elements;
+	check = 0;
+	while (tmp)
+	{
+		if (!ft_strncmp(tmp->elements, first_elements, len))
+			check++;
+		tmp = tmp->next;
+	}
+	if (check != 1)
+		return (1);
+	return (0);
 }
 
-int checkDup(t_map *elements, char  *first_elements, int len)
+char	*join_rest(char *str, int len)
 {
-    t_map *tmp;
-    int check = 0;
+	char	*tmp;
+	int		i;
 
-    tmp = elements;
-    while (tmp)
-    {
-        // printf("%s\n", tmp->elements);
-        if (!ft_strncmp(tmp->elements, first_elements, len))
-            check++;
-        tmp = tmp->next;
-    }
-    if (check != 1)
-        return (1);
-    return (0);
+	i = 0;
+	tmp = malloc(sizeof(char) * len + 1);
+	if (!tmp)
+		return (NULL);
+	while (i < len)
+	{
+		if (i < ft_strlen(str))
+			tmp[i] = str[i];
+		else
+			tmp[i] = '2';
+		i++;
+	}
+	tmp[i] = '\0';
+	i = 0;
+	while (tmp[i] == ' ')
+	{
+		tmp[i] = '2';
+		i++;
+	}
+	i = 0;
+	free(str);
+	return (tmp);
 }
 
-char    *join_rest(char *str, int len)
+int	ft_lstsize(t_map *lst)
 {
-    char    *tmp;
-    int s;
-    int i;
+	int	len;
 
-    i = 0;
-    tmp = malloc(sizeof(char) * len + 1);
-    if (!tmp)
-        return (NULL);
-    s = 0;
-    while (i < len)
-    {
-        if (i < ft_strlen(str))
-            tmp[i] = str[i];
-        else
-            tmp[i] = '2';
-        i++;
-    }
-    tmp[i] = '\0';
-    i = 0;
-    while (tmp[i] == ' ')
-    {
-        tmp[i] = '2';
-        i++;
-    }
-    i = 0;
-    free(str);
-    return (tmp);
+	len = 0;
+	if (!lst)
+		return (0);
+	while (lst)
+	{
+		len++;
+		lst = lst->next;
+	}
+	return (len);
 }

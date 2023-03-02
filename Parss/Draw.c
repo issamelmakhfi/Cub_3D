@@ -6,19 +6,11 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:42:45 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/01 20:46:40 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/02 00:41:54 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/cub3d.h"
-
-void clear_draw(t_mlx **mlx)
-{
-	mlx_destroy_image((*mlx)->ptr, (*mlx)->data.img);
-	mlx_clear_window((*mlx)->ptr, (*mlx)->win_ptr);
-	(*mlx)->data.img = mlx_new_image((*mlx)->ptr, WIN_W, WIN_H);
-	(*mlx)->data.addr = mlx_get_data_addr((*mlx)->data.img, &(*mlx)->data.bits_per_pixel, &(*mlx)->data.line_length, &(*mlx)->data.endian);
-}
 
 int	keyup(int code, t_mlx *mlx)
 {
@@ -47,7 +39,7 @@ int	keyup(int code, t_mlx *mlx)
 	return (0);
 }
 
-int	keyD(int code, t_mlx *mlx)
+int	key_press(int code, t_mlx *mlx)
 {
 	if (code == 49)
 		mlx->pos->miniMap = 1;
@@ -74,25 +66,27 @@ int	keyD(int code, t_mlx *mlx)
 
 int	map_collisions(t_mlx *mlx, int Cx, int Cy)
 {
-	int	X;
-	int	Y;
+	int	x;
+	int	y;
 
-	X = roundf(Cx / mlx->info->cell_size);
-	Y = roundf(Cy / mlx->info->cell_size);
-	if (mlx->info->map_arr[Y][X] && mlx->info->map_arr[Y][X] == '1')
+	x = roundf(Cx / mlx->info->cell_size);
+	y = roundf(Cy / mlx->info->cell_size);
+	if (mlx->info->map_arr[y][x] && mlx->info->map_arr[y][x] == '1')
 		return (1);
 	return (0);
 }
 
-int	keypress(t_mlx *mlx)
+int	key_handler(t_mlx *mlx)
 {
-	int x_save = mlx->pos->virtual_px;
-	int y_save = mlx->pos->virtual_py;
+	int	x_save;
+	int	y_save;
 
+	x_save = mlx->pos->virtual_px;
+	y_save = mlx->pos->virtual_py;
 	if (mlx->pos->_s)
 	{
 		if (map_collisions(mlx, mlx->pos->virtual_px - mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4, mlx->pos->virtual_py + mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4))
-			return 1;
+			return (1);
 		mlx->pos->virtual_px -= mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
 		mlx->pos->virtual_py += mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
 		mlx->pos->map_px += mlx->pos->virtual_px - x_save;
@@ -101,7 +95,7 @@ int	keypress(t_mlx *mlx)
 	if (mlx->pos->_w)
 	{
 		if (map_collisions(mlx, mlx->pos->virtual_px + mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4, mlx->pos->virtual_py - mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4))
-			return 1;
+			return (1);
 		mlx->pos->virtual_px += mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
 		mlx->pos->virtual_py -= mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
 		mlx->pos->map_px += mlx->pos->virtual_px - x_save;
@@ -110,7 +104,7 @@ int	keypress(t_mlx *mlx)
 	if (mlx->pos->_a)
 	{
 		if (map_collisions(mlx, mlx->pos->virtual_px - (mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4), mlx->pos->virtual_py - mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4))
-			return 1;
+			return (1);
 		mlx->pos->virtual_px -= mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
 		mlx->pos->virtual_py -= mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
 		mlx->pos->map_px += mlx->pos->virtual_px - x_save;
@@ -119,7 +113,7 @@ int	keypress(t_mlx *mlx)
 	if (mlx->pos->_d)
 	{
 		if (map_collisions(mlx, mlx->pos->virtual_px + (mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4), mlx->pos->virtual_py + mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4))
-			return 1;
+			return (1);
 		mlx->pos->virtual_py += mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
 		mlx->pos->virtual_px += mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
 		mlx->pos->map_px += mlx->pos->virtual_px - x_save;
@@ -147,48 +141,49 @@ int	keypress(t_mlx *mlx)
 	clear_draw(&mlx);
 	create_trigonometric_tables(6480, mlx->table, 0);
 	casting_rays(mlx->table, mlx->rays, mlx->pos);
-	map3D(mlx);
-	miniMap(mlx);
+	map_projection(mlx);
+	mini_map(mlx);
 	return (0);
 }
 
 
-int	mouse_move(int x, int y, t_mlx *mlx)
-{
-	(void)y;
-	if (x > 0 && x < WIN_W)
-	{
-		mlx_mouse_hide();
-		mlx_mouse_move(mlx->win_ptr, WIN_W / 2, WIN_H / 2);
-		// mlx->pos->tmpX = WIN_W / 2;
-	}
-	return 0;	
-}
+// int	mouse_move(int x, int y, t_mlx *mlx)
+// {
+// 	(void)y;
+// 	if (x > 0 && x < WIN_W)
+// 	{
+// 		mlx_mouse_hide();
+// 		mlx_mouse_move(mlx->win_ptr, WIN_W / 2, WIN_H / 2);
+// 		// mlx->pos->tmpX = WIN_W / 2;
+// 	}
+// 	return 0;	
+// }
 
 void	start_execution(t_info *info, t_position *pos, t_mlx *mlx)
 {
-	t_table	*table = malloc(sizeof(t_table));
-	t_ray *rays = malloc(sizeof(t_ray) * N_RAY);
-	
+	t_table	*table;
+	t_ray	*rays;
+
+	table = malloc(sizeof(t_table));
+	rays = malloc(sizeof(t_ray) * N_RAY);
 	pos->info = info;
 	mlx->ptr = mlx_init();
-    mlx->data.img = mlx_new_image(mlx->ptr, WIN_W, WIN_H);
+	mlx->data.img = mlx_new_image(mlx->ptr, WIN_W, WIN_H);
 	mlx->win_ptr = mlx_new_window(mlx->ptr, WIN_W, WIN_H, "Cub3D");
-	mlx->data.addr = mlx_get_data_addr(mlx->data.img, &mlx->data.bits_per_pixel, &mlx->data.line_length, &mlx->data.endian);
+	mlx->data.addr = mlx_get_data_addr(mlx->data.img, \
+	&mlx->data.bits_per_pixel, \
+	&mlx->data.line_length, &mlx->data.endian);
 	create_trigonometric_tables(6480, table, 0);
 	casting_rays(table, rays, pos);
-
 	mlx->info = info;
 	mlx->pos = pos;
 	mlx->rays = rays;
 	mlx->table = table;
 	xpm_image(mlx);
-
-	mlx_hook(mlx->win_ptr, 2, (1L<<0), keyD, mlx);
-	mlx_hook(mlx->win_ptr, 3, (1L<<1), keyup, mlx);
-	// mlx_hook(mlx->win_ptr, 6, 0L,&mouse_move, mlx);
-	mlx_loop_hook(mlx->ptr, keypress, mlx);
-    mlx_loop(mlx->ptr);
+	mlx_hook(mlx->win_ptr, 2, (1L << 0), key_press, mlx);
+	mlx_hook(mlx->win_ptr, 3, (1L << 1), keyup, mlx);
+	mlx_loop_hook(mlx->ptr, key_handler, mlx);
+	mlx_loop(mlx->ptr);
 	free(table);
 	free(rays);
 }
