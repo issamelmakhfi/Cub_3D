@@ -36,7 +36,7 @@ int		get_offset(int direction, int x, int y, int img_x);
 int		abs(int n);
 void	get_pov(t_mlx *mlx, int i);
 void	project_wall(t_mlx *mlx, int i);
-int		map_collisions(t_mlx *mlx, int Cx, int Cy);
+int		map_collisions(t_mlx *mlx, int cx, int cy);
 
 //////////////////////////////// Movements //////////////////////////
 

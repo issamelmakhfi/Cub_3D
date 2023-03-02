@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:49:10 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/02 13:05:13 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/02 19:10:15 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ void	draw(t_mlx *mlx)
 	int	i;
 	int	j;
 
-	x = mlx->x * mlx->info->cell_sizeMap;
-	y = mlx->y * mlx->info->cell_sizeMap;
+	x = mlx->x * mlx->info->cell_size_map;
+	y = mlx->y * mlx->info->cell_size_map;
 	i = x;
 	j = y;
-	while (j - y < mlx->info->cell_sizeMap - mlx->pos->b_cells)
+	while (j - y < mlx->info->cell_size_map - mlx->pos->b_cells)
 	{
 		i = x;
-		while (i - x < mlx->info->cell_sizeMap - mlx->pos->b_cells)
+		while (i - x < mlx->info->cell_size_map - mlx->pos->b_cells)
 		{
 			my_mlx_pixel_put(&mlx->data, i * mlx->pos->space, j \
 				* mlx->pos->space, mlx->color);
@@ -89,12 +89,17 @@ void	map_projection(t_mlx *mlx)
 	{
 		mlx->pos->dis = mlx->rays[i].save_distance * \
 			mlx->table->cos_table[abs(N_RAY / 2 - i)];
-		mlx->pos->wallHeight = (WIN_H / mlx->pos->dis) * CELL_SIZE;
+		mlx->pos->wall_height = (WIN_H / mlx->pos->dis) * CELL_SIZE;
 		get_pov(mlx, i);
 		project_wall(mlx, i);
 		i++;
 	}
 	mlx_put_image_to_window(mlx->ptr, mlx->win_ptr, mlx->data.img, 0, 0);
+}
+
+void	leaks()
+{
+	system("leaks cub3D");
 }
 
 int	main(int ac, char **av)
@@ -113,7 +118,7 @@ int	main(int ac, char **av)
 	if (ac != 2)
 		return (1);
 	if (!get_filename_ext(av[1]) || ft_strcmp(get_filename_ext(av[1]), ".cub"))
-		error_handler("No such file or directory", 1);
+		error_handler("No such file or directory1", 1);
 	fill_data(av[1], &head, &head2);
 	search_map(info, head, head2, pos);
 	start_execution(info, pos, mlx);

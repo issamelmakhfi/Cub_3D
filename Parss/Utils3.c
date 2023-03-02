@@ -6,58 +6,11 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 16:26:10 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/02 17:15:36 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/02 17:38:09 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/cub3d.h"
-
-int	create_trgb(int t, int r, int g, int b)
-{
-	return (t << 24 | r << 16 | g << 8 | b);
-}
-
-int	check_colors(t_info *info, char **colors)
-{
-	int		i;
-	char	*tmp;
-	int		r;
-	int		g;
-	int		b;
-
-	i = 0;
-	if (colors[0] && (!ft_strcmp(colors[0], "F") || !ft_strcmp(colors[0], "C")))
-	{
-		while (colors[++i])
-		{
-			tmp = ft_strtrim(colors[i], ",");
-			if (check_digit(tmp))
-			{
-				free (tmp);
-				return (1);
-			}
-			if (ft_atoi(tmp) > 256)
-			{
-				free(tmp);
-				return (1);
-			}
-			if (i == 1)
-				r = ft_atoi(tmp);
-			if (i == 2)
-				g = ft_atoi(tmp);
-			else
-				b = ft_atoi(tmp);
-			free(tmp);
-		}
-		if (!ft_strcmp(colors[0], "C"))
-			info->c_color = create_trgb(0, r, g, b);
-		else
-			info->f_color = create_trgb(0, r, g, b);
-	}
-	else
-		return (1);
-	return (0);
-}
 
 int	char_check(char ch, int *check)
 {

@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 00:11:53 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/02 17:16:21 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/02 19:06:35 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@ void	get_texture_color(t_mlx *mlx, int y, int i)
 {
 	t_image	tmp_image;
 
-	if (mlx->pos->povTextur == E)
-		tmp_image = mlx->textur.E_img;
-	if (mlx->pos->povTextur == N)
-		tmp_image = mlx->textur.N_img;
-	if (mlx->pos->povTextur == S)
-		tmp_image = mlx->textur.S_img;
-	if (mlx->pos->povTextur == W)
-		tmp_image = mlx->textur.W_img;
-	y = y * (double)tmp_image.y / mlx->pos->wallHeight;
+	if (mlx->pos->pov_textur == E)
+		tmp_image = mlx->textur.e_img;
+	if (mlx->pos->pov_textur == N)
+		tmp_image = mlx->textur.n_img;
+	if (mlx->pos->pov_textur == S)
+		tmp_image = mlx->textur.s_img;
+	if (mlx->pos->pov_textur == W)
+		tmp_image = mlx->textur.w_img;
+	y = y * (double)tmp_image.y / mlx->pos->wall_height;
 	mlx->pos->offset = get_offset(mlx->rays[i].first, mlx->rays[i].x_save, \
 		mlx->rays[i].y_save, tmp_image.x);
 	if (mlx->pos->offset > tmp_image.x || y > tmp_image.y \
@@ -58,6 +58,7 @@ void	dda(t_mlx *mlx, int x1, int y1)
 		dda->y_ += dda->y_inc;
 		i++;
 	}
+	free(dda);
 }
 
 void	draw_cell(t_mlx *mlx)

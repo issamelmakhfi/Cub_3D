@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:42:45 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/02 17:12:25 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/02 19:13:38 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int	keyup(int code, t_mlx *mlx)
 {
 	if (code == SPACE)
 	{
-		mlx->pos->b_cells = mlx->info->cell_sizeMap * 0.3;
-		mlx->pos->miniMap = 0;
+		mlx->pos->b_cells = mlx->info->cell_size_map * 0.3;
+		mlx->pos->mini_map_ = 0;
 		mlx->pos->space = 0.3;
 	}
 	if (code == _W)
@@ -42,7 +42,7 @@ int	keyup(int code, t_mlx *mlx)
 int	key_press(int code, t_mlx *mlx)
 {
 	if (code == SPACE)
-		mlx->pos->miniMap = 1;
+		mlx->pos->mini_map_ = 1;
 	if (code == EXIT)
 		exit(0);
 	if (code == _W)
@@ -74,7 +74,6 @@ int	key_handler(t_mlx *mlx)
 	mlx->pos->x_cell = floor(mlx->pos->virtual_px / CELL_SIZE);
 	mlx->pos->y_cell = floor(mlx->pos->virtual_py / CELL_SIZE);
 	clear_draw(&mlx);
-	create_trigonometric_tables(6480, mlx->table, 0);
 	casting_rays(mlx->table, mlx->rays, mlx->pos);
 	map_projection(mlx);
 	mini_map(mlx);
@@ -84,10 +83,9 @@ int	key_handler(t_mlx *mlx)
 void	start_execution(t_info *info, t_position *pos, t_mlx *mlx)
 {
 	t_table	*table;
-	t_ray	*rays;
+	t_ray	rays[N_RAY];
 
 	table = malloc(sizeof(t_table));
-	rays = malloc(sizeof(t_ray) * N_RAY);
 	pos->info = info;
 	mlx->ptr = mlx_init();
 	mlx->data.img = mlx_new_image(mlx->ptr, WIN_W, WIN_H);
@@ -106,6 +104,4 @@ void	start_execution(t_info *info, t_position *pos, t_mlx *mlx)
 	mlx_hook(mlx->win_ptr, 3, (1L << 1), keyup, mlx);
 	mlx_loop_hook(mlx->ptr, key_handler, mlx);
 	mlx_loop(mlx->ptr);
-	free(table);
-	free(rays);
 }

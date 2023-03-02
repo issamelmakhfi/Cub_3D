@@ -1,4 +1,4 @@
-SRC = main.c ./Parss/parssMap.c  ./Parss/errorHandler.c ./Parss/Utils.c ./Parss/Utils2.c  ./Parss/Utils3.c  ./Parss/Utils4.c \
+SRC = main.c ./Parss/parssMap.c  ./Parss/errorHandler.c ./Parss/Utils.c ./Parss/Utils2.c  ./Parss/Utils3.c  ./Parss/Utils4.c ./Parss/Utils5.c \
 	./Parss/getCells.c ./Parss/DrawingUtils.c ./Parss/DrawingUtils2.c \
 	./Parss/Draw.c ./Parss/get_mlx_data.c ./Parss/movements.c  ./Parss/movements2.c \
 	./42Get_next_line/get_next_line.c \
@@ -25,7 +25,7 @@ LIBFT = 42Libft/libft.a
 all: libft_r $(NAME)
 
 $(NAME): $(OBJ) $(HEADERS)
-	$(CC) $(FLAGS) $(LIBFT) -lmlx  minilibx/libmlx.a $(MLX_FLAGS) $(OBJ) -o $(NAME)
+	$(CC) $(FLAGS) $(LIBFT) -lmlx  $(MLX_FLAGS) $(OBJ) -o $(NAME)
 	@echo "\033[0;32mCub3D Done!\033[0m"
 
 %.o : %.c $(HEADERS)

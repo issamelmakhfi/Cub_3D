@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:16:30 by Ma3ert            #+#    #+#             */
-/*   Updated: 2023/03/02 17:15:56 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/02 17:45:35 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,16 @@ typedef struct s_info
 	int				map_h;
 	int				map_w;
 	int				cell_size;
-	int				cell_sizeMap;
-	char			*path_N;
-	char			*path_S;
-	char			*path_E;
-	char			*path_W;
-	int				c_color;
-	int				f_color;
+	int				cell_size_map;
+	char			*path_n;
+	char			*path_s;
+	char			*path_e;
+	char			*path_w;
+	unsigned int	c_color;
+	unsigned int	f_color;
+	int				r;
+	int				g;
+	int				b;
 	char			*texture;
 	int				color;
 	t_map			*map;
@@ -89,7 +92,7 @@ typedef struct s_position
 	double	map_px;
 	double	map_py;
 	double	pov;
-	int		povTextur;
+	int		pov_textur;
 	int		down_arrow;
 	int		up_arrow;
 	int		left_arrow;
@@ -99,17 +102,16 @@ typedef struct s_position
 	int		_s;
 	int		_d;
 	double	space;
-	int		miniMap;
+	int		mini_map_;
 	int		b_cells;
 	int		wall_color;
-	int		wallHeight;
+	int		wall_height;
 	int		offset;
 	double	dis;
 	int		top_pixel;
 	double	adapter;
 	t_info	*info;
 }	t_position;
-
 
 typedef struct s_ray
 {
@@ -159,11 +161,10 @@ typedef struct s_image
 }	t_image;
 typedef struct s_texter
 {
-	t_image	E_img;
-	t_image	N_img;
-	t_image	S_img;
-	t_image	W_img;
-	t_image	F_img;
+	t_image	e_img;
+	t_image	n_img;
+	t_image	s_img;
+	t_image	w_img;
 }	t_texter;
 
 typedef struct s_dda
@@ -183,8 +184,8 @@ typedef struct s_mlx
 	int			color;
 	int			x;
 	int			y;
-	int			Cx;
-	int			Cy;
+	int			cx;
+	int			cy;
 	t_info		*info;
 	t_data		data;
 	t_ray		*rays;

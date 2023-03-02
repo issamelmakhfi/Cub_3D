@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 00:20:33 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/02 00:33:35 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/02 18:41:25 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,30 +24,30 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 
 void	xpm_image(t_mlx *mlx)
 {
-	mlx->textur.E_img.img = mlx_xpm_file_to_image(mlx->ptr, mlx->info->path_E, \
-		&mlx->textur.E_img.x, &mlx->textur.E_img.y);
-	mlx->textur.N_img.img = mlx_xpm_file_to_image(mlx->ptr, mlx->info->path_N, \
-		&mlx->textur.N_img.x, &mlx->textur.N_img.y);
-	mlx->textur.S_img.img = mlx_xpm_file_to_image(mlx->ptr, mlx->info->path_S, \
-		&mlx->textur.S_img.x, &mlx->textur.S_img.y);
-	mlx->textur.W_img.img = mlx_xpm_file_to_image(mlx->ptr, mlx->info->path_W, \
-		&mlx->textur.W_img.x, &mlx->textur.W_img.y);
-	mlx->textur.E_img.addr = (int *)mlx_get_data_addr(mlx->textur.E_img.img, \
-	&mlx->textur.E_img.bits_per_pixel, \
-		&mlx->textur.E_img.line_length, &mlx->textur.E_img.endian);
-	mlx->textur.N_img.addr = (int *)mlx_get_data_addr(mlx->textur.N_img.img, \
-	&mlx->textur.N_img.bits_per_pixel, \
-	&mlx->textur.N_img.line_length, &mlx->textur.N_img.endian);
-	mlx->textur.W_img.addr = (int *)mlx_get_data_addr(mlx->textur.W_img.img, \
-	&mlx->textur.W_img.bits_per_pixel, \
-		&mlx->textur.W_img.line_length, &mlx->textur.W_img.endian);
-	mlx->textur.S_img.addr = (int *)mlx_get_data_addr(mlx->textur.S_img.img, \
-	&mlx->textur.S_img.bits_per_pixel, \
-		&mlx->textur.S_img.line_length, &mlx->textur.S_img.endian);
-	free(mlx->info->path_E);
-	free(mlx->info->path_N);
-	free(mlx->info->path_W);
-	free(mlx->info->path_S);
+	mlx->textur.e_img.img = mlx_xpm_file_to_image(mlx->ptr, mlx->info->path_e, \
+		&mlx->textur.e_img.x, &mlx->textur.e_img.y);
+	mlx->textur.n_img.img = mlx_xpm_file_to_image(mlx->ptr, mlx->info->path_n, \
+		&mlx->textur.n_img.x, &mlx->textur.n_img.y);
+	mlx->textur.s_img.img = mlx_xpm_file_to_image(mlx->ptr, mlx->info->path_s, \
+		&mlx->textur.s_img.x, &mlx->textur.s_img.y);
+	mlx->textur.w_img.img = mlx_xpm_file_to_image(mlx->ptr, mlx->info->path_w, \
+		&mlx->textur.w_img.x, &mlx->textur.w_img.y);
+	mlx->textur.e_img.addr = (int *)mlx_get_data_addr(mlx->textur.e_img.img, \
+	&mlx->textur.e_img.bits_per_pixel, \
+		&mlx->textur.e_img.line_length, &mlx->textur.e_img.endian);
+	mlx->textur.n_img.addr = (int *)mlx_get_data_addr(mlx->textur.n_img.img, \
+	&mlx->textur.n_img.bits_per_pixel, \
+	&mlx->textur.n_img.line_length, &mlx->textur.n_img.endian);
+	mlx->textur.w_img.addr = (int *)mlx_get_data_addr(mlx->textur.w_img.img, \
+	&mlx->textur.w_img.bits_per_pixel, \
+		&mlx->textur.w_img.line_length, &mlx->textur.w_img.endian);
+	mlx->textur.s_img.addr = (int *)mlx_get_data_addr(mlx->textur.s_img.img, \
+	&mlx->textur.s_img.bits_per_pixel, \
+		&mlx->textur.s_img.line_length, &mlx->textur.s_img.endian);
+	free(mlx->info->path_e);
+	free(mlx->info->path_n);
+	free(mlx->info->path_w);
+	free(mlx->info->path_s);
 }
 
 void	clear_draw(t_mlx **mlx)

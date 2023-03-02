@@ -6,26 +6,11 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:40:07 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/02 16:50:11 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/02 18:08:52 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/cub3d.h"
-
-int	get_direction(char **direction)
-{
-	if (direction[0] && !ft_strcmp(direction[0], "NO"))
-		check_path(direction[1]);
-	else if (direction[0] && !ft_strcmp(direction[0], "SO"))
-		check_path(direction[1]);
-	else if (direction[0] && !ft_strcmp(direction[0], "WE"))
-		check_path(direction[1]);
-	else if (direction[0] && !ft_strcmp(direction[0], "EA"))
-		check_path(direction[1]);
-	else
-		return (1);
-	return (0);
-}
 
 int	check_elements(t_info *info, t_map *list_elements)
 {
@@ -89,17 +74,13 @@ void	search_map(t_info *info, t_map *head, t_map *head2, t_position *pos)
 		error_handler("NEED PLAYER", 1);
 }
 
-void	fill_data(char *av, t_map **head, t_map **head2)
+void	fill_data2(char *str, t_map **head, t_map **head2, int fd)
 {
-	int		fd;
-	char	*str;
+	int		i;
 	t_map	*tmp;
 	t_map	*cub;
-	int		i;
 
 	i = -1;
-	fd = check_file(av);
-	str = get_next_line(fd);
 	while (str)
 	{
 		if (++i < 7)
@@ -117,4 +98,14 @@ void	fill_data(char *av, t_map **head, t_map **head2)
 		free(str);
 		str = get_next_line(fd);
 	}
+}
+
+void	fill_data(char *av, t_map **head, t_map **head2)
+{
+	int		fd;
+	char	*str;
+
+	fd = check_file(av);
+	str = get_next_line(fd);
+	fill_data2(str, head, head2, fd);
 }

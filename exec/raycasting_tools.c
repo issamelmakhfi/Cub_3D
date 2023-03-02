@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 18:43:44 by Ma3ert            #+#    #+#             */
-/*   Updated: 2023/02/18 20:48:05 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/02 19:10:05 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ void	create_trigonometric_tables(int narc, t_table *table, int i)
 	table->tan_table = tan_res;
 	table->cos_table = cos_res;
 	table->sin_table = sin_res;
+	// free(tan_res);
+	// free(sin_res);
+	// free(cos_res);
 }
 
 double	calcul_adjacent(double hypotenuse, double opposite)
