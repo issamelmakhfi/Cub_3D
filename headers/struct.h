@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:16:30 by Ma3ert            #+#    #+#             */
-/*   Updated: 2023/03/02 00:07:27 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/02 17:15:56 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@
 # define _A 0
 # define _S 1
 # define _D 2
+# define EXIT 53
+# define SPACE 49
 # define PI 3.142857
 # define RED 0xFF0000
 
@@ -71,6 +73,8 @@ typedef struct s_info
 	char			*path_S;
 	char			*path_E;
 	char			*path_W;
+	int				c_color;
+	int				f_color;
 	char			*texture;
 	int				color;
 	t_map			*map;

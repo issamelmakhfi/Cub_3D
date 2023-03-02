@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:42:45 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/02 00:41:54 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/02 17:12:25 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	keyup(int code, t_mlx *mlx)
 {
-	if (code == 49)
+	if (code == SPACE)
 	{
 		mlx->pos->b_cells = mlx->info->cell_sizeMap * 0.3;
 		mlx->pos->miniMap = 0;
@@ -41,9 +41,9 @@ int	keyup(int code, t_mlx *mlx)
 
 int	key_press(int code, t_mlx *mlx)
 {
-	if (code == 49)
+	if (code == SPACE)
 		mlx->pos->miniMap = 1;
-	if (code == 53)
+	if (code == EXIT)
 		exit(0);
 	if (code == _W)
 		mlx->pos->_w = 1;
@@ -53,26 +53,10 @@ int	key_press(int code, t_mlx *mlx)
 		mlx->pos->_s = 1;
 	if (code == _D)
 		mlx->pos->_d = 1;
-	if (code == DOWN_ARROW)
-		mlx->pos->down_arrow = 1;
-	if (code == UP_ARROW)
-		mlx->pos->up_arrow = 1;
 	if (code == LEFT_ARROW)
 		mlx->pos->left_arrow = 1;
 	if (code == RIGHT_ARROW)
 		mlx->pos->right_arrow = 1;
-	return (0);
-}
-
-int	map_collisions(t_mlx *mlx, int Cx, int Cy)
-{
-	int	x;
-	int	y;
-
-	x = roundf(Cx / mlx->info->cell_size);
-	y = roundf(Cy / mlx->info->cell_size);
-	if (mlx->info->map_arr[y][x] && mlx->info->map_arr[y][x] == '1')
-		return (1);
 	return (0);
 }
 
@@ -83,59 +67,10 @@ int	key_handler(t_mlx *mlx)
 
 	x_save = mlx->pos->virtual_px;
 	y_save = mlx->pos->virtual_py;
-	if (mlx->pos->_s)
-	{
-		if (map_collisions(mlx, mlx->pos->virtual_px - mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4, mlx->pos->virtual_py + mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4))
-			return (1);
-		mlx->pos->virtual_px -= mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
-		mlx->pos->virtual_py += mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
-		mlx->pos->map_px += mlx->pos->virtual_px - x_save;
-		mlx->pos->map_py += mlx->pos->virtual_py - y_save;
-	}
-	if (mlx->pos->_w)
-	{
-		if (map_collisions(mlx, mlx->pos->virtual_px + mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4, mlx->pos->virtual_py - mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4))
-			return (1);
-		mlx->pos->virtual_px += mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
-		mlx->pos->virtual_py -= mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
-		mlx->pos->map_px += mlx->pos->virtual_px - x_save;
-		mlx->pos->map_py += mlx->pos->virtual_py - y_save;
-	}
-	if (mlx->pos->_a)
-	{
-		if (map_collisions(mlx, mlx->pos->virtual_px - (mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4), mlx->pos->virtual_py - mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4))
-			return (1);
-		mlx->pos->virtual_px -= mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
-		mlx->pos->virtual_py -= mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
-		mlx->pos->map_px += mlx->pos->virtual_px - x_save;
-		mlx->pos->map_py += mlx->pos->virtual_py - y_save;
-	}
-	if (mlx->pos->_d)
-	{
-		if (map_collisions(mlx, mlx->pos->virtual_px + (mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4), mlx->pos->virtual_py + mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4))
-			return (1);
-		mlx->pos->virtual_py += mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
-		mlx->pos->virtual_px += mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 4;
-		mlx->pos->map_px += mlx->pos->virtual_px - x_save;
-		mlx->pos->map_py += mlx->pos->virtual_py - y_save;
-	}
-	if (mlx->pos->right_arrow)
-	{
-		if (mlx->pos->pov > 360)
-			mlx->pos->pov = 0;
-		mlx->pos->pov += 4;
-	}
-	if (mlx->pos->left_arrow)
-	{
-		if (mlx->pos->pov < 0)
-			mlx->pos->pov += 360;
-		mlx->pos->pov -= 4;
-	}
-	if (mlx->pos->miniMap)
-	{
-		mlx->pos->b_cells = mlx->info->cell_sizeMap * 0.5;
-		mlx->pos->space = 0.8;
-	}
+	if (player_move(mlx, x_save, y_save))
+		return (1);
+	player_rotaion(mlx);
+	mini_map_zoom(mlx);
 	mlx->pos->x_cell = floor(mlx->pos->virtual_px / CELL_SIZE);
 	mlx->pos->y_cell = floor(mlx->pos->virtual_py / CELL_SIZE);
 	clear_draw(&mlx);
@@ -145,19 +80,6 @@ int	key_handler(t_mlx *mlx)
 	mini_map(mlx);
 	return (0);
 }
-
-
-// int	mouse_move(int x, int y, t_mlx *mlx)
-// {
-// 	(void)y;
-// 	if (x > 0 && x < WIN_W)
-// 	{
-// 		mlx_mouse_hide();
-// 		mlx_mouse_move(mlx->win_ptr, WIN_W / 2, WIN_H / 2);
-// 		// mlx->pos->tmpX = WIN_W / 2;
-// 	}
-// 	return 0;	
-// }
 
 void	start_execution(t_info *info, t_position *pos, t_mlx *mlx)
 {

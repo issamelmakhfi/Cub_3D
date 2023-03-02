@@ -24,7 +24,6 @@
 # include <errno.h>
 
 void	init_data(t_info *info, t_position *pos);
-int		keey_move(int code, t_mlx *mlx);
 void	clear_draw(t_mlx **mlx);
 void	map_projection(t_mlx *mlx);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
@@ -37,5 +36,17 @@ int		get_offset(int direction, int x, int y, int img_x);
 int		abs(int n);
 void	get_pov(t_mlx *mlx, int i);
 void	project_wall(t_mlx *mlx, int i);
+int		map_collisions(t_mlx *mlx, int Cx, int Cy);
+
+//////////////////////////////// Movements //////////////////////////
+
+int		player_move(t_mlx *mlx, int x_save, int y_save);
+int		s_move(t_mlx *mlx, int x_save, int y_save);
+int		w_move(t_mlx *mlx, int x_save, int y_save);
+int		a_move(t_mlx *mlx, int x_save, int y_save);
+int		d_move(t_mlx *mlx, int x_save, int y_save);
+void	player_rotaion(t_mlx *mlx);
+void	mini_map_zoom(t_mlx *mlx);
+int		keey_move(int code, t_mlx *mlx);
 
 #endif

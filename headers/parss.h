@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:05:13 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/02 01:06:55 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/02 16:51:56 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 ////////////////////////////// Parss ////////////////////////////////
 
 void	fill_data(char *av, t_map **head, t_map **head2);
-void	searchMap(t_info *info, t_map *head, t_map *head2, t_position *pos);
+void	search_map(t_info *info, t_map *head, t_map *head2, t_position *pos);
 char	*get_filename_ext(char *filename);
 void	error_handler(char *mssg, int exit_status);
 void	check_path(char *path);
@@ -39,9 +39,18 @@ size_t	get_longest_len(char **str);
 int		check_line(char *line);
 int		check_dup(t_map *elements, char *first_elements, int len);
 char	*join_rest(char *str, int len);
-int		check_colors(char **colors);
+int		check_colors(t_info *info, char **colors);
 int		char_check(char ch, int *check);
 void	lsttoarray2(t_map *map, t_info *info);
+void	search_map_utils(t_info *info, int *check);
+void	player_check(char **map_arr, int i, int j);
+int		char_check(char ch, int *check);
+int		check_elements_utils(t_info *info, t_map *list, char **elements);
+int		get_direction(char **direction);
+void	fill_list(t_map ***head2, t_map **cub, char *str);
+void	fill_list2(t_map ***head, t_map **tmp, char *str);
+int		skip_new_line(char **str, int fd);
+int		check_file(char *av);
 
 /////////////////////// MLX //////////////////////////////
 

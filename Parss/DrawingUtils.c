@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 00:11:53 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/02 01:09:35 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/02 17:16:21 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	draw_cell(t_mlx *mlx)
 		mlx->y = 0;
 		while (mlx->y < WIN_H / 2)
 		{
-			my_mlx_pixel_put(&mlx->data, mlx->x, mlx->y, 0x000000);
+			my_mlx_pixel_put(&mlx->data, mlx->x, mlx->y, mlx->info->c_color);
 			mlx->y++;
 		}
 		mlx->x++;
@@ -79,7 +79,7 @@ void	draw_cell(t_mlx *mlx)
 		mlx->y = WIN_H / 2;
 		while (mlx->y < WIN_H)
 		{
-			my_mlx_pixel_put(&mlx->data, mlx->x, mlx->y, 0xdfeaff);
+			my_mlx_pixel_put(&mlx->data, mlx->x, mlx->y, mlx->info->f_color);
 			mlx->y++;
 		}
 		mlx->x++;
