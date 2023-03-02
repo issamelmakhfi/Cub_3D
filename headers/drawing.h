@@ -37,6 +37,7 @@ int		abs(int n);
 void	get_pov(t_mlx *mlx, int i);
 void	project_wall(t_mlx *mlx, int i);
 int		map_collisions(t_mlx *mlx, int cx, int cy);
+int		map_collisions2(t_mlx *mlx, int cx, int cy);
 
 //////////////////////////////// Movements //////////////////////////
 

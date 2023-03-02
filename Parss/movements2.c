@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:19:25 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/02 17:45:35 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/02 23:07:21 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,29 @@ void	mini_map_zoom(t_mlx *mlx)
 	}
 }
 
+int	map_collisions2(t_mlx *mlx, int cx, int cy)
+{
+	int	x;
+	int	y;
+
+	x = cx / mlx->info->cell_size;
+	y = cy / mlx->info->cell_size;
+	if (mlx->info->map_arr[y][x] && mlx->info->map_arr[y][x] == '1')
+		return (1);
+	if (mlx->info->map_arr[mlx->pos->y_cell][mlx->pos->x_cell + 1] == '1' \
+	&& mlx->info->map_arr[mlx->pos->y_cell - 1][mlx->pos->x_cell] == '1' && \
+	mlx->info->map_arr[y][x] == '0')
+		return (1);
+	return (0);
+}
+
 int	map_collisions(t_mlx *mlx, int cx, int cy)
 {
 	int	x;
 	int	y;
 
-	x = roundf(cx / mlx->info->cell_size);
-	y = roundf(cy / mlx->info->cell_size);
+	x = cx / mlx->info->cell_size;
+	y = cy / mlx->info->cell_size;
 	if (mlx->info->map_arr[y][x] && mlx->info->map_arr[y][x] == '1')
 		return (1);
 	return (0);

@@ -1,7 +1,7 @@
-NO  ./textures/TECH.xpm
-SO  ./textures/TECH.xpm
-WE  ./textures/TECH.xpm
-EA  ./textures/TECH.xpm
+NO  ./textures/pillar.xpm
+SO  ./textures/pillar.xpm
+WE  ./textures/pillar.xpm
+EA  ./textures/pillar.xpm
 
 F 0, 0, 0
 C 51, 004, 056

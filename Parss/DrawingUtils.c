@@ -6,31 +6,47 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 00:11:53 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/02 19:06:35 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/02 22:12:22 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/cub3d.h"
 
-void	get_texture_color(t_mlx *mlx, int y, int i)
+t_image	set_textur(t_mlx *mlx)
+{
+	if (mlx->pos->pov_textur == E)
+		return (mlx->textur.e_img);
+	if (mlx->pos->pov_textur == N)
+		return (mlx->textur.n_img);
+	if (mlx->pos->pov_textur == S)
+		return (mlx->textur.s_img);
+	if (mlx->pos->pov_textur == W)
+		return (mlx->textur.w_img);
+	return (mlx->textur.w_img);
+}
+
+void	get_texture_color(t_mlx *mlx, int tex_y, int i)
 {
 	t_image	tmp_image;
+	double	tex_dy;
+	double	tex_dx;
 
-	if (mlx->pos->pov_textur == E)
-		tmp_image = mlx->textur.e_img;
-	if (mlx->pos->pov_textur == N)
-		tmp_image = mlx->textur.n_img;
-	if (mlx->pos->pov_textur == S)
-		tmp_image = mlx->textur.s_img;
-	if (mlx->pos->pov_textur == W)
-		tmp_image = mlx->textur.w_img;
-	y = y * (double)tmp_image.y / mlx->pos->wall_height;
-	mlx->pos->offset = get_offset(mlx->rays[i].first, mlx->rays[i].x_save, \
-		mlx->rays[i].y_save, tmp_image.x);
-	if (mlx->pos->offset > tmp_image.x || y > tmp_image.y \
-	|| mlx->pos->offset < 0 || y < 0)
-		return ;
-	mlx->info->color = tmp_image.addr[y * tmp_image.x + mlx->pos->offset];
+	tex_dy = 0;
+	tex_dx = 0;
+	tmp_image = set_textur(mlx);
+	tex_dy = tex_y;
+	if (tex_dy < 0)
+		tex_dy = 0;
+	tex_dx = mlx->rays[i].x_save;
+	if (mlx->rays[i].first == 'v')
+		tex_dx = mlx->rays[i].y_save;
+	tex_dx /= CELL_SIZE;
+	tex_dx -= floor(tex_dx);
+	tex_dx *= tmp_image.x;
+	tex_dy *= (double)tmp_image.y / mlx->pos->wall_height;
+	tex_dy = floor(tex_dy);
+	tex_dy *= tmp_image.x;
+	mlx->info->color = tmp_image.addr[(int)tex_dy + (int)tex_dx];
 }
 
 void	dda(t_mlx *mlx, int x1, int y1)
@@ -53,7 +69,7 @@ void	dda(t_mlx *mlx, int x1, int y1)
 	while (i <= dda->steps)
 	{
 		my_mlx_pixel_put(&mlx->data, dda->x_ * mlx->pos->space, \
-		dda->y_ * mlx->pos->space, 0xFF0000);
+		dda->y_ * mlx->pos->space, 0xFCC99FF);
 		dda->x_ += dda->x_inc;
 		dda->y_ += dda->y_inc;
 		i++;
@@ -107,7 +123,7 @@ void	draw_point(t_mlx *mlx)
 			y = i * mlx->table->sin_table[(int)(a / ANG_IN_D)] + \
 			(mlx->pos->virtual_py * mlx->pos->adapter);
 			my_mlx_pixel_put(&mlx->data, x * mlx->pos->space, \
-				y * mlx->pos->space, 0xFF0000);
+				y * mlx->pos->space, 0xFCC99FF);
 		}
 	}
 }
