@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:40:07 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/02 18:08:52 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/03 20:18:50 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,11 @@ void	player_check(char **map_arr, int i, int j)
 void	search_map(t_info *info, t_map *head, t_map *head2, t_position *pos)
 {
 	int		check;
+	int		i;
+	int		j;
 
 	check = 0;
+	i = -1;
 	if (check_elements(info, head2))
 		error_handler("ELEMENTS ERROR", 1);
 	lsttoarray(head, info);
@@ -72,6 +75,15 @@ void	search_map(t_info *info, t_map *head, t_map *head2, t_position *pos)
 	search_map_utils(info, &check);
 	if (!check)
 		error_handler("NEED PLAYER", 1);
+	while (info->map_arr[++i])
+	{
+		j = -1;
+		while (info->map_arr[i][++j])
+		{
+			if (info->map_arr[i][j] == 'N')
+				info->map_arr[i][j] = '0';
+		}
+	}
 }
 
 void	fill_data2(char *str, t_map **head, t_map **head2, int fd)

@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:42:45 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/02 23:01:01 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/03 20:46:50 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,21 @@ int	key_handler(t_mlx *mlx)
 {
 	int	x_save;
 	int	y_save;
+	int	x_;
+	int	y_;
 
 	x_save = mlx->pos->virtual_px;
 	y_save = mlx->pos->virtual_py;
+	player_rotaion(mlx);
 	if (player_move(mlx, x_save, y_save))
 		return (1);
-	player_rotaion(mlx);
 	mini_map_zoom(mlx);
-	mlx->pos->x_cell = floor(mlx->pos->virtual_px / CELL_SIZE);
-	mlx->pos->y_cell = floor(mlx->pos->virtual_py / CELL_SIZE);
+	x_ = mlx->pos->virtual_px / CELL_SIZE;
+	y_ = mlx->pos->virtual_py / CELL_SIZE;
+	if (mlx->info->map_arr[y_][x_] && mlx->info->map_arr[y_][x_] == '1')
+		return (1);
+	mlx->pos->x_cell = mlx->pos->virtual_px / CELL_SIZE;
+	mlx->pos->y_cell = mlx->pos->virtual_py / CELL_SIZE;
 	clear_draw(&mlx);
 	casting_rays(mlx->table, mlx->rays, mlx->pos);
 	map_projection(mlx);

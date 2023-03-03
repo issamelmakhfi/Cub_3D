@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 13:39:11 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/02 18:04:33 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/03 20:09:27 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ void	fill_list(t_map ***head2, t_map **cub, char *str)
 	{
 		(*cub) = malloc(sizeof(t_map));
 		**head2 = (*cub);
-		(*cub)->elements = strdup(str);
+		(*cub)->elements = ft_strdup(str);
 		(*cub)->next = NULL;
 	}
 	else
 	{
 		(*cub)->next = malloc(sizeof(t_map));
 		(*cub) = (*cub)->next;
-		(*cub)->elements = strdup(str);
+		(*cub)->elements = ft_strdup(str);
 		(*cub)->next = NULL;
 	}
 }
@@ -36,14 +36,14 @@ void	fill_list2(t_map ***head, t_map **tmp, char *str)
 	{
 		(*tmp) = malloc(sizeof(t_map));
 		(**head) = (*tmp);
-		(*tmp)->map_tab = strdup(str);
+		(*tmp)->map_tab = ft_strdup(str);
 		(*tmp)->next = NULL;
 	}
 	else
 	{
 		(*tmp)->next = malloc(sizeof(t_map));
 		(*tmp) = (*tmp)->next;
-		(*tmp)->map_tab = strdup(str);
+		(*tmp)->map_tab = ft_strdup(str);
 		(*tmp)->next = NULL;
 	}
 }

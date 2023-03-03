@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:19:25 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/02 23:07:21 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/03 20:45:48 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,17 @@ void	player_rotaion(t_mlx *mlx)
 {
 	if (mlx->pos->right_arrow)
 	{
-		if (mlx->pos->pov > 360)
-			mlx->pos->pov = 0;
 		mlx->pos->pov += 4;
+		if (mlx->pos->pov >= 360)
+		{
+			mlx->pos->pov = 0;
+		}
 	}
 	if (mlx->pos->left_arrow)
 	{
+		mlx->pos->pov -= 4;
 		if (mlx->pos->pov < 0)
 			mlx->pos->pov += 360;
-		mlx->pos->pov -= 4;
 	}
 }
 
@@ -58,8 +60,8 @@ int	map_collisions(t_mlx *mlx, int cx, int cy)
 	int	x;
 	int	y;
 
-	x = cx / mlx->info->cell_size;
-	y = cy / mlx->info->cell_size;
+	x = floor(cx / mlx->info->cell_size);
+	y = floor(cy / mlx->info->cell_size);
 	if (mlx->info->map_arr[y][x] && mlx->info->map_arr[y][x] == '1')
 		return (1);
 	return (0);

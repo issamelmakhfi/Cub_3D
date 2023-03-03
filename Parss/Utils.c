@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 20:12:05 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/02 01:05:48 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/03 20:31:39 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,17 @@ void	lsttoarray(t_map *map, t_info *info)
 {
 	t_map	*list;
 	int		i;
+	size_t	len;
 
 	i = 0;
 	list = map;
-	info->map_arr = malloc(sizeof(char *) * ft_lstsize(list) + 1);
+	len = ft_lstsize(list) + 1;
+	info->map_arr = (char **)malloc(sizeof(char *) * len);
 	if (!info->map_arr)
 		return ;
 	while (list)
 	{
-		(info->map_arr)[i++] = ft_strdup(list->map_tab);
+		info->map_arr[i++] = list->map_tab;
 		list = list->next;
 	}
 	info->map_arr[i] = NULL;
@@ -66,10 +68,12 @@ void	lsttoarray2(t_map *map, t_info *info)
 {
 	t_map	*list;
 	int		i;
+	size_t	len;
 
 	i = 0;
 	list = map;
-	info->elements = malloc(sizeof(char *) * ft_lstsize(list) + 1);
+	len = ft_lstsize(list) + 1;
+	info->elements = malloc(sizeof(char *) * len);
 	if (!info->elements)
 		return ;
 	while (list)

@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 14:51:41 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/02 23:07:42 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/03 20:39:17 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	s_move(t_mlx *mlx, int x_save, int y_save)
 {
 	if (mlx->pos->_s)
 	{
-		if (map_collisions2(mlx, x_save - \
+		if (map_collisions(mlx, x_save - \
 		mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 6 \
 		, y_save + mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 6))
 			return (1);
@@ -47,7 +47,7 @@ int	w_move(t_mlx *mlx, int x_save, int y_save)
 {
 	if (mlx->pos->_w)
 	{
-		if (map_collisions2(mlx, x_save + \
+		if (map_collisions(mlx, x_save + \
 		mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 6 \
 		, y_save - mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 6))
 			return (1);
@@ -84,7 +84,7 @@ int	d_move(t_mlx *mlx, int x_save, int y_save)
 	if (mlx->pos->_d)
 	{
 		if (map_collisions(mlx, x_save + \
-		(mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 6) \
+		(mlx->table->cos_table[(int)(mlx->pos->pov / ANG_IN_D)] * 6) \
 		, y_save + mlx->table->sin_table[(int)(mlx->pos->pov / ANG_IN_D)] * 6))
 			return (1);
 		mlx->pos->virtual_py += \
