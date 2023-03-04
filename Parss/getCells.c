@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:07:02 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/03 17:01:51 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/04 15:18:37 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,6 @@ void	init_data(t_info *info, t_position *pos)
 	pos->_s = 0;
 	pos->_w = 0;
 	pos->mini_map_ = 0;
+	pos->old_x = WIN_W / 2;
 	fill_elements(info);
 }

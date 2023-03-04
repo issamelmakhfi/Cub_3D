@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:16:30 by Ma3ert            #+#    #+#             */
-/*   Updated: 2023/03/02 17:45:35 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/04 15:13:56 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ typedef struct s_position
 	double	dis;
 	int		top_pixel;
 	double	adapter;
+	int		old_x;
+	int		old_y;
 	t_info	*info;
 }	t_position;
 
