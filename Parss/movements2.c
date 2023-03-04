@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:19:25 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/04 01:27:25 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/04 01:37:27 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,3 @@ int	map_collisions2(t_mlx *mlx, int cx, int cy)
 		return (1);
 	return (0);
 }
-
-// int	map_collisions(t_mlx *mlx, int cx, int cy)
-// {
-// 	int	x;
-// 	int	y;
-
-// 	x = floor(cx / mlx->info->cell_size);
-// 	y = floor(cy / mlx->info->cell_size);
-// 	if (mlx->info->map_arr[y][x] && mlx->info->map_arr[y][x] == '1')
-// 		return (1);
-// 	return (0);
-// }
