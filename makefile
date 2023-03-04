@@ -1,6 +1,6 @@
 SRC = main.c ./Parss/parssMap.c  ./Parss/errorHandler.c ./Parss/Utils.c ./Parss/Utils2.c  ./Parss/Utils3.c  ./Parss/Utils4.c ./Parss/Utils5.c \
 	./Parss/getCells.c ./Parss/DrawingUtils.c ./Parss/DrawingUtils2.c \
-	./Parss/Draw.c ./Parss/get_mlx_data.c ./Parss/movements.c  ./Parss/movements2.c \
+	./Parss/Draw.c ./Parss/get_mlx_data.c ./Parss/movements.c  ./Parss/movements2.c ./Parss/movements3.c \
 	./42Get_next_line/get_next_line.c \
 	./42Get_next_line/get_next_line_utils.c \
 	./exec/raycasting.c \
@@ -17,7 +17,7 @@ CC = cc
 
 MLX_FLAGS = -framework OpenGL -framework AppKit
 
-FLAGS = -Wall -Wextra -Werror -g -o3 -fsanitize=address
+FLAGS = -Wall -Wextra -Werror -g -o3
 # -fsanitize=address
 
 LIBFT = 42Libft/libft.a

@@ -49,5 +49,9 @@ int		d_move(t_mlx *mlx, int x_save, int y_save);
 void	player_rotaion(t_mlx *mlx);
 void	mini_map_zoom(t_mlx *mlx);
 int		keey_move(int code, t_mlx *mlx);
+int		case1(t_mlx *mlx, int x, int y);
+int		case2(t_mlx *mlx, int x, int y);
+int		case3(t_mlx *mlx, int x, int y);
+int		case4(t_mlx *mlx, int x, int y);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:42:45 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/03 20:46:50 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/04 01:04:42 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ int	key_handler(t_mlx *mlx)
 
 	x_save = mlx->pos->virtual_px;
 	y_save = mlx->pos->virtual_py;
-	player_rotaion(mlx);
 	if (player_move(mlx, x_save, y_save))
 		return (1);
 	mini_map_zoom(mlx);

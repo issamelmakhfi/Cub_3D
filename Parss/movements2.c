@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:19:25 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/03 20:45:48 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/04 01:27:25 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	player_rotaion(t_mlx *mlx)
 {
 	if (mlx->pos->right_arrow)
 	{
-		mlx->pos->pov += 4;
+		mlx->pos->pov += 3;
 		if (mlx->pos->pov >= 360)
 		{
 			mlx->pos->pov = 0;
@@ -24,7 +24,7 @@ void	player_rotaion(t_mlx *mlx)
 	}
 	if (mlx->pos->left_arrow)
 	{
-		mlx->pos->pov -= 4;
+		mlx->pos->pov -= 3;
 		if (mlx->pos->pov < 0)
 			mlx->pos->pov += 360;
 	}
@@ -46,23 +46,29 @@ int	map_collisions2(t_mlx *mlx, int cx, int cy)
 
 	x = cx / mlx->info->cell_size;
 	y = cy / mlx->info->cell_size;
-	if (mlx->info->map_arr[y][x] && mlx->info->map_arr[y][x] == '1')
+	mlx->cx = mlx->pos->x_cell;
+	mlx->cy = mlx->pos->y_cell;
+	if (case1(mlx, x, y))
 		return (1);
-	if (mlx->info->map_arr[mlx->pos->y_cell][mlx->pos->x_cell + 1] == '1' \
-	&& mlx->info->map_arr[mlx->pos->y_cell - 1][mlx->pos->x_cell] == '1' && \
-	mlx->info->map_arr[y][x] == '0')
+	if (case2(mlx, x, y))
 		return (1);
-	return (0);
-}
-
-int	map_collisions(t_mlx *mlx, int cx, int cy)
-{
-	int	x;
-	int	y;
-
-	x = floor(cx / mlx->info->cell_size);
-	y = floor(cy / mlx->info->cell_size);
+	if (case3(mlx, x, y))
+		return (1);
+	if (case4(mlx, x, y))
+		return (1);
 	if (mlx->info->map_arr[y][x] && mlx->info->map_arr[y][x] == '1')
 		return (1);
 	return (0);
 }
+
+// int	map_collisions(t_mlx *mlx, int cx, int cy)
+// {
+// 	int	x;
+// 	int	y;
+
+// 	x = floor(cx / mlx->info->cell_size);
+// 	y = floor(cy / mlx->info->cell_size);
+// 	if (mlx->info->map_arr[y][x] && mlx->info->map_arr[y][x] == '1')
+// 		return (1);
+// 	return (0);
+// }
