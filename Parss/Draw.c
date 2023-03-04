@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:42:45 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/04 01:04:42 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/04 02:41:59 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,22 @@ int	key_handler(t_mlx *mlx)
 	return (0);
 }
 
+int	mouse_move(int x, int y, t_mlx *mlx)
+{
+	// (void)y;
+	// (void)mlx;
+	printf("%d\n", x);
+	if (x > (WIN_W / 2) && x <= WIN_W)
+	{
+		mlx->pos->pov += 4;
+		if (mlx->pos->pov >= 360)
+			mlx->pos->pov = 0;
+	}
+	mlx_mouse_get_pos(mlx->win_ptr, &x, &y);
+	printf("%d\n", x);
+	return (0);
+}
+
 void	start_execution(t_info *info, t_position *pos, t_mlx *mlx)
 {
 	t_table	*table;
@@ -107,6 +123,7 @@ void	start_execution(t_info *info, t_position *pos, t_mlx *mlx)
 	xpm_image(mlx);
 	mlx_hook(mlx->win_ptr, 2, (1L << 0), key_press, mlx);
 	mlx_hook(mlx->win_ptr, 3, (1L << 1), keyup, mlx);
+	mlx_hook(mlx->win_ptr, 6, 0L, mouse_move, mlx);
 	mlx_loop_hook(mlx->ptr, key_handler, mlx);
 	mlx_loop(mlx->ptr);
 }

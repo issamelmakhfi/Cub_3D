@@ -25,7 +25,7 @@ LIBFT = 42Libft/libft.a
 all: libft_r $(NAME)
 
 $(NAME): $(OBJ) $(HEADERS)
-	$(CC) $(FLAGS) $(LIBFT) -lmlx  $(MLX_FLAGS) $(OBJ) -o $(NAME)
+	$(CC) $(FLAGS) $(LIBFT) -lmlx  minilibx/libmlx.a $(MLX_FLAGS) $(OBJ) -o $(NAME)
 	@echo "\033[0;32mCub3D Done!\033[0m"
 
 %.o : %.c $(HEADERS)
