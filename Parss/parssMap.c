@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:40:07 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/05 16:12:12 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/05 21:23:43 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,12 @@ void	search_map(t_info *info, t_map *head, t_map *head2, t_position *pos)
 
 	check = 0;
 	i = -1;
+	// while (head2)
+	// {
+	// 	printf("%s\n", head2->elements);
+	// 	head2 = head2->next;
+	// }
+	// exit(1);
 	if (check_elements(info, head2))
 		error_handler("ELEMENTS ERROR", 1);
 	lsttoarray(head, info);
@@ -92,14 +98,15 @@ void	fill_data2(char *str, t_map **head, t_map **head2, int fd)
 	t_map	*tmp;
 	t_map	*cub;
 
-	i = -1;
+	i = 0;
 	while (str)
 	{
-		if (++i < 7)
+		if (i < 6)
 		{
 			if (!skip_new_line(&str, fd))
 				continue ;
 			fill_list(&head2, &cub, str);
+			i++;
 		}
 		else
 			fill_list2(&head, &tmp, str);

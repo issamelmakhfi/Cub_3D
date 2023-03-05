@@ -1,10 +1,10 @@
+F  0,0,0
 NO  ./textures/pillar.xpm
 SO  ./textures/pillar.xpm
 WE  ./textures/pillar.xpm
+C 51, 004, 056
 EA  ./textures/pillar.xpm
 
-F 0, 0, 0
-C 51, 004, 056
 
 111111111111111
 100000100000001

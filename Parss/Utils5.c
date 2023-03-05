@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 17:37:45 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/02 18:08:58 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/05 21:01:10 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	init_color(t_info *info, char **colors, char *tmp, int i)
 {
 	if (check_digit(tmp))
 	{
-		free (tmp);
+		free(tmp);
 		return (1);
 	}
 	if (ft_atoi(tmp) > 256)
@@ -42,20 +42,14 @@ int	init_color(t_info *info, char **colors, char *tmp, int i)
 	return (free(tmp), 0);
 }
 
-int	check_colors(t_info *info, char **colors)
+int	check_colors(t_info *info, char **colors, int i_)
 {
-	int		i;
-	char	*tmp;
-
-	i = 0;
 	if (colors[0] && (!ft_strcmp(colors[0], "F") || !ft_strcmp(colors[0], "C")))
 	{
-		while (colors[++i])
-		{
-			tmp = ft_strtrim(colors[i], ",");
-			if (init_color(info, colors, tmp, i))
-				return (1);
-		}
+		if (i_ == 2 && without_space(info, colors))
+			return (1);
+		if (i_ == 4 && with_space(info, colors))
+			return (1);
 		if (!ft_strcmp(colors[0], "C"))
 			info->c_color = create_trgb(0, info->r, info->g, info->b);
 		else

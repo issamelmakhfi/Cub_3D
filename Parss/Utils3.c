@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 16:26:10 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/05 15:59:06 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/05 20:10:18 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	search_map_utils(t_info *info, int *check)
 
 int	check_elements_utils(t_info *info, t_map *list, char **elements)
 {
-	int	i;
+	int		i;
 
 	i = 0;
 	if (elements[0] && ft_strlen(elements[0]) == 2)
@@ -114,7 +114,7 @@ int	check_elements_utils(t_info *info, t_map *list, char **elements)
 	{
 		while (elements[i])
 			i++;
-		if (i != 4 || check_colors(info, elements) || \
+		if (check_colors(info, elements, i) || \
 			check_dup(list, elements[0], 1))
 			return (1);
 	}
