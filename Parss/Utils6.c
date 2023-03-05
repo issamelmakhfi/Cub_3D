@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 20:40:00 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/05 21:08:30 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/05 23:50:52 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	without_space(t_info *info, char **colors)
 			return (1);
 		idx++;
 	}
+	free(str);
 	return (0);
 }
 
@@ -43,4 +44,20 @@ int	with_space(t_info *info, char **colors)
 		i++;
 	}
 	return (0);
+}
+
+int	search_player(char p)
+{
+	char	*str;
+	int		t;
+
+	str = "NSWE";
+	t = 0;
+	while (str[t])
+	{
+		if (p == str[t])
+			return (0);
+		t++;
+	}
+	return (1);
 }

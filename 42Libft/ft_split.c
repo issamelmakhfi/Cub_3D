@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 15:00:56 by ielmakhf          #+#    #+#             */
-/*   Updated: 2021/11/13 17:10:58 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/05 23:22:09 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static char	**alloc(char **tab, char const *s, char c, int size)
 	k = 0;
 	while (*s)
 	{
-		while (s[i] != c && s[i] != '\0')
+		while (s[i] != c && s[i] != '\0' && s[i] != ',')
 			i++;
 		if (i != 0 && k < size)
 		{

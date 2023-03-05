@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 21:50:39 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/05 15:59:00 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/05 21:51:06 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,22 @@
 
 void	free_stuff(t_info *info, t_map *head, t_map *head2)
 {
+	t_map	*tmp;
+
 	free_tab(info->map_arr);
 	while (head)
 	{
 		free(head->map_tab);
+		tmp = head->next;
 		free(head);
-		head = head->next;
+		head = tmp;
 	}
 	while (head2)
 	{
 		free(head2->elements);
+		tmp = head2->next;
 		free(head2);
-		head2 = head2->next;
+		head2 = tmp;
 	}
 	free(info);
 }

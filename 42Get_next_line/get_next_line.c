@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 15:58:55 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/04 23:08:37 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/05 23:49:13 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ char	*get_rest(char *rest)
 		rest = tmp;
 		return (rest);
 	}
+	free(rest);
 	rest = NULL;
 	return (rest);
 }
@@ -62,7 +63,7 @@ char	*get_line(char *rest, int k)
 		return (new_buff);
 	}
 	new_buff = ft_strdup(rest);
-	return (rest = NULL, new_buff);
+	return (new_buff);
 }
 
 char	*alloc_buffer(char *buffer)

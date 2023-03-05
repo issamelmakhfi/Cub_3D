@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:40:07 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/05 21:23:43 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/05 23:09:29 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	check_elements(t_info *info, t_map *list_elements)
 	list = list_elements;
 	while (list)
 	{
-		list->check = 0;
 		elements = ft_split(list->elements, ' ');
 		if (check_elements_utils(info, list, elements))
 			return (1);
@@ -67,12 +66,6 @@ void	search_map(t_info *info, t_map *head, t_map *head2, t_position *pos)
 
 	check = 0;
 	i = -1;
-	// while (head2)
-	// {
-	// 	printf("%s\n", head2->elements);
-	// 	head2 = head2->next;
-	// }
-	// exit(1);
 	if (check_elements(info, head2))
 		error_handler("ELEMENTS ERROR", 1);
 	lsttoarray(head, info);

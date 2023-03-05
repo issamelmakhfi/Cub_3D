@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 16:26:10 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/05 20:10:18 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/06 00:23:33 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	check_elements_utils(t_info *info, t_map *list, char **elements)
 	{
 		while (elements[i])
 			i++;
-		if (i != 2 || get_direction(elements) || \
+		if (get_direction(elements) || \
 			check_dup(list, elements[0], 2))
 			return (1);
 	}

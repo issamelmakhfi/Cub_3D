@@ -6,9 +6,9 @@ EA ./textures/BlueWalls.xpm
 
 NO ./textures/BlueWalls.xpm
 
-C  105 , 65, 192
+C  255, 155, 0     
 
-F  17 , 17, 40
+F  255   , 0, 0
 
 1111111111111
 1000000000001

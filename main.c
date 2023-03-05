@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:49:10 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/05 21:24:04 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/05 23:50:40 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,22 +48,6 @@ void	draw(t_mlx *mlx)
 		}
 		j++;
 	}
-}
-
-int	search_player(char p)
-{
-	char	*str;
-	int		t;
-
-	str = "NSWE";
-	t = 0;
-	while (str[t])
-	{
-		if (p == str[t])
-			return (0);
-		t++;
-	}
-	return (1);
 }
 
 void	mini_map(t_mlx *mlx)
@@ -131,7 +115,6 @@ int	main(int ac, char **av)
 	if (!get_filename_ext(av[1]) || ft_strcmp(get_filename_ext(av[1]), ".cub"))
 		error_handler("No such file or directory1", 1);
 	fill_data(av[1], &head, &head2);
-	
 	search_map(info, head, head2, pos);
 	start_execution(info, pos, mlx);
 	free_stuff(info, head, head2);
