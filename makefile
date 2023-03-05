@@ -25,15 +25,19 @@ LIBFT = 42Libft/libft.a
 all: libft_r $(NAME)
 
 $(NAME): $(OBJ) $(HEADERS)
-	$(CC) $(FLAGS) $(LIBFT) -lmlx  minilibx/libmlx.a $(MLX_FLAGS) $(OBJ) -o $(NAME)
+	@$(CC) $(FLAGS) $(LIBFT) -lmlx  minilibx/libmlx.a $(MLX_FLAGS) $(OBJ) -o $(NAME)
 	@echo "\033[0;32mCub3D Done!\033[0m"
 
 %.o : %.c $(HEADERS)
-	$(CC) $(FLAGS) -Imlx  -c $< -o $@
+	@$(CC) $(FLAGS) -Iminilibx  -c $< -o $@
 
 libft_r :
 	@ make -C 42Libft/
 	@echo "\033[0;32m42Libft Done!\033[0m"
+
+minilibx_r :
+	@make -C minilibx/
+	@echo "\033[0;32mMLX42 Done!\033[0m"
 
 clean:
 	@make clean -C 42libft/

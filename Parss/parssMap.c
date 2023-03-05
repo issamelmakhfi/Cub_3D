@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:40:07 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/04 21:14:16 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/05 01:08:57 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,7 @@ void	fill_data2(char *str, t_map **head, t_map **head2, int fd)
 			fill_list(&head2, &cub, str);
 		}
 		else
-		{
-			// if (!skip_new_line(&str, fd))
-			// 	continue ;
 			fill_list2(&head, &tmp, str);
-		}
 		free(str);
 		str = get_next_line(fd);
 	}
