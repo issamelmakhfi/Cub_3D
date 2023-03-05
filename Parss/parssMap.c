@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:40:07 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/05 16:10:39 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/05 16:12:12 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	search_map(t_info *info, t_map *head, t_map *head2, t_position *pos)
 		j = -1;
 		while (info->map_arr[i][++j])
 		{
-			if (info->map_arr[i][j] == 'N')
+			if (!search_player(info->map_arr[i][j]))
 				info->map_arr[i][j] = '0';
 		}
 	}

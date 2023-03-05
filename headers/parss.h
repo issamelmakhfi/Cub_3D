@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:05:13 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/05 16:10:30 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/05 16:11:49 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	fill_list(t_map ***head2, t_map **cub, char *str);
 void	fill_list2(t_map ***head, t_map **tmp, char *str);
 int		skip_new_line(char **str, int fd);
 int		check_file(char *av);
+int		search_player(char p);
 
 /////////////////////// MLX //////////////////////////////
 
