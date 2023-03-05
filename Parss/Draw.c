@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:42:45 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/05 01:12:52 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/05 01:28:38 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,22 +88,22 @@ int	key_handler(t_mlx *mlx)
 int	mouse_move(int x, int y, t_mlx *mlx)
 {
 	(void)y;
-	(void)x;
-	mlx_mouse_hide();
-	// if ((x - mlx->pos->old_x) > 0)
-	// {
-	// 	mlx->pos->pov += 3;
-	// 	if (mlx->pos->pov >= 360)
-	// 		mlx->pos->pov = 0;
-	// }
-	// else if ((x - mlx->pos->old_x) < 0)
-	// {
-	// 	mlx->pos->pov -= 3;
-	// 	if (mlx->pos->pov <= 0)
-	// 		mlx->pos->pov += 360;
-	// }
-	// mlx->pos->old_x = x;
-	mlx_mouse_move(mlx->win_ptr, WIN_H / 2, WIN_W / 2);
+	// mlx_mouse_hide();
+	x = mlx->pos->old_x;
+	if ((x - mlx->pos->old_x) > 0)
+	{
+		mlx->pos->pov += 3;
+		if (mlx->pos->pov >= 360)
+			mlx->pos->pov = 0;
+	}
+	else if ((x - mlx->pos->old_x) < 0)
+	{
+		mlx->pos->pov -= 3;
+		if (mlx->pos->pov <= 0)
+			mlx->pos->pov += 360;
+	}
+	mlx->pos->old_x = WIN_W / 2;
+	// mlx_mouse_move(mlx->win_ptr, WIN_H / 2, WIN_W / 2);
 	return (0);
 }
 
