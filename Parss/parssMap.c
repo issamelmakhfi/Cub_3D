@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:40:07 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/05 01:08:57 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/05 16:10:39 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,16 @@ void	player_check(char **map_arr, int i, int j)
 	{
 		if ((j > 0) && (map_arr[i][j + 1] == '0' || map_arr[i][j - 1] == '0' || \
 		map_arr[i][j - 1] == str[idx] || map_arr[i][j + 1] == str[idx]))
-			error_handler("+++++++MAP ERROR", 1);
+			error_handler("+++++++MAP ERROR1", 1);
 		if (map_arr[i + 1])
 		{
-			if (map_arr[i + 1][j] == '0' || map_arr[i + 1][j] == 'P')
-				error_handler("+++++++MAP ERROR", 1);
+			if (map_arr[i + 1][j] == '0' || map_arr[i + 1][j] == str[idx])
+				error_handler("+++++++MAP ERROR2", 1);
 		}
 		if (i && map_arr[i - 1][j])
 		{
-			if (map_arr[i - 1][j] == '0' || map_arr[i - 1][j] == 'P')
-				error_handler("+++++++MAP ERROR", 1);
+			if (map_arr[i - 1][j] == '0' || map_arr[i - 1][j] == str[idx])
+				error_handler("+++++++MAP ERROR3", 1);
 		}
 		idx++;
 	}

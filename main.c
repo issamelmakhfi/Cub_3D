@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:49:10 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/02 22:11:34 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/05 16:00:24 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ void	draw(t_mlx *mlx)
 	y = mlx->y * mlx->info->cell_size_map;
 	i = x;
 	j = y;
-	while (j - y < mlx->info->cell_size_map - mlx->pos->b_cells)
+	while (j - y < mlx->info->cell_size_map)
 	{
 		i = x;
-		while (i - x < mlx->info->cell_size_map - mlx->pos->b_cells)
+		while (i - x < mlx->info->cell_size_map)
 		{
 			my_mlx_pixel_put(&mlx->data, i * mlx->pos->space, j \
 				* mlx->pos->space, mlx->color);
@@ -48,6 +48,22 @@ void	draw(t_mlx *mlx)
 		}
 		j++;
 	}
+}
+
+int	search_player(char p)
+{
+	char	*str;
+	int		t;
+
+	str = "NSWE";
+	t = 0;
+	while (str[t])
+	{
+		if (p == str[t])
+			return (0);
+		t++;
+	}
+	return (1);
 }
 
 void	mini_map(t_mlx *mlx)
@@ -62,7 +78,7 @@ void	mini_map(t_mlx *mlx)
 			if (mlx->info->map_arr[mlx->y][mlx->x] == '1')
 				mlx->color = 0x000000;
 			if (mlx->info->map_arr[mlx->y][mlx->x] == '0' || \
-				mlx->info->map_arr[mlx->y][mlx->x] == 'N')
+				!search_player(mlx->info->map_arr[mlx->y][mlx->x]))
 				mlx->color = 0xFFFFFF;
 			if (mlx->info->map_arr[mlx->y][mlx->x] == ' ' || \
 				mlx->info->map_arr[mlx->y][mlx->x] == '2')

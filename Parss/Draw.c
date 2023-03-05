@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:42:45 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/05 01:28:38 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/05 15:48:40 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	keyup(int code, t_mlx *mlx)
 {
 	if (code == SPACE)
 	{
-		mlx->pos->b_cells = mlx->info->cell_size_map * 0.3;
+		mlx->pos->b_cells = mlx->info->cell_size_map * 1;
 		mlx->pos->mini_map_ = 0;
 		mlx->pos->space = 0.3;
 	}
