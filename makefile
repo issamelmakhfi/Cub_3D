@@ -22,7 +22,7 @@ FLAGS = -Wall -Wextra -Werror -g -Ofast
 
 LIBFT = 42Libft/libft.a
 
-all: libft_r $(NAME)
+all: libft_r minilibx_r $(NAME)
 
 $(NAME): $(OBJ) $(HEADERS)
 	@$(CC) $(FLAGS) $(LIBFT) -lmlx  minilibx/libmlx.a $(MLX_FLAGS) $(OBJ) -o $(NAME)

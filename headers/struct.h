@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:16:30 by Ma3ert            #+#    #+#             */
-/*   Updated: 2023/03/04 15:13:56 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/05 18:33:09 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,5 +196,10 @@ typedef struct s_mlx
 	t_image		image;
 	t_texter	textur;
 }	t_mlx;
+
+typedef struct s_tmp
+{
+	t_mlx	*mlx;
+}	t_tmp;
 
 #endif
