@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:42:45 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/04 16:47:14 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/05 00:21:46 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,7 @@ int	key_handler(t_mlx *mlx)
 int	mouse_move(int x, int y, t_mlx *mlx)
 {
 	(void)y;
-
 	mlx_mouse_hide();
-	if (x >= WIN_W)
-		x = WIN_W / 2;
-	printf("%d\n", x);
-	printf("|%d|\n", mlx->pos->old_x);
 	if ((x - mlx->pos->old_x) > 0)
 	{
 		mlx->pos->pov += 3;
@@ -107,7 +102,7 @@ int	mouse_move(int x, int y, t_mlx *mlx)
 			mlx->pos->pov += 360;
 	}
 	mlx->pos->old_x = x;
-	mlx_mouse_move(mlx->win_ptr, WIN_W / 2, WIN_H / 2);
+	mlx_mouse_move(mlx->win_ptr, WIN_H / 2, WIN_W / 2);
 	return (0);
 }
 
@@ -133,7 +128,7 @@ void	start_execution(t_info *info, t_position *pos, t_mlx *mlx)
 	xpm_image(mlx);
 	mlx_hook(mlx->win_ptr, 2, (1L << 0), key_press, mlx);
 	mlx_hook(mlx->win_ptr, 3, (1L << 1), keyup, mlx);
-	mlx_hook(mlx->win_ptr, 6, 0L, &mouse_move, mlx);
+	mlx_hook(mlx->win_ptr, 06, 0L, &mouse_move, mlx);
 	mlx_loop_hook(mlx->ptr, key_handler, mlx);
 	mlx_loop(mlx->ptr);
 }

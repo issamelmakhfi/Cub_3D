@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 16:26:10 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/03 17:39:52 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/05 01:00:04 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	char_check(char ch, int *check)
 	str = "102 ";
 	while (str[i] && str1[i])
 	{
+		if (ch == '\n')
+			return (1);
 		if (ch == str[i])
 			return (0);
 		if (ch == str1[i])
@@ -50,6 +52,26 @@ int	check_digit(char *str)
 	return (0);
 }
 
+void	seperate_map_check(t_info *info)
+{
+	size_t	i;
+	size_t	len;
+
+	i = 0;
+	len = 0;
+	while (info->map_arr[len])
+		len++;
+	while (info->map_arr[i])
+	{
+		if (info->map_arr[i][0] != '\0')
+		{
+			if (i + 1 < len && info->map_arr[i + 1][0] == '\0')
+				error_handler("+++++++MAP ERROR_", 1);
+		}
+		i++;
+	}
+}
+
 void	search_map_utils(t_info *info, int *check)
 {
 	size_t	len;
@@ -58,6 +80,7 @@ void	search_map_utils(t_info *info, int *check)
 
 	i = -1;
 	len = get_longest_len(info->map_arr);
+	seperate_map_check(info);
 	while (info->map_arr[++i])
 		info->map_arr[i] = join_rest(info->map_arr[i], len);
 	i = -1;
@@ -67,7 +90,7 @@ void	search_map_utils(t_info *info, int *check)
 		while (info->map_arr[i][++j])
 		{
 			if (char_check(info->map_arr[i][j], check))
-				error_handler("MAP ERROR0", 1);
+				error_handler("+++++++MAP ERROR", 1);
 			if (info->map_arr[i][j] == ' ' || info->map_arr[i][j] == '2')
 				player_check(info->map_arr, i, j);
 		}

@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:40:07 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/03 20:18:50 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/04 21:14:16 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,16 @@ void	player_check(char **map_arr, int i, int j)
 	{
 		if ((j > 0) && (map_arr[i][j + 1] == '0' || map_arr[i][j - 1] == '0' || \
 		map_arr[i][j - 1] == str[idx] || map_arr[i][j + 1] == str[idx]))
-			error_handler("MAP ERROR1", 1);
+			error_handler("+++++++MAP ERROR", 1);
 		if (map_arr[i + 1])
 		{
 			if (map_arr[i + 1][j] == '0' || map_arr[i + 1][j] == 'P')
-				error_handler("MAP ERROR2", 1);
+				error_handler("+++++++MAP ERROR", 1);
 		}
 		if (i && map_arr[i - 1][j])
 		{
 			if (map_arr[i - 1][j] == '0' || map_arr[i - 1][j] == 'P')
-				error_handler("MAP ERROR3", 1);
+				error_handler("+++++++MAP ERROR", 1);
 		}
 		idx++;
 	}
@@ -103,8 +103,8 @@ void	fill_data2(char *str, t_map **head, t_map **head2, int fd)
 		}
 		else
 		{
-			if (!skip_new_line(&str, fd))
-				continue ;
+			// if (!skip_new_line(&str, fd))
+			// 	continue ;
 			fill_list2(&head, &tmp, str);
 		}
 		free(str);
