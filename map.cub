@@ -1,11 +1,11 @@
-SO ./textures/BlueWalls.xpm
-WE ./textures/BlueWalls.xpm
-EA ./textures/BlueWalls.xpm
-NO ./textures/BlueWalls.xpm
 
 C  0, 0, 102    
 F  0, 0, 0
 
+SO ./textures/BlueWalls.xpm
+WE ./textures/122.xpm
+EA ./textures/Archive/space3.xpm
+NO ./textures/aadnane.xpm
 111111111111111
 1000001000000001
 10000111111111111111111111
