@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:49:10 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/06 02:49:49 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/06 16:13:34 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int	main(int ac, char **av)
 	if (ac != 2)
 		return (1);
 	if (!get_filename_ext(av[1]) || ft_strcmp(get_filename_ext(av[1]), ".cub"))
-		error_handler("No such file or directory1", 1);
+		error_handler("No such file or directory", 1);
 	fill_data(av[1], &head, &head2);
 	search_map(info, head, head2, pos);
 	start_execution(info, pos, mlx);

@@ -1,6 +1,6 @@
-SRC = main.c ./Parss/parssMap.c  ./Parss/errorHandler.c ./Parss/Utils.c ./Parss/Utils2.c  ./Parss/Utils3.c  ./Parss/Utils4.c ./Parss/Utils5.c ./Parss/Utils6.c \
-	./Parss/getCells.c ./Parss/DrawingUtils.c ./Parss/DrawingUtils2.c \
-	./Parss/Draw.c ./Parss/get_mlx_data.c ./Parss/movements.c  ./Parss/movements2.c ./Parss/movements3.c \
+SRC = main.c ./Src/parssMap.c  ./Src/errorHandler.c ./Src/Utils.c ./Src/Utils2.c  ./Src/Utils3.c  ./Src/Utils4.c ./Src/Utils5.c ./Src/Utils6.c \
+	./Src/getCells.c ./Src/DrawingUtils.c ./Src/DrawingUtils2.c \
+	./Src/Draw.c ./Src/get_mlx_data.c ./Src/movements.c  ./Src/movements2.c ./Src/movements3.c \
 	./42Get_next_line/get_next_line.c \
 	./42Get_next_line/get_next_line_utils.c \
 	./exec/raycasting.c \
@@ -33,7 +33,6 @@ $(NAME): $(OBJ) $(HEADERS)
 
 libft_r :
 	@ make -C 42Libft/
-	@echo "\033[0;32m42Libft Done!\033[0m"
 
 minilibx_r :
 	@make -C minilibx/

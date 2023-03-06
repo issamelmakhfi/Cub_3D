@@ -22,6 +22,7 @@ all : ${NAME}
 ${NAME} : ${OFILES}
 	@${CC} ${W} ${CFILES}
 	@ar -cr ${NAME} ${OFILES}
+	@echo "\033[0;32m42Libft Done!\033[0m"
 
 %.o : %.c $(HEADERS)
 	@$(CC) $(W) -c $< -o $@
