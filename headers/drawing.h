@@ -27,7 +27,6 @@ void	init_data(t_info *info, t_position *pos);
 void	clear_draw(t_mlx **mlx);
 void	map_projection(t_mlx *mlx);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
-void	xpm_image(t_mlx *mlx);
 void	get_texture_color(t_mlx *mlx, int y, int i);
 void	dda(t_mlx *mlx, int x1, int y1);
 void	draw_cell(t_mlx *mlx);
@@ -38,6 +37,10 @@ void	get_pov(t_mlx *mlx, int i);
 void	project_wall(t_mlx *mlx, int i);
 int		map_collisions(t_mlx *mlx, int cx, int cy);
 int		map_collisions2(t_mlx *mlx, int cx, int cy);
+void	mini_map(t_mlx *mlx);
+void	start_execution(t_info *info, t_position *pos, t_mlx *mlx);
+void	draw(t_mlx *mlx);
+int		xpm_image(t_mlx *mlx);
 
 //////////////////////////////// Movements //////////////////////////
 

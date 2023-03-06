@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 00:20:33 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/02 18:41:25 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/06 02:31:06 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,15 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void	xpm_image(t_mlx *mlx)
+void	free_paths(t_mlx *mlx)
+{
+	free(mlx->info->path_e);
+	free(mlx->info->path_n);
+	free(mlx->info->path_w);
+	free(mlx->info->path_s);
+}
+
+int	xpm_image(t_mlx *mlx)
 {
 	mlx->textur.e_img.img = mlx_xpm_file_to_image(mlx->ptr, mlx->info->path_e, \
 		&mlx->textur.e_img.x, &mlx->textur.e_img.y);
@@ -32,6 +40,9 @@ void	xpm_image(t_mlx *mlx)
 		&mlx->textur.s_img.x, &mlx->textur.s_img.y);
 	mlx->textur.w_img.img = mlx_xpm_file_to_image(mlx->ptr, mlx->info->path_w, \
 		&mlx->textur.w_img.x, &mlx->textur.w_img.y);
+	if (!mlx->textur.w_img.img || !mlx->textur.n_img.img \
+	|| !mlx->textur.s_img.img || !mlx->textur.e_img.img)
+		return (1);
 	mlx->textur.e_img.addr = (int *)mlx_get_data_addr(mlx->textur.e_img.img, \
 	&mlx->textur.e_img.bits_per_pixel, \
 		&mlx->textur.e_img.line_length, &mlx->textur.e_img.endian);
@@ -44,10 +55,8 @@ void	xpm_image(t_mlx *mlx)
 	mlx->textur.s_img.addr = (int *)mlx_get_data_addr(mlx->textur.s_img.img, \
 	&mlx->textur.s_img.bits_per_pixel, \
 		&mlx->textur.s_img.line_length, &mlx->textur.s_img.endian);
-	free(mlx->info->path_e);
-	free(mlx->info->path_n);
-	free(mlx->info->path_w);
-	free(mlx->info->path_s);
+	free_paths(mlx);
+	return (0);
 }
 
 void	clear_draw(t_mlx **mlx)

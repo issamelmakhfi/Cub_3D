@@ -1,10 +1,11 @@
-SO ./textures/BlueWalls.xpm
 
-WE ./textures/BlueWalls.xpm
+SO ./textures/122.xpm
+
+WE ./textures/122.xpm
 
 EA ./textures/BlueWalls.xpm
 
-NO ./textures/BlueWalls.xpm
+NO ./textures/122.xpm
 
 C  255, 155, 0     
 
@@ -12,8 +13,10 @@ F  255   , 0, 0
 
 1111111111111
 1000000000001
+1000000000001
 1011111111101
-101000N000101
+100000N000101
 1011111111101
+1000000000001
 1000000000001
 1111111111111

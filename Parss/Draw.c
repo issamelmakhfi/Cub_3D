@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:42:45 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/05 21:05:41 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/06 02:24:36 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,8 @@ void	start_execution(t_info *info, t_position *pos, t_mlx *mlx)
 	mlx->pos = pos;
 	mlx->rays = rays;
 	mlx->table = table;
-	xpm_image(mlx);
+	if (xpm_image(mlx))
+		error_handler("+++++++MLX_ERROR", 1);
 	mlx_hook(mlx->win_ptr, 2, (1L << 0), &key_press, mlx);
 	mlx_hook(mlx->win_ptr, 3, (1L << 1), &keyup, mlx);
 	mlx_hook(mlx->win_ptr, 06, 0L, &mouse_move, mlx);

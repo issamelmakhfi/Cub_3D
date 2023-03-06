@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 17:37:45 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/06 00:28:14 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/06 02:25:41 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,27 +60,20 @@ int	check_colors(t_info *info, char **colors, int i_)
 	return (0);
 }
 
-int	get_direction(char **direction)
+int	get_direction(t_map *list, char **direction)
 {
 	char	*tmp;
-	
-	int i =0;
-	while (direction[i])
-	{
-		if (direction[i + 1])
-			tmp = ft_strjoin(direction[i], direction[i + 1]);
-		printf("%s\n", tmp);
-		i++;
-	}
-	exit(1);
+
+	tmp = ft_substr(list->elements, 2, ft_strlen(list->elements));
+	tmp = ft_strtrim(tmp, " ");
 	if (direction[0] && !ft_strcmp(direction[0], "NO"))
-		check_path(direction[1]);
+		check_path(tmp);
 	else if (direction[0] && !ft_strcmp(direction[0], "SO"))
-		check_path(direction[1]);
+		check_path(tmp);
 	else if (direction[0] && !ft_strcmp(direction[0], "WE"))
-		check_path(direction[1]);
+		check_path(tmp);
 	else if (direction[0] && !ft_strcmp(direction[0], "EA"))
-		check_path(direction[1]);
+		check_path(tmp);
 	else
 		return (1);
 	return (0);

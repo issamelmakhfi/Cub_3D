@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 20:12:05 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/04 22:41:54 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/06 02:27:13 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ void	check_path(char *path)
 
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
+	{
+		free(path);
 		error_handler("no such file or directory", 127);
+	}
 }
 
 void	free_tab(char **tab)

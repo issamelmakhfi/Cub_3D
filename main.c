@@ -6,7 +6,7 @@
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:49:10 by ielmakhf          #+#    #+#             */
-/*   Updated: 2023/03/05 23:50:40 by ielmakhf         ###   ########.fr       */
+/*   Updated: 2023/03/06 02:49:49 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	mini_map(t_mlx *mlx)
 				mlx->color = 0x000000;
 			if (mlx->info->map_arr[mlx->y][mlx->x] == '0' || \
 				!search_player(mlx->info->map_arr[mlx->y][mlx->x]))
-				mlx->color = 0xFFFFFF;
+				mlx->color = 0x75FFFFFF;
 			if (mlx->info->map_arr[mlx->y][mlx->x] == ' ' || \
 				mlx->info->map_arr[mlx->y][mlx->x] == '2')
 			{
